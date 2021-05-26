@@ -19,3 +19,12 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+Route::post('v1/send-cer-key', [SendCerKeyController::class, 'sendCerKey']);
+
+Route::post('v1/make-query', [MakeQueryController::class, 'makeQuery']);
+
+Route::post('v1/verify-query', [VerifyQueryController::class, 'verifyQuery']);
+
+Route::post('v1/download-packages', [DownloadPackagesController::class, 'downloadPackages']);
