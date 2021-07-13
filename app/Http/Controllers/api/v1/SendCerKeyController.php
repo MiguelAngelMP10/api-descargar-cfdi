@@ -11,6 +11,7 @@ class SendCerKeyController extends Controller
 
     public function sendCerKey(Request $request)
     {
+
         $RFC = $request->get('RFC');
         $pathCer = $request->file('cer')->storeAs(
             'datos/' . $RFC,

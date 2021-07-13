@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\api\v1\DownloadPackagesController;
+use App\Http\Controllers\api\v1\MakeQueryController;
+use App\Http\Controllers\api\v1\SendCerKeyController;
+use App\Http\Controllers\api\v1\VerifyQueryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
