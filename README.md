@@ -47,5 +47,5 @@ https://documenter.getpostman.com/view/6966544/TzXwEyTD
 
 ## Copyright and License
 
-The `MiguelAngelMP10/api-descargar-cfdi` proyect is copyright © [Miguel Angel Muñoz Pozos]()
-and licensed for use under the MIT License (MIT). Please see [LICENSE][https://github.com/MiguelAngelMP10/api-descargar-cfdi/blob/main/LICENSE] for more information.
+The `MiguelAngelMP10/api-descargar-cfdi` proyect is copyright © [Miguel Angel Muñoz Pozos](a)
+and licensed for use under the MIT License (MIT). Please see [LICENSE](https://github.com/MiguelAngelMP10/api-descargar-cfdi/blob/main/LICENSE) for more information.

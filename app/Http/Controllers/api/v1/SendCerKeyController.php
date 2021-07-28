@@ -11,21 +11,24 @@ class SendCerKeyController extends Controller
 
     public function sendCerKey(Request $request)
     {
+        try {
+            $RFC = $request->get('RFC');
+            $pathCer = $request->file('cer')->storeAs(
+                'datos/' . $RFC,
+                $RFC . '.cer'
+            );
 
-        $RFC = $request->get('RFC');
-        $pathCer = $request->file('cer')->storeAs(
-            'datos/' . $RFC,
-            $RFC . '.cer'
-        );
+            $pathKey = $request->file('key')->storeAs(
+                'datos/' . $RFC,
+                $RFC . '.key'
+            );
 
-        $pathKey = $request->file('key')->storeAs(
-            'datos/' . $RFC,
-            $RFC . '.key'
-        );
-
-        return response()->json([
-            'pathCer' => $pathCer,
-            'pathKey' =>  $pathKey,
-        ]);
+            return response()->json([
+                'pathCer' => $pathCer,
+                'pathKey' =>  $pathKey,
+            ]);
+        } catch (\Throwable $e) {
+            return $e;
+        }
     }
 }
