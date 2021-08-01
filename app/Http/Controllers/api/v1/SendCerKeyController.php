@@ -2,33 +2,41 @@
 
 namespace App\Http\Controllers\api\v1;
 
+use App\Helpers\SatWsService;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use Throwable;
 
 class SendCerKeyController extends Controller
 {
 
     public function sendCerKey(Request $request)
     {
+        $satWsService = new SatWsService();
         try {
-            $RFC = $request->get('RFC');
-            $pathCer = $request->file('cer')->storeAs(
-                'datos/' . $RFC,
-                $RFC . '.cer'
+            $fiel = $satWsService->createFiel(
+                $request->file('cer')->getContent(),
+                $request->file('key')->getContent(),
+                $request->input('password')
             );
-
-            $pathKey = $request->file('key')->storeAs(
-                'datos/' . $RFC,
-                $RFC . '.key'
-            );
-
+        } catch (Throwable $exception) {
             return response()->json([
-                'pathCer' => $pathCer,
-                'pathKey' =>  $pathKey,
-            ]);
-        } catch (\Throwable $e) {
-            return $e;
+                'message' => 'Certificado, llave privada o contraseña inválida',
+                'code' => $exception->getMessage(),
+            ], 422);
         }
+
+        $rfc = $fiel->getRfc();
+
+        $certificatePath = $satWsService->obtainCertificatePath($rfc);
+        $privateKeyPath = $satWsService->obtainPrivateKeyPath($rfc);
+
+        $pathCer = $request->file('cer')->storeAs(dirname($certificatePath), basename($certificatePath));
+        $pathKey = $request->file('key')->storeAs(dirname($privateKeyPath), basename($privateKeyPath));
+
+        return response()->json([
+            'pathCer' => $pathCer,
+            'pathKey' =>  $pathKey,
+        ]);
     }
 }
