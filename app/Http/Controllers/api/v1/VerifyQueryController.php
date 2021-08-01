@@ -2,57 +2,27 @@
 
 namespace App\Http\Controllers\api\v1;
 
+use App\Helpers\SatWsService;
 use App\Http\Controllers\Controller;
+use Exception;
 use Illuminate\Http\Request;
-
-use Illuminate\Support\Facades\Storage;
-use PhpCfdi\SatWsDescargaMasiva\RequestBuilder\FielRequestBuilder\Fiel;
-
-use PhpCfdi\SatWsDescargaMasiva\RequestBuilder\FielRequestBuilder\FielRequestBuilder;
-use PhpCfdi\SatWsDescargaMasiva\Service;
-use PhpCfdi\SatWsDescargaMasiva\Shared\ServiceEndpoints;
-use PhpCfdi\SatWsDescargaMasiva\WebClient\GuzzleWebClient;
 
 class VerifyQueryController extends Controller
 {
     public function verifyQuery(Request $request)
     {
-        $RFC =  $request->input('RFC');
-        $password = $request->input('password');
-        $retenciones = $request->boolean('retenciones');
+        $satWsServiceHelper = new SatWsService();
+        try {
+            $service = $satWsServiceHelper->createService(
+                $request->input('RFC'),
+                $request->input('password'),
+                $request->boolean('retenciones')
+            );
+        } catch (Exception $exception) {
+            return response()->json(['message' => $exception->getMessage()], 422);
+        }
+
         $requestId =  $request->input('requestId');
-
-
-        $contentCer = Storage::get('datos/' . $RFC . "/" . $RFC . '.cer');
-        $contentKey = Storage::get('datos/' . $RFC . "/" . $RFC . '.key');
-
-        $fiel = Fiel::create(
-            $contentCer,
-            $contentKey,
-            $password
-        );
-
-        // verificar que la FIEL sea válida (no sea CSD y sea vigente acorde a la fecha del sistema)
-        if (!$fiel->isValid()) {
-            return response()->json([
-                'message' => 'La FIEL no es valida'
-            ]);
-        }
-
-        // creación del web client basado en Guzzle que implementa WebClientInterface
-        // para usarlo necesitas instalar guzzlehttp/guzzle pues no es una dependencia directa
-        $webClient = new GuzzleWebClient();
-
-        // creación del objeto encargado de crear las solicitudes firmadas usando una FIEL
-        $requestBuilder = new FielRequestBuilder($fiel);
-
-        // Creación del servicio
-        if ($retenciones) {
-            $service = new Service($requestBuilder, $webClient, null, ServiceEndpoints::retenciones());
-        } else {
-            $service = new Service($requestBuilder, $webClient);
-        }
-
 
         // consultar el servicio de verificación
         $verify = $service->verify($requestId);
