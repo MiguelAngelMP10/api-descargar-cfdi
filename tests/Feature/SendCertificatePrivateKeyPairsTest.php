@@ -89,4 +89,24 @@ final class SendCertificatePrivateKeyPairsTest extends TestCase
         $response->assertStatus(422);
         $response->assertJson(["message" => "Certificado, llave privada o contraseña inválida"]);
     }
+
+    /**
+     * @see SendCerKeyController::sendCerKey()
+     * @test
+     */
+    public function it_refuses_valid_csd(): void
+    {
+        $certificatePath = __DIR__ . '/../_files/fake-csd/EKU9003173C9.cer';
+        $privateKeyPath = __DIR__ . '/../_files/fake-csd/EKU9003173C9.key';
+        $passPhrasePath = __DIR__ . '/../_files/fake-csd/EKU9003173C9-password.txt';
+
+        $response = $this->post('/api/v1/send-cer-key', [
+            'cer' => new UploadedFile($certificatePath, basename($certificatePath)),
+            'key' => new UploadedFile($privateKeyPath, basename($privateKeyPath)),
+            'password' => trim(file_get_contents($passPhrasePath)),
+        ]);
+
+        $response->assertStatus(422);
+        $response->assertJson(["message" => "Certificado, llave privada o contraseña inválida"]);
+    }
 }
