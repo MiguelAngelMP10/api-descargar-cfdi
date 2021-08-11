@@ -43,7 +43,21 @@ link de documentación en **postman**
 
 https://documenter.getpostman.com/view/6966544/TzXwEyTD
 
+## Ejecución con *Docker*
 
+Usa [`laravel/sail`](https://laravel.com/docs/8.x/sail) si estás familiarizado.
+
+También puedes crear la imagen de docker en tu máquina y levantar un contenedor,
+como se muestra en [`docker/Docker.md`](docker/Docker.md).
+
+```shell
+git clone https://github.com/MiguelAngelMP10/api-descargar-cfdi.git
+cd git clone https://github.com/MiguelAngelMP10/api-descargar-cfdi.git
+docker build -t api-descargar-cfdi -f docker/Dockerfile .
+docker run --name=api-descargar-cfdi --detach=true --publish 8081:80 \
+  --volume $HOME/api-descargar-cfdi-data:/opt/api-descargar-cfdi/storage/app/datos/ \
+  api-descargar-cfdi
+```
 
 ## Copyright and License
 
