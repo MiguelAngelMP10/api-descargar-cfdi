@@ -4,11 +4,34 @@ declare(strict_types=1);
 
 namespace Tests\Feature;
 
+use App\Helpers\SatWsService;
+use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 final class SendCertificatePrivateKeyPairsTest extends TestCase
 {
+    /** @var Filesystem */
+    private $disk;
+
+    /** @var string */
+    private $expectedCertificatePath;
+
+    /** @var string */
+    private $expectedPrivateKeyPath;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->disk = Storage::fake('local');
+
+        $satWsService = new SatWsService();
+        $this->expectedCertificatePath = $satWsService->obtainCertificatePath('EKU9003173C9');
+        $this->expectedPrivateKeyPath = $satWsService->obtainPrivateKeyPath('EKU9003173C9');
+    }
+
     /**
      * @see SendCerKeyController::sendCerKey()
      * @test
@@ -28,6 +51,9 @@ final class SendCertificatePrivateKeyPairsTest extends TestCase
         $response->assertStatus(200);
         $this->assertStringContainsString('EKU9003173C9.cer', $response->json('pathCer'));
         $this->assertStringContainsString('EKU9003173C9.key', $response->json('pathKey'));
+
+        $this->disk->assertExists($this->expectedCertificatePath);
+        $this->disk->assertExists($this->expectedPrivateKeyPath);
     }
 
     /**
@@ -48,6 +74,9 @@ final class SendCertificatePrivateKeyPairsTest extends TestCase
 
         $response->assertStatus(422);
         $response->assertJson(["message" => "Certificado, llave privada o contraseña inválida"]);
+
+        $this->disk->assertMissing($this->expectedCertificatePath);
+        $this->disk->assertMissing($this->expectedPrivateKeyPath);
     }
 
     /**
@@ -68,6 +97,9 @@ final class SendCertificatePrivateKeyPairsTest extends TestCase
 
         $response->assertStatus(422);
         $response->assertJson(["message" => "Certificado, llave privada o contraseña inválida"]);
+
+        $this->disk->assertMissing($this->expectedCertificatePath);
+        $this->disk->assertMissing($this->expectedPrivateKeyPath);
     }
 
     /**
@@ -88,6 +120,9 @@ final class SendCertificatePrivateKeyPairsTest extends TestCase
 
         $response->assertStatus(422);
         $response->assertJson(["message" => "Certificado, llave privada o contraseña inválida"]);
+
+        $this->disk->assertMissing($this->expectedCertificatePath);
+        $this->disk->assertMissing($this->expectedPrivateKeyPath);
     }
 
     /**
@@ -108,5 +143,8 @@ final class SendCertificatePrivateKeyPairsTest extends TestCase
 
         $response->assertStatus(422);
         $response->assertJson(["message" => "Certificado, llave privada o contraseña inválida"]);
+
+        $this->disk->assertMissing($this->expectedCertificatePath);
+        $this->disk->assertMissing($this->expectedPrivateKeyPath);
     }
 }
