@@ -52,7 +52,7 @@ como se muestra en [`docker/Docker.md`](docker/Docker.md).
 
 ```shell
 git clone https://github.com/MiguelAngelMP10/api-descargar-cfdi.git
-cd git clone https://github.com/MiguelAngelMP10/api-descargar-cfdi.git
+cd api-descargar-cfdi
 docker build -t api-descargar-cfdi -f docker/Dockerfile .
 docker run --name=api-descargar-cfdi --detach=true --publish 8081:80 \
   --volume $HOME/api-descargar-cfdi-data:/opt/api-descargar-cfdi/storage/app/datos/ \

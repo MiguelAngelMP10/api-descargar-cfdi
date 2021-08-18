@@ -22,7 +22,7 @@ Sin necesidad de construir y mantener la imagen localmente.
 Comandos relacionados con la construcción de la imagen local.
 
 ```shell
-# construir la imagen
+# construir la imagen (usar --no-cache para forzar la reconstrucción)
 docker build -t api-descargar-cfdi -f docker/Dockerfile .
 
 # eliminar la imagen
@@ -45,6 +45,9 @@ docker run --name=api-descargar-cfdi \
 # iniciar y detener el contenedor
 docker stop api-descargar-cfdi
 docker start api-descargar-cfdi
+
+# entrar con una sesión de bash
+docker exec -it api-descargar-cfdi /bin/bash
 
 # eliminar el contenedor
 docker rm api-descargar-cfdi
