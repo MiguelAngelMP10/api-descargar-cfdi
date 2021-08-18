@@ -6,20 +6,23 @@ RUN set -e \
     && apt-get dist-upgrade -y \
     && apt-get install -y supervisor zip unzip git wget \
     && wget -q -O - https://packages.sury.org/php/README.txt | bash \
-    && apt-get install -y php-cli php-zip php-mbstring php-xml \
+    && apt-get install -y php-cli composer php-zip php-mbstring php-xml php-curl \
     && apt-get -y autoremove \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
-
-COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
 COPY . /opt/api-descargar-cfdi
 WORKDIR /opt/api-descargar-cfdi
 
 RUN set -e \
     && export COMPOSER_ALLOW_SUPERUSER=1 \
+    && composer diagnose \
     && composer install --no-interaction --prefer-dist --no-dev --optimize-autoloader \
     && rm -rf "$(composer config cache-dir --global)" "$(composer config data-dir --global)" "$(composer config home --global)"
+
+RUN set -e \
+    && cp .env.example .env \
+    && php artisan key:generate
 
 EXPOSE 80
 
