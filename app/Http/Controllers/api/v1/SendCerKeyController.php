@@ -4,13 +4,13 @@ namespace App\Http\Controllers\api\v1;
 
 use App\Helpers\SatWsService;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Requests\SendCerKeyRequest;
 use Throwable;
 
 class SendCerKeyController extends Controller
 {
 
-    public function sendCerKey(Request $request)
+    public function sendCerKey(SendCerKeyRequest $request)
     {
         $satWsService = new SatWsService();
         try {

@@ -21,6 +21,11 @@ final class SendCertificatePrivateKeyPairsTest extends TestCase
     /** @var string */
     private $expectedPrivateKeyPath;
 
+    private function makeUploadFile(string $path): UploadedFile
+    {
+        return new UploadedFile($path, basename($path), null, null, true);
+    }
+
     protected function setUp(): void
     {
         parent::setUp();
@@ -43,11 +48,10 @@ final class SendCertificatePrivateKeyPairsTest extends TestCase
         $passPhrasePath = __DIR__ . '/../_files/fake-fiel/EKU9003173C9-password.txt';
 
         $response = $this->post('/api/v1/send-cer-key', [
-            'cer' => new UploadedFile($certificatePath, basename($certificatePath)),
-            'key' => new UploadedFile($privateKeyPath, basename($privateKeyPath)),
+            'cer' => $this->makeUploadFile($certificatePath),
+            'key' =>  $this->makeUploadFile($privateKeyPath),
             'password' => trim(file_get_contents($passPhrasePath)),
         ]);
-
         $response->assertStatus(200);
         $this->assertStringContainsString('EKU9003173C9.cer', $response->json('pathCer'));
         $this->assertStringContainsString('EKU9003173C9.key', $response->json('pathKey'));
@@ -60,18 +64,76 @@ final class SendCertificatePrivateKeyPairsTest extends TestCase
      * @see SendCerKeyController::sendCerKey()
      * @test
      */
+    public function it_refuse_an_invalid_empty_request(): void
+    {
+        $response = $this->post('/api/v1/send-cer-key', []);
+        $response->assertStatus(422)->assertJson([
+            'message' => 'Los datos enviados de certificado, llave privada o contraseña son inválidos.',
+            'errors' => [
+                'password' => ['The password field is required.'],
+                'key' => ['The key field is required.'],
+                'cer' => ['The cer field is required.']
+            ]
+        ]);
+    }
+
+    /**
+     * @see SendCerKeyController::sendCerKey()
+     * @test
+     */
+    public function it_refuse_sending_string_instead_of_file(): void
+    {
+        $response = $this->post('/api/v1/send-cer-key', [
+            'cer' => 'foo',
+            'key' => 'bar',
+            'password' => 'pwd',
+        ]);
+        $response->assertStatus(422)->assertJson([
+            'errors' =>
+            [
+                'cer' => ['The certificate is not a file.'],
+                'key' => ['The private key is not a file.']
+            ],
+        ]);
+    }
+
+    /**
+     * @see SendCerKeyController::sendCerKey()
+     * @test
+     */
+    public function it_refuse_an_invalid_file_mimetype(): void
+    {
+
+        $response = $this->post('/api/v1/send-cer-key', [
+            'cer' => UploadedFile::fake()->create('image.png'),
+            'key' =>  UploadedFile::fake()->create('image.jpg'),
+            'password' => 'pwd',
+        ]);
+        $response->assertStatus(422)->assertJson([
+            'message' => 'Los datos enviados de certificado, llave privada o contraseña son inválidos.',
+            'errors' =>
+            [
+                'cer' => ['The certificate file has invalid type.'],
+                'key' => ['The private key file has invalid type.']
+            ],
+        ]);
+    }
+
+    /**
+     * @see SendCerKeyController::sendCerKey()
+     * @test
+     */
     public function it_refuse_an_invalid_certificate(): void
     {
-        $certificatePath = __FILE__;
+        $certificatePath = __DIR__ . '/../_files/plain-text.txt';
         $privateKeyPath = __DIR__ . '/../_files/fake-fiel/EKU9003173C9.key';
         $passPhrasePath = __DIR__ . '/../_files/fake-fiel/EKU9003173C9-password.txt';
 
         $response = $this->post('/api/v1/send-cer-key', [
-            'cer' => new UploadedFile($certificatePath, basename($certificatePath)),
-            'key' => new UploadedFile($privateKeyPath, basename($privateKeyPath)),
+            'cer' => $this->makeUploadFile($certificatePath),
+            'key' =>  $this->makeUploadFile($privateKeyPath),
             'password' => trim(file_get_contents($passPhrasePath)),
         ]);
-
         $response->assertStatus(422);
         $response->assertJson(["message" => "Certificado, llave privada o contraseña inválida"]);
 
@@ -86,15 +148,14 @@ final class SendCertificatePrivateKeyPairsTest extends TestCase
     public function it_refuse_an_invalid_privatekey(): void
     {
         $certificatePath = __DIR__ . '/../_files/fake-fiel/EKU9003173C9.cer';
-        $privateKeyPath = __FILE__;
+        $privateKeyPath = __DIR__ . '/../_files/plain-text.txt';
         $passPhrasePath = __DIR__ . '/../_files/fake-fiel/EKU9003173C9-password.txt';
 
         $response = $this->post('/api/v1/send-cer-key', [
-            'cer' => new UploadedFile($certificatePath, basename($certificatePath)),
-            'key' => new UploadedFile($privateKeyPath, basename($privateKeyPath)),
+            'cer' => $this->makeUploadFile($certificatePath),
+            'key' =>  $this->makeUploadFile($privateKeyPath),
             'password' => trim(file_get_contents($passPhrasePath)),
         ]);
-
         $response->assertStatus(422);
         $response->assertJson(["message" => "Certificado, llave privada o contraseña inválida"]);
 
@@ -113,11 +174,10 @@ final class SendCertificatePrivateKeyPairsTest extends TestCase
         $passPhrasePath = __DIR__ . '/../_files/fake-fiel/EKU9003173C9-password.txt';
 
         $response = $this->post('/api/v1/send-cer-key', [
-            'cer' => new UploadedFile($certificatePath, basename($certificatePath)),
-            'key' => new UploadedFile($privateKeyPath, basename($privateKeyPath)),
+            'cer' => $this->makeUploadFile($certificatePath),
+            'key' =>  $this->makeUploadFile($privateKeyPath),
             'password' => trim(file_get_contents($passPhrasePath)) . '-invalid-password',
         ]);
-
         $response->assertStatus(422);
         $response->assertJson(["message" => "Certificado, llave privada o contraseña inválida"]);
 
@@ -136,11 +196,10 @@ final class SendCertificatePrivateKeyPairsTest extends TestCase
         $passPhrasePath = __DIR__ . '/../_files/fake-csd/EKU9003173C9-password.txt';
 
         $response = $this->post('/api/v1/send-cer-key', [
-            'cer' => new UploadedFile($certificatePath, basename($certificatePath)),
-            'key' => new UploadedFile($privateKeyPath, basename($privateKeyPath)),
+            'cer' => $this->makeUploadFile($certificatePath),
+            'key' =>  $this->makeUploadFile($privateKeyPath),
             'password' => trim(file_get_contents($passPhrasePath)),
         ]);
-
         $response->assertStatus(422);
         $response->assertJson(["message" => "Certificado, llave privada o contraseña inválida"]);
 
