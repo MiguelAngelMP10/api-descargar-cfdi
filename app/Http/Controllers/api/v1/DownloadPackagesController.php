@@ -16,7 +16,7 @@ class DownloadPackagesController extends Controller
         $satWsServiceHelper = new SatWsService();
         try {
             $service = $satWsServiceHelper->createService(
-                $request->input('RFC'),
+                $rfc = $request->input('RFC'),
                 $request->input('password'),
                 $request->boolean('retenciones')
             );
@@ -33,8 +33,7 @@ class DownloadPackagesController extends Controller
                 $errorMessages[] =  "El paquete {$packageId} no se ha podido descargar: {$download->getStatus()->getMessage()}";
                 continue;
             }
-            $zipfile = "$packageId.zip";
-            file_put_contents($zipfile, $download->getPackageContent());
+            $satWsServiceHelper->storePackage($rfc, $packageId, $download);
             $messages[] =  "El paquete {$packageId} se ha almacenado";
         }
         return response()->json(['errorMessages' => $errorMessages, 'messages' => $messages]);

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use PhpCfdi\SatWsDescargaMasiva\RequestBuilder\FielRequestBuilder\Fiel;
 use PhpCfdi\SatWsDescargaMasiva\RequestBuilder\FielRequestBuilder\FielRequestBuilder;
 use PhpCfdi\SatWsDescargaMasiva\Service;
+use PhpCfdi\SatWsDescargaMasiva\Services\Download\DownloadResult;
 use PhpCfdi\SatWsDescargaMasiva\Shared\ServiceEndpoints;
 use PhpCfdi\SatWsDescargaMasiva\WebClient\GuzzleWebClient;
 
@@ -53,5 +54,19 @@ class SatWsService
     public function obtainPrivateKeyPath(string $rfc): string
     {
         return 'datos/' . $rfc . "/" . $rfc . '.key';
+    }
+
+    public function obtainPackagePath(string $rfc, string $packageId): string
+    {
+        if ($packageId !== '') {
+            $packageId = $packageId . '.zip';
+        }
+        return 'datos/' . $rfc . '/packages/' . $packageId;
+    }
+
+    public function storePackage(string $rfc, string $packageId, DownloadResult $package): void
+    {
+        $path = $this->obtainPackagePath($rfc, $packageId);
+        Storage::put($path, $package->getPackageContent());
     }
 }
