@@ -30,6 +30,20 @@ composer install
     ```bash
        php artisan serve
     ```
+* Validaciones de código
+   
+   larastan:
+   ```
+      ./vendor/bin/phpstan
+   ```
+   phpinsights:
+   ```
+     php artisan insights
+   ```
+   phpcs:
+   ```
+      ./vendor/bin/phpcs --error-severity=1 --warning-severity=8 --extensions=php
+   ```
 
 * Lista de endPoints
    ```
@@ -38,6 +52,7 @@ composer install
     - /api/v1/verify-query
     - /api/v1/download-packages
     ```
+    
 
 link de documentación en **postman** 
 
