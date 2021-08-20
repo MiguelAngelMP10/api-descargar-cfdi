@@ -1,0 +1,19 @@
+includes:
+    - ./vendor/nunomaduro/larastan/extension.neon
+
+parameters:
+
+    paths:
+        - app
+        - database
+
+    # The level 8 is the highest level
+    level: 5
+
+    ignoreErrors:
+    - '#Call to an undefined method Faker\\UniqueGenerator\:\:safeEmail\(\).#'
+    excludePaths:
+        - ./tests/Feature/*.php
+        - ./tests/Unit/*.php
+
+    checkMissingIterableValueType: false
