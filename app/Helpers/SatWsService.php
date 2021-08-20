@@ -6,6 +6,7 @@ namespace App\Helpers;
 
 use Exception;
 use Illuminate\Support\Facades\Storage;
+use PhpCfdi\Rfc\Rfc;
 use PhpCfdi\SatWsDescargaMasiva\RequestBuilder\FielRequestBuilder\Fiel;
 use PhpCfdi\SatWsDescargaMasiva\RequestBuilder\FielRequestBuilder\FielRequestBuilder;
 use PhpCfdi\SatWsDescargaMasiva\Service;
@@ -17,6 +18,9 @@ class SatWsService
 {
     public function createService(string $rfc, string $password, bool $retenciones): Service
     {
+        // parse will throw an exception if rfc is incorrect
+        $rfc = Rfc::parse($rfc)->getRfc();
+
         $contentCer = Storage::get($this->obtainCertificatePath($rfc));
         $contentKey = Storage::get($this->obtainPrivateKeyPath($rfc));
 
