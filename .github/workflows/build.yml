@@ -25,9 +25,9 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-versions }}
-          extensions: json, mbstring, pdo, sqlite, pdo_sqlite
+          extensions: json, mbstring
           coverage: none
-          tools: composer:v2, cs2pr
+          tools: composer:v2
         env:
           fail-fast: true
 
