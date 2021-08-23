@@ -56,3 +56,6 @@ jobs:
 
       - name: PHP Insights
         run: vendor/bin/phpinsights analyse --min-style=100 --no-interaction --ansi --format=github-action
+
+      - name: Static analysis
+        run: vendor/bin/phpstan analyse --verbose --no-progress --no-interaction --ansi
