@@ -53,3 +53,6 @@ jobs:
 
       - name: Tests (phpunit)
         run: vendor/bin/phpunit --testdox --verbose
+
+      - name: PHP Insights
+        run: vendor/bin/phpinsights analyse --min-style=100 --no-interaction --ansi --format=github-action
