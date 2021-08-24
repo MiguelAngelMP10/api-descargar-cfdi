@@ -55,7 +55,7 @@ jobs:
         run: vendor/bin/phpunit --testdox --verbose
 
       - name: PHP Insights
-        run: php artisan insights --min-style=100 --no-interaction --ansi --format=github-action
+        run: php artisan insights --no-interaction --ansi --format=github-action
         continue-on-error: true
 
       - name: Static analysis
