@@ -33,17 +33,6 @@ class SendCerKeyRequest extends FormRequest
         ];
     }
 
-    protected function failedValidation(Validator $validator)
-    {
-        $response = [
-            'message' => 'Los datos enviados de certificado, llave privada o contraseña son inválidos.',
-            'errors' => $validator->errors(),
-        ];
-        throw new HttpResponseException(
-            response()->json($response, 422)
-        );
-    }
-
     /**
      * Get custom messages for validator errors.
      *
@@ -57,5 +46,16 @@ class SendCerKeyRequest extends FormRequest
             'cer.file' => 'The certificate is not a file.',
             'key.file' => 'The private key is not a file.',
         ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        $response = [
+            'message' => 'Los datos enviados de certificado, llave privada o contraseña son inválidos.',
+            'errors' => $validator->errors(),
+        ];
+        throw new HttpResponseException(
+            response()->json($response, 422)
+        );
     }
 }

@@ -19,11 +19,13 @@ class MakeQueryController extends Controller
         $end = $request->input('period.end');
 
         // Realizar una consulta
-        $period =  DateTimePeriod::createFromValues($start, $end);
+        $period = DateTimePeriod::createFromValues($start, $end);
 
-        $downloadType = ($request->input('downloadType') === 'issued') ? DownloadType::issued() : DownloadType::received();
-        $requestType = ($request->input('requestType') === 'cfdi') ? RequestType::cfdi() : RequestType::metadata();
-        $rfcMatch = $request->input('rfcMatch') ?? "";
+        $downloadType = $request->input('downloadType') === 'issued'
+            ? DownloadType::issued() : DownloadType::received();
+        $requestType = $request->input('requestType') === 'cfdi'
+            ? RequestType::cfdi() : RequestType::metadata();
+        $rfcMatch = $request->input('rfcMatch') ?? '';
 
         $queryParameters = QueryParameters::create(
             $period,
@@ -44,20 +46,19 @@ class MakeQueryController extends Controller
         }
 
         // presentar la consulta
-        $query =  $service->query($queryParameters);
+        $query = $service->query($queryParameters);
 
         // verificar que el proceso de consulta fue correcto
-        if (!$query->getStatus()->isAccepted()) {
-            return response()->json([
-                'message' => $query->getStatus()->getMessage(),
-                'code' => $query->getStatus()
-            ]);
-        } else {
+        if (! $query->getStatus()->isAccepted()) {
             return response()->json([
                 'message' => $query->getStatus()->getMessage(),
                 'code' => $query->getStatus(),
-                'requestId' => $query->getRequestId()
             ]);
         }
+        return response()->json([
+            'message' => $query->getStatus()->getMessage(),
+            'code' => $query->getStatus(),
+            'requestId' => $query->getRequestId(),
+        ]);
     }
 }

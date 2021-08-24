@@ -22,22 +22,22 @@ class VerifyQueryController extends Controller
             return response()->json(['message' => $exception->getMessage()], 422);
         }
 
-        $requestId =  $request->input('requestId');
+        $requestId = $request->input('requestId');
 
         // consultar el servicio de verificación
         $verify = $service->verify($requestId);
 
         // revisar que el proceso de verificación fue correcto
-        if (!$verify->getStatus()->isAccepted()) {
+        if (! $verify->getStatus()->isAccepted()) {
             return response()->json([
-                'message' => "Fallo al verificar la consulta {$requestId}: {$verify->getStatus()->getMessage()}"
+                'message' => "Fallo al verificar la consulta {$requestId}: {$verify->getStatus()->getMessage()}",
             ]);
         }
 
         // revisar que la consulta no haya sido rechazada
-        if (!$verify->getCodeRequest()->isAccepted()) {
+        if (! $verify->getCodeRequest()->isAccepted()) {
             return response()->json([
-                'message' => "La solicitud {$requestId} fue rechazada: {$verify->getCodeRequest()->getMessage()}"
+                'message' => "La solicitud {$requestId} fue rechazada: {$verify->getCodeRequest()->getMessage()}",
             ]);
         }
 
@@ -45,22 +45,21 @@ class VerifyQueryController extends Controller
         $statusRequest = $verify->getStatusRequest();
         if ($statusRequest->isExpired() || $statusRequest->isFailure() || $statusRequest->isRejected()) {
             return response()->json([
-                'message' => "La solicitud {$requestId} no se puede completar"
+                'message' => "La solicitud {$requestId} no se puede completar",
             ]);
         }
 
         if ($statusRequest->isInProgress() || $statusRequest->isAccepted()) {
             return response()->json([
-                'message' => "La solicitud {$requestId} se está procesando"
+                'message' => "La solicitud {$requestId} se está procesando",
             ]);
         }
-
 
         if ($statusRequest->isFinished()) {
             return response()->json([
                 'message' => "La solicitud {$requestId} está lista",
                 'numPaquetes' => "Se encontraron {$verify->countPackages()} paquetes",
-                'packagesIds'  => $verify->getPackagesIds()
+                'packagesIds' => $verify->getPackagesIds(),
             ]);
         }
     }
