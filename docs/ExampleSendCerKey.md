@@ -31,14 +31,33 @@ Reporta los path de los archivos .cer y .key
     }
     ```
 
+*   **Errors Response:**
 
-* **Error Response:**
+    -   **Code:** 422 UNPROCESSABLE ENTITY
 
-  * **Code:** 404 NOT FOUND <br />
-    **Content:** 
-    ```bash
-        { error : "User doesn't exist" }
-     ```
+        **Content:**
+
+        ```json
+        {
+            "message": "Los datos enviados de certificado, llave privada o contraseña son inválidos.",
+            "errors": {
+                "password": ["The password field is required."],
+                "key": ["The key field is required."],
+                "cer": ["The cer field is required."]
+            }
+        }
+        ```
+
+        -   **Code:** 422 UNPROCESSABLE ENTITY
+
+        **Content:**
+
+        ```json
+        {
+            "message": "Certificado, llave privada o contraseña inválida",
+            "code": "Cannot open private key: error:06065064:digital envelope routines:EVP_DecryptFinal_ex:bad decrypt"
+        }
+        ```
 
 -   **Example**
 
