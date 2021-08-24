@@ -1,5 +1,4 @@
 <?php
-// phpcs:disable PSR1.Methods.CamelCapsMethodName.NotCamelCaps
 
 namespace Tests\Feature;
 
@@ -159,7 +158,7 @@ class DownloadPackagesTest extends TestCase
         $response->assertStatus(422)->assertJson([
             'message' => 'Petición inválida.',
             'errors' => [
-                'RFC' => ['The rfc field not appears to be valid.'],
+                'RFC' => ['The RFC field not appears to be valid.'],
             ],
         ]);
     }
