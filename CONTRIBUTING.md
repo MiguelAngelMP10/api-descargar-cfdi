@@ -62,7 +62,18 @@ Este proyecto usa [PHPStan][] a través de [Larastan][].
 php vendor/bin/phpstan analyse -v
 ```
 
+### Simulación de GitHub Actions
+
+Con la herramienta [nektos/act][] se puede simular todos los flujos de trabajo en tu máquina si tienes [Docker][] instalado.
+
+```shell
+act -P ubuntu-latest=shivammathur/node:latest
+```
+
+
 [PHPInsights]: https://phpinsights.com/
 [PHPUnit]: https://phpunit.de/
 [PHPStan]: https://github.com/phpstan/phpstan
 [Larastan]: https://github.com/nunomaduro/larastan
+[nektos/act]: https://github.com/nektos/act
+[Docker]: https://docs.docker.com/
