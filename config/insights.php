@@ -109,7 +109,7 @@ return [
         //     'maxCount' => 20,
         // ],
         // COMPATIBILITY: Conditionally set this option for compatibility with PHPInsights:^1.0
-        FunctionLengthSniff::class => class_exists(FunctionLengthSniff::class) ? [
+        FunctionLengthSniff::class => class_exists(FunctionLengthSniff::class, false) ? [
             'maxLinesLength' => 25,
         ] : null,
     ]),
