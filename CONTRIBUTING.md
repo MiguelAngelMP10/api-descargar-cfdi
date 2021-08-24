@@ -14,14 +14,14 @@ o una *discusión* de GitHub. Te pedimos que sigas esta guía en caso de enviar 
 
 * Apégate al estándar de código del proyecto.
 * Asegúrate que las pruebas actuales son exitosas. Si has agregado algo crea las pruebas oportunas.
-* Envía una historia de *commits* coherente, haz cada *commit* en tu *pull request* tenga sentido.
+* Envía una historia de *commits* coherente, haz que cada *commit* en tu *pull request* tenga sentido.
 * Tal vez necesites hacer *[rebase](https://git-scm.com/book/en/v2/Git-Branching-Rebasing)* para evitar *merge conflicts*.
 * Si estás cambiando el comportamiento o la API pública entonces cambia también la documentación.
 * Corre las revisiones en tu entorno de desarrollo antes de enviar tu *pull request*, asegúrate que tus pruebas son exitosas.
 
 ## Revisiones de integración continua (CI)
 
-Este proyecto usa *GitHub Workflows* para el proceso de integración continua *(CI: Continuous Integration)* 
+Este proyecto usa *GitHub Workflows* para el proceso de integración continua *(CI: Continuous Integration)*.
 
 El proceso de CI se ejecuta con todas las versiones de PHP con las que el proyecto es compatible.
 
@@ -56,7 +56,7 @@ php artisan test
 ### Análisis estático
 
 El análisis estático de código puede ser muy útil para detectar errores y código defectuoso.
-Este proyecto usa *[PHPStan][]* a través de *[Larastan][]*.
+Este proyecto usa [PHPStan][] a través de [Larastan][].
 
 ```shell
 php vendor/bin/phpstan analyse -v
