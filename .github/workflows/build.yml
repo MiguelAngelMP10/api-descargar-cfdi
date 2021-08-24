@@ -56,7 +56,6 @@ jobs:
 
       - name: PHP Insights
         run: php artisan insights --no-interaction --ansi --format=github-action
-        continue-on-error: true
 
       - name: Static analysis
         run: vendor/bin/phpstan analyse --verbose --no-progress --no-interaction --ansi
