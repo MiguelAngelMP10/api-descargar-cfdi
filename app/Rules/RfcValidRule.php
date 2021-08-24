@@ -26,7 +26,7 @@ class RfcValidRule implements Rule
         try {
             Rfc::parse($value);
         } catch (InvalidExpressionToParseException $exception) {
-            $this->message = 'The rfc field not appears to be valid.';
+            $this->message = "The ${attribute} field not appears to be valid.";
             return false;
         }
         return true;
