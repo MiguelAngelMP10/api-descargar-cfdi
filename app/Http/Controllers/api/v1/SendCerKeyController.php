@@ -9,7 +9,6 @@ use Throwable;
 
 class SendCerKeyController extends Controller
 {
-
     public function sendCerKey(SendCerKeyRequest $request)
     {
         $satWsService = new SatWsService();
@@ -36,7 +35,7 @@ class SendCerKeyController extends Controller
 
         return response()->json([
             'pathCer' => $pathCer,
-            'pathKey' =>  $pathKey,
+            'pathKey' => $pathKey,
         ]);
     }
 }

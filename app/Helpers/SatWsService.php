@@ -34,7 +34,7 @@ class SatWsService
         $requestBuilder = new FielRequestBuilder($fiel);
 
         // Creación del servicio
-        $endpoints = (! $retenciones) ? ServiceEndpoints::cfdi() : ServiceEndpoints::retenciones();
+        $endpoints = ! $retenciones ? ServiceEndpoints::cfdi() : ServiceEndpoints::retenciones();
         return new Service($requestBuilder, $webClient, null, $endpoints);
     }
 
@@ -52,18 +52,18 @@ class SatWsService
 
     public function obtainCertificatePath(string $rfc): string
     {
-        return 'datos/' . $rfc . "/" . $rfc . '.cer';
+        return 'datos/' . $rfc . '/' . $rfc . '.cer';
     }
 
     public function obtainPrivateKeyPath(string $rfc): string
     {
-        return 'datos/' . $rfc . "/" . $rfc . '.key';
+        return 'datos/' . $rfc . '/' . $rfc . '.key';
     }
 
     public function obtainPackagePath(string $rfc, string $packageId): string
     {
         if ($packageId !== '') {
-            $packageId = $packageId . '.zip';
+            $packageId .= '.zip';
         }
         return 'datos/' . $rfc . '/packages/' . $packageId;
     }

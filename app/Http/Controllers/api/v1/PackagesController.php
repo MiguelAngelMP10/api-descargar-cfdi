@@ -21,7 +21,7 @@ class PackagesController extends Controller
         }
         return response()->json([
             'rfc' => $rfc,
-            'packages' => $packageIds
+            'packages' => $packageIds,
         ]);
     }
 
@@ -30,7 +30,7 @@ class PackagesController extends Controller
         $satWsServiceHelper = new SatWsService();
         $path = $satWsServiceHelper->obtainPackagePath($rfc->getRfc(), $packageId);
         if (! Storage::exists($path)) {
-            return response()->json(['message' => "Package $rfc/$packageId not found."], 404);
+            return response()->json(['message' => "Package ${rfc}/${packageId} not found."], 404);
         }
         return Storage::response($path);
     }

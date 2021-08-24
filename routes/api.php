@@ -1,8 +1,8 @@
 <?php
 
 use App\Http\Controllers\api\v1\DownloadPackagesController;
-use App\Http\Controllers\api\v1\PackagesController;
 use App\Http\Controllers\api\v1\MakeQueryController;
+use App\Http\Controllers\api\v1\PackagesController;
 use App\Http\Controllers\api\v1\SendCerKeyController;
 use App\Http\Controllers\api\v1\VerifyQueryController;
 use Illuminate\Http\Request;
@@ -26,7 +26,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
 Route::post('v1/send-cer-key', [SendCerKeyController::class, 'sendCerKey']);
 
 Route::post('v1/make-query', [MakeQueryController::class, 'makeQuery']);
@@ -46,6 +45,6 @@ Route::bind('rfc', function (string $value): Rfc {
     try {
         return Rfc::parse($value);
     } catch (InvalidExpressionToParseException $exception) {
-        throw new NotFoundHttpException("Invalid RFC value $value.");
+        throw new NotFoundHttpException("Invalid RFC value ${value}.");
     }
 });

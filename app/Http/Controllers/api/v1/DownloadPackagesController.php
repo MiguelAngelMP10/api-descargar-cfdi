@@ -29,12 +29,12 @@ class DownloadPackagesController extends Controller
         $errorMessages = [];
         foreach ($packagesIds as $packageId) {
             $download = $service->download($packageId);
-            if (!$download->getStatus()->isAccepted()) {
-                $errorMessages[] =  "El paquete {$packageId} no se ha podido descargar: {$download->getStatus()->getMessage()}";
+            if (! $download->getStatus()->isAccepted()) {
+                $errorMessages[] = "El paquete {$packageId} no se ha podido descargar: {$download->getStatus()->getMessage()}";
                 continue;
             }
             $satWsServiceHelper->storePackage($rfc, $packageId, $download);
-            $messages[] =  "El paquete {$packageId} se ha almacenado";
+            $messages[] = "El paquete {$packageId} se ha almacenado";
         }
         return response()->json(['errorMessages' => $errorMessages, 'messages' => $messages]);
     }
