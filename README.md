@@ -77,6 +77,11 @@ docker run --name=api-descargar-cfdi --detach=true --publish 8081:80 \
   api-descargar-cfdi
 ```
 
+## Contribuciones
+
+Estamos abiertos a contribuciones de código, documentación, entorno de desarrollo, reporte de problemas,
+discusión de nuevas ideas, etc. Lee nuestra [guía de contribución](CONTRIBUTING.md).
+
 ## Copyright and License
 
 The `MiguelAngelMP10/api-descargar-cfdi` proyect is copyright © [Miguel Angel Muñoz Pozos](a)
