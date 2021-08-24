@@ -4,31 +4,23 @@ namespace App\Http\Controllers\api\v1;
 
 use App\Helpers\SatWsService;
 use App\Http\Controllers\Controller;
-use Exception;
-use Illuminate\Http\Request;
+use App\Http\Requests\DownloadPackagesRequest;
+use PhpCfdi\SatWsDescargaMasiva\Service;
+use PhpCfdi\SatWsDescargaMasiva\Services\Download\DownloadResult;
 
 class DownloadPackagesController extends Controller
 {
-    public function downloadPackages(Request $request)
+    public function downloadPackages(DownloadPackagesRequest $request)
     {
         $packagesIds = $request->input('packagesIds');
-
-        $satWsServiceHelper = new SatWsService();
-        try {
-            $service = $satWsServiceHelper->createService(
-                $rfc = $request->input('RFC'),
-                $request->input('password'),
-                $request->boolean('retenciones')
-            );
-        } catch (Exception $exception) {
-            return response()->json(['message' => $exception->getMessage()], 422);
-        }
-
+        $rfc = $request->input('RFC');
+        $service = $request->getSatWsService();
         // consultar el servicio de verificación
         $messages = [];
         $errorMessages = [];
+        $satWsServiceHelper = new SatWsService();
         foreach ($packagesIds as $packageId) {
-            $download = $service->download($packageId);
+            $download = $this->download($service, $packageId);
             if (! $download->getStatus()->isAccepted()) {
                 $errorMessages[] = sprintf(
                     'El paquete %s no se ha podido descargar: %s',
@@ -41,5 +33,10 @@ class DownloadPackagesController extends Controller
             $messages[] = "El paquete {$packageId} se ha almacenado";
         }
         return response()->json(['errorMessages' => $errorMessages, 'messages' => $messages]);
+    }
+
+    protected function download(Service $service, string $packageId): DownloadResult
+    {
+        return $service->download($packageId);
     }
 }
