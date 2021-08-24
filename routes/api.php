@@ -22,9 +22,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::middleware('auth:api')->get('/user', fn (Request $request) => $request->user());
 
 Route::post('v1/send-cer-key', [SendCerKeyController::class, 'sendCerKey']);
 
