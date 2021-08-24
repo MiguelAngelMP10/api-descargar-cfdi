@@ -21,8 +21,10 @@ class MakeQueryController extends Controller
         // Realizar una consulta
         $period = DateTimePeriod::createFromValues($start, $end);
 
-        $downloadType = $request->input('downloadType') === 'issued' ? DownloadType::issued() : DownloadType::received();
-        $requestType = $request->input('requestType') === 'cfdi' ? RequestType::cfdi() : RequestType::metadata();
+        $downloadType = $request->input('downloadType') === 'issued'
+            ? DownloadType::issued() : DownloadType::received();
+        $requestType = $request->input('requestType') === 'cfdi'
+            ? RequestType::cfdi() : RequestType::metadata();
         $rfcMatch = $request->input('rfcMatch') ?? '';
 
         $queryParameters = QueryParameters::create(
