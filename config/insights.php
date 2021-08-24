@@ -94,7 +94,7 @@ return [
         UselessFunctionDocCommentSniff::class,
     ],
 
-    'config' => [
+    'config' => array_filter([
         ForbiddenPrivateMethods::class => [
             'title' => 'The usage of private methods is not idiomatic in Laravel.',
         ],
@@ -108,10 +108,11 @@ return [
         // MethodPerClassLimitSniff::class => [
         //     'maxCount' => 20,
         // ],
-        FunctionLengthSniff::class => [
+        // COMPATIBILITY: Conditionally set this option for compatibility with PHPInsights:^1.0
+        FunctionLengthSniff::class => class_exists(FunctionLengthSniff::class) ? [
             'maxLinesLength' => 25,
-        ]
-    ],
+        ] : null,
+    ]),
 
     /*
     |--------------------------------------------------------------------------
@@ -143,6 +144,7 @@ return [
     |
     */
 
-    'threads' => null,
+    // COMPATIBILITY: Unset this option for compatibility with PHPInsights:^1.0
+    // 'threads' => null,
 
 ];
