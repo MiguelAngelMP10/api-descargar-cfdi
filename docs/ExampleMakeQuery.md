@@ -1,14 +1,10 @@
 ## Make query
 
-    Retorna 
+    Retorna un json con "message, code y requestId" si se realizó de forma correcta la consulta.
 
 -   **URL**
 
-    `/api/v1/make-query`
-
--   **Method:**
-
-    `POST`
+    `POST /api/v1/make-query`
 
 -   **URL Params**
 
@@ -25,7 +21,6 @@
     -   `downloadType=[string: issued|received]`
     -   `requestType=[string: cfdi|metadata]`
     -   `rfcMatch=[string]`
-
 
 -   **Success Response:**
 
@@ -44,14 +39,19 @@
     }
     ```
 
-    * **Error Response:**
+    -   **Error Response:**
 
-  * **Code:** 404 NOT FOUND <br />
-    **Content:** 
-    ```bash
-        { error : "" }
-     ```
-
+*   **Code:** 404 NOT FOUND <br />
+    **Content:**
+    ```json
+    {
+        "message": "Certificado Inválido",
+        "code": {
+            "code": 305,
+            "message": "Certificado Inválido"
+        }
+    }
+    ```
 
 -   **Example**
 
