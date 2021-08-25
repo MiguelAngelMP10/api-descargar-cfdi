@@ -14,8 +14,7 @@ final class RetrievePackagesTest extends TestCase
 {
     use WithFaker;
 
-    /** @var SatWsService */
-    private $service;
+    private SatWsService $service;
 
     protected function setUp(): void
     {
