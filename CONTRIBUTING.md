@@ -62,6 +62,8 @@ Este proyecto usa [PHPStan][] a través de [Larastan][].
 php vendor/bin/phpstan analyse -v
 ```
 
+## Otras herramientas
+
 ### Simulación de GitHub Actions
 
 Con la herramienta [nektos/act][] se puede simular todos los flujos de trabajo en tu máquina si tienes [Docker][] instalado.
@@ -70,6 +72,10 @@ Con la herramienta [nektos/act][] se puede simular todos los flujos de trabajo e
 act -P ubuntu-latest=shivammathur/node:latest
 ```
 
+## `rector/rector`
+
+[Rector][] permite automatizar la modificación de código, se agregó al proyecto para hacer las modificaciones
+automáticas de PHP 7.3 a PHP 7.4. No está agregado a proceso de CI porque no es necesaria su ejecución contínua.
 
 [PHPInsights]: https://phpinsights.com/
 [PHPUnit]: https://phpunit.de/
@@ -77,3 +83,4 @@ act -P ubuntu-latest=shivammathur/node:latest
 [Larastan]: https://github.com/nunomaduro/larastan
 [nektos/act]: https://github.com/nektos/act
 [Docker]: https://docs.docker.com/
+[Rector]: https://github.com/rectorphp/rector
