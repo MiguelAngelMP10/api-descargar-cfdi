@@ -13,11 +13,13 @@ use Throwable;
 
 class BaseWraperSatWsRequest extends FormRequest
 {
-    protected $stopOnFirstFailure = false;
-    /**
-     * @var SatWsService
-     */
-    private $satWsService;
+    private ?SatWsService $satWsService = null;
+
+    public function getSatWsService(): SatWsService
+    {
+        return $this->satWsService;
+    }
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -83,11 +85,6 @@ class BaseWraperSatWsRequest extends FormRequest
             }
             $this->satWsService = $service;
         });
-    }
-
-    public function getSatWsService(): SatWsService
-    {
-        return $this->satWsService;
     }
 
     protected function failedValidation(Validator $validator)
