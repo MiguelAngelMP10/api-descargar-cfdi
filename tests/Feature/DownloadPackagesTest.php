@@ -2,7 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\Helpers\SatWsService;
 use App\Http\Controllers\api\v1\DownloadPackagesController;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -13,85 +12,69 @@ use Tests\TestCase;
 
 class DownloadPackagesTest extends TestCase
 {
-    /**
-     * @return array ['password' => 'privateKeyPassword', 'rfc' => 'rfc']
-     */
-    private function prepareFielForEkuFiel(): array
-    {
-        $certificatePath = __DIR__ . '/../_files/fake-fiel/EKU9003173C9.cer';
-        $privateKeyPath = __DIR__ . '/../_files/fake-fiel/EKU9003173C9.key';
-        $passPhrasePath = __DIR__ . '/../_files/fake-fiel/EKU9003173C9-password.txt';
-        $service = new SatWsService();
-        $rfc = 'EKU9003173C9';
-        Storage::put($service->obtainCertificatePath($rfc), file_get_contents($certificatePath));
-        Storage::put($service->obtainPrivateKeyPath($rfc), file_get_contents($privateKeyPath));
-        return ['password' => file_get_contents($passPhrasePath), 'rfc' => $rfc];
-    }
+    use WithValidFielTrait;
 
-    private function mockGoodDownload()
+    private function mockControllerDownload(StatusCode $statusCode, string $resultContentPath = ''): void
     {
-        $fakeDownload = __DIR__ . '/../_files/fake-download.zip';
-        $statusCode = new StatusCode(5000, '');
-        $downloadResult = new DownloadResult($statusCode, file_get_contents($fakeDownload));
-        $this->partialMock(DownloadPackagesController::class, function (MockInterface $service) use ($downloadResult) {
-            $service->shouldAllowMockingProtectedMethods()
-                ->shouldReceive('download')->once()->andReturn($downloadResult);
-        });
-    }
-
-    private function mockBadDownload($message): void
-    {
-        $statusCode = new StatusCode(400, $message);
-        $downloadResult = new DownloadResult($statusCode, '');
-        $this->partialMock(DownloadPackagesController::class, function (MockInterface $service) use ($downloadResult) {
-            $service->shouldAllowMockingProtectedMethods()
-                ->shouldReceive('download')->once()->andReturn($downloadResult);
-        });
+        $resultContent = ('' === $resultContentPath) ? '' : file_get_contents($resultContentPath);
+        $downloadResult = new DownloadResult($statusCode, $resultContent);
+        $this->partialMock(
+            DownloadPackagesController::class,
+            function (MockInterface $service) use ($downloadResult) {
+                return $service
+                    ->shouldAllowMockingProtectedMethods()
+                    ->shouldReceive('download')
+                    ->once()
+                    ->andReturn($downloadResult);
+            }
+        );
     }
 
     /**
      * @see DownloadPackagesController::downloadPackages()
      * @test
      */
-    public function it_download_package()
+    public function it_download_package(): void
     {
-        Storage::fake('local');
-        $fielData = $this->prepareFielForEkuFiel();
-        $rfc = $fielData['rfc'];
-        $this->mockGoodDownload();
+        $this->setUpValidFiel();
         $packageId = 'foo';
+        $this->mockControllerDownload(new StatusCode(5000, ''), __DIR__ . '/../_files/fake-download.zip');
+        $expectedPackagePath = $this->getSatWsService()->obtainPackagePath($this->getFielRfc(), $packageId);
+
         $response = $this->postJson('/api/v1/download-packages', [
-            'RFC' => $rfc,
-            'password' => $fielData['password'],
+            'RFC' => $this->getFielRfc(),
+            'password' => $this->getFielPassword(),
             'retenciones' => false,
             'packagesIds' => [$packageId],
         ]);
+
         $response->assertStatus(200);
         $response->assertJson([
             'messages' => [
                 'El paquete foo se ha almacenado',
             ],
         ]);
-        Storage::assertExists("datos/${rfc}/packages/${packageId}.zip");
+        Storage::assertExists($expectedPackagePath);
     }
 
     /**
      * @see DownloadPackagesController::downloadPackages()
      * @test
      */
-    public function it_download_package_invalid_fiel()
+    public function it_capture_error_when_download_fail(): void
     {
-        Storage::fake('local');
-        $fielData = $this->prepareFielForEkuFiel();
+        $this->setUpValidFiel();
         $errorMessageExpected = 'Certificado Inválido';
-        //coment this line for real test
-        $this->mockBadDownload($errorMessageExpected);
+        // comment this line to test against SAT servers
+        $this->mockControllerDownload(new StatusCode(400, $errorMessageExpected));
+
         $response = $this->postJson('/api/v1/download-packages', [
-            'RFC' => $fielData['rfc'],
-            'password' => $fielData['password'],
+            'RFC' => $this->getFielRfc(),
+            'password' => $this->getFielPassword(),
             'retenciones' => false,
             'packagesIds' => ['foo'],
         ]);
+
         $response->assertStatus(200);
         $response->assertJson([
             'errorMessages' => [
@@ -132,7 +115,9 @@ class DownloadPackagesTest extends TestCase
             'retenciones' => $file,
             'packagesIds' => $file,
         ]);
-        $response->assertStatus(422)->assertJson([
+
+        $response->assertStatus(422);
+        $response->assertJson([
             'message' => 'Petición inválida.',
             'errors' => [
                 'RFC' => ['The rfc must be a string.'],
@@ -155,7 +140,9 @@ class DownloadPackagesTest extends TestCase
             'retenciones' => false,
             'packageIds' => ['foo', 'bar'],
         ]);
-        $response->assertStatus(422)->assertJson([
+
+        $response->assertStatus(422);
+        $response->assertJson([
             'message' => 'Petición inválida.',
             'errors' => [
                 'RFC' => ['The RFC field not appears to be valid.'],
@@ -175,7 +162,9 @@ class DownloadPackagesTest extends TestCase
             'retenciones' => false,
             'packagesIds' => ['foo', 'bar'],
         ]);
-        $response->assertStatus(422)->assertJson([
+
+        $response->assertStatus(422);
+        $response->assertJson([
             'message' => 'Petición inválida.',
             'errors' => [
                 'RFC' => ['Unable to create the SAT web service.'],

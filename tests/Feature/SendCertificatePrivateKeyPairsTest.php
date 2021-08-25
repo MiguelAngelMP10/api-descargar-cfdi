@@ -12,14 +12,11 @@ use Tests\TestCase;
 
 final class SendCertificatePrivateKeyPairsTest extends TestCase
 {
-    /** @var Filesystem */
-    private $disk;
+    private Filesystem $disk;
 
-    /** @var string */
-    private $expectedCertificatePath;
+    private string $expectedCertificatePath;
 
-    /** @var string */
-    private $expectedPrivateKeyPath;
+    private string $expectedPrivateKeyPath;
 
     private function makeUploadFile(string $path): UploadedFile
     {
