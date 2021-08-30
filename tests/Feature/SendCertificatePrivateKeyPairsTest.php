@@ -6,12 +6,15 @@ namespace Tests\Feature;
 
 use App\Helpers\SatWsService;
 use Illuminate\Contracts\Filesystem\Filesystem;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 final class SendCertificatePrivateKeyPairsTest extends TestCase
 {
+    use RefreshDatabase;
+
     private Filesystem $disk;
 
     private string $expectedCertificatePath;
@@ -44,6 +47,7 @@ final class SendCertificatePrivateKeyPairsTest extends TestCase
         $privateKeyPath = __DIR__ . '/../_files/fake-fiel/EKU9003173C9.key';
         $passPhrasePath = __DIR__ . '/../_files/fake-fiel/EKU9003173C9-password.txt';
 
+        $this->sanctumAuthenticate();
         $response = $this->post('/api/v1/send-cer-key', [
             'cer' => $this->makeUploadFile($certificatePath),
             'key' =>  $this->makeUploadFile($privateKeyPath),
@@ -63,6 +67,7 @@ final class SendCertificatePrivateKeyPairsTest extends TestCase
      */
     public function it_refuse_an_invalid_empty_request(): void
     {
+        $this->sanctumAuthenticate();
         $response = $this->post('/api/v1/send-cer-key', []);
         $response->assertStatus(422)->assertJson([
             'message' => 'Los datos enviados de certificado, llave privada o contraseña son inválidos.',
@@ -80,6 +85,7 @@ final class SendCertificatePrivateKeyPairsTest extends TestCase
      */
     public function it_refuse_sending_string_instead_of_file(): void
     {
+        $this->sanctumAuthenticate();
         $response = $this->post('/api/v1/send-cer-key', [
             'cer' => 'foo',
             'key' => 'bar',
@@ -100,7 +106,7 @@ final class SendCertificatePrivateKeyPairsTest extends TestCase
      */
     public function it_refuse_an_invalid_file_mimetype(): void
     {
-
+        $this->sanctumAuthenticate();
         $response = $this->post('/api/v1/send-cer-key', [
             'cer' => UploadedFile::fake()->create('image.png'),
             'key' =>  UploadedFile::fake()->create('image.jpg'),
@@ -126,6 +132,7 @@ final class SendCertificatePrivateKeyPairsTest extends TestCase
         $privateKeyPath = __DIR__ . '/../_files/fake-fiel/EKU9003173C9.key';
         $passPhrasePath = __DIR__ . '/../_files/fake-fiel/EKU9003173C9-password.txt';
 
+        $this->sanctumAuthenticate();
         $response = $this->post('/api/v1/send-cer-key', [
             'cer' => $this->makeUploadFile($certificatePath),
             'key' =>  $this->makeUploadFile($privateKeyPath),
@@ -148,6 +155,7 @@ final class SendCertificatePrivateKeyPairsTest extends TestCase
         $privateKeyPath = __DIR__ . '/../_files/plain-text.txt';
         $passPhrasePath = __DIR__ . '/../_files/fake-fiel/EKU9003173C9-password.txt';
 
+        $this->sanctumAuthenticate();
         $response = $this->post('/api/v1/send-cer-key', [
             'cer' => $this->makeUploadFile($certificatePath),
             'key' =>  $this->makeUploadFile($privateKeyPath),
@@ -170,6 +178,7 @@ final class SendCertificatePrivateKeyPairsTest extends TestCase
         $privateKeyPath = __DIR__ . '/../_files/fake-fiel/EKU9003173C9.key';
         $passPhrasePath = __DIR__ . '/../_files/fake-fiel/EKU9003173C9-password.txt';
 
+        $this->sanctumAuthenticate();
         $response = $this->post('/api/v1/send-cer-key', [
             'cer' => $this->makeUploadFile($certificatePath),
             'key' =>  $this->makeUploadFile($privateKeyPath),
@@ -192,6 +201,7 @@ final class SendCertificatePrivateKeyPairsTest extends TestCase
         $privateKeyPath = __DIR__ . '/../_files/fake-csd/EKU9003173C9.key';
         $passPhrasePath = __DIR__ . '/../_files/fake-csd/EKU9003173C9-password.txt';
 
+        $this->sanctumAuthenticate();
         $response = $this->post('/api/v1/send-cer-key', [
             'cer' => $this->makeUploadFile($certificatePath),
             'key' =>  $this->makeUploadFile($privateKeyPath),

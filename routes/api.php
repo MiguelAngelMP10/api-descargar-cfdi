@@ -24,17 +24,17 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 Route::middleware('auth:api')->get('/user', fn (Request $request) => $request->user());
 
-Route::post('v1/send-cer-key', [SendCerKeyController::class, 'sendCerKey']);
-
-Route::post('v1/make-query', [MakeQueryController::class, 'makeQuery']);
-
-Route::post('v1/verify-query', [VerifyQueryController::class, 'verifyQuery']);
-
-Route::post('v1/download-packages', [DownloadPackagesController::class, 'downloadPackages']);
-
-Route::get('v1/{rfc}/packages', [PackagesController::class, 'index']);
-Route::get('v1/{rfc}/packages/{packageId}', [PackagesController::class, 'download']);
-Route::delete('v1/{rfc}/packages/{packageId}', [PackagesController::class, 'delete']);
+Route::prefix('v1')
+    ->middleware('auth:sanctum')
+    ->group(function () {
+        Route::post('/send-cer-key', [SendCerKeyController::class, 'sendCerKey']);
+        Route::post('/make-query', [MakeQueryController::class, 'makeQuery']);
+        Route::post('/verify-query', [VerifyQueryController::class, 'verifyQuery']);
+        Route::post('/download-packages', [DownloadPackagesController::class, 'downloadPackages']);
+        Route::get('/{rfc}/packages', [PackagesController::class, 'index']);
+        Route::get('/{rfc}/packages/{packageId}', [PackagesController::class, 'download']);
+        Route::delete('/{rfc}/packages/{packageId}', [PackagesController::class, 'delete']);
+    });
 
 /*
  * convert routes `{rfc}` parameter to `Rfc` object

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f33dcf6e503c839434fb289b19bd1803",
+    "content-hash": "0cce9d648093391323114f125b277053",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1040,16 +1040,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v8.56.0",
+            "version": "v8.57.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "d700f336dc672dcbfe46db05d4e5fe9347b3a5b6"
+                "reference": "6de01746680d7bc7e239b20ec5cdfe70ce586235"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/d700f336dc672dcbfe46db05d4e5fe9347b3a5b6",
-                "reference": "d700f336dc672dcbfe46db05d4e5fe9347b3a5b6",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/6de01746680d7bc7e239b20ec5cdfe70ce586235",
+                "reference": "6de01746680d7bc7e239b20ec5cdfe70ce586235",
                 "shasum": ""
             },
             "require": {
@@ -1204,7 +1204,71 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2021-08-24T13:46:30+00:00"
+            "time": "2021-08-27T13:34:11+00:00"
+        },
+        {
+            "name": "laravel/sanctum",
+            "version": "v2.11.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel/sanctum.git",
+                "reference": "b21e65cbe13896946986cb0868180cd69e1bd5d3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel/sanctum/zipball/b21e65cbe13896946986cb0868180cd69e1bd5d3",
+                "reference": "b21e65cbe13896946986cb0868180cd69e1bd5d3",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "illuminate/contracts": "^6.9|^7.0|^8.0",
+                "illuminate/database": "^6.9|^7.0|^8.0",
+                "illuminate/support": "^6.9|^7.0|^8.0",
+                "php": "^7.2|^8.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.0",
+                "orchestra/testbench": "^4.0|^5.0|^6.0",
+                "phpunit/phpunit": "^8.0|^9.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.x-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "Laravel\\Sanctum\\SanctumServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Laravel\\Sanctum\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Taylor Otwell",
+                    "email": "taylor@laravel.com"
+                }
+            ],
+            "description": "Laravel Sanctum provides a featherweight authentication system for SPAs and simple APIs.",
+            "keywords": [
+                "auth",
+                "laravel",
+                "sanctum"
+            ],
+            "support": {
+                "issues": "https://github.com/laravel/sanctum/issues",
+                "source": "https://github.com/laravel/sanctum"
+            },
+            "time": "2021-06-15T15:56:21+00:00"
         },
         {
             "name": "laravel/tinker",
@@ -7066,16 +7130,16 @@
         },
         {
             "name": "nunomaduro/collision",
-            "version": "v5.8.0",
+            "version": "v5.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nunomaduro/collision.git",
-                "reference": "0c3c393462eada1233513664e2d22bb9f69ca393"
+                "reference": "63456f5c3e8c4bc52bd573e5c85674d64d84fd43"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nunomaduro/collision/zipball/0c3c393462eada1233513664e2d22bb9f69ca393",
-                "reference": "0c3c393462eada1233513664e2d22bb9f69ca393",
+                "url": "https://api.github.com/repos/nunomaduro/collision/zipball/63456f5c3e8c4bc52bd573e5c85674d64d84fd43",
+                "reference": "63456f5c3e8c4bc52bd573e5c85674d64d84fd43",
                 "shasum": ""
             },
             "require": {
@@ -7150,7 +7214,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2021-08-13T14:23:01+00:00"
+            "time": "2021-08-26T15:32:09+00:00"
         },
         {
             "name": "nunomaduro/larastan",
@@ -7914,16 +7978,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "0.12.95",
+            "version": "0.12.96",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "4ffddfe86e85dcc494a47e5f3dcfd1a2dccdce58"
+                "reference": "a98bdc51318f20fcae8c953d266f81a70254917f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/4ffddfe86e85dcc494a47e5f3dcfd1a2dccdce58",
-                "reference": "4ffddfe86e85dcc494a47e5f3dcfd1a2dccdce58",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/a98bdc51318f20fcae8c953d266f81a70254917f",
+                "reference": "a98bdc51318f20fcae8c953d266f81a70254917f",
                 "shasum": ""
             },
             "require": {
@@ -7954,7 +8018,7 @@
             "description": "PHPStan - PHP Static Analysis Tool",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/0.12.95"
+                "source": "https://github.com/phpstan/phpstan/tree/0.12.96"
             },
             "funding": [
                 {
@@ -7974,7 +8038,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-08-20T12:53:41+00:00"
+            "time": "2021-08-21T11:55:13+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -8399,20 +8463,20 @@
         },
         {
             "name": "psr/cache",
-            "version": "2.0.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/cache.git",
-                "reference": "213f9dbc5b9bfbc4f8db86d2838dc968752ce13b"
+                "reference": "d11b50ad223250cf17b86e38383413f5a6764bf8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/cache/zipball/213f9dbc5b9bfbc4f8db86d2838dc968752ce13b",
-                "reference": "213f9dbc5b9bfbc4f8db86d2838dc968752ce13b",
+                "url": "https://api.github.com/repos/php-fig/cache/zipball/d11b50ad223250cf17b86e38383413f5a6764bf8",
+                "reference": "d11b50ad223250cf17b86e38383413f5a6764bf8",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.0.0"
+                "php": ">=5.3.0"
             },
             "type": "library",
             "extra": {
@@ -8432,7 +8496,7 @@
             "authors": [
                 {
                     "name": "PHP-FIG",
-                    "homepage": "https://www.php-fig.org/"
+                    "homepage": "http://www.php-fig.org/"
                 }
             ],
             "description": "Common interface for caching libraries",
@@ -8442,9 +8506,9 @@
                 "psr-6"
             ],
             "support": {
-                "source": "https://github.com/php-fig/cache/tree/2.0.0"
+                "source": "https://github.com/php-fig/cache/tree/master"
             },
-            "time": "2021-02-03T23:23:37+00:00"
+            "time": "2016-08-06T20:24:11+00:00"
         },
         {
             "name": "react/promise",
@@ -8498,21 +8562,21 @@
         },
         {
             "name": "rector/rector",
-            "version": "0.11.49",
+            "version": "0.11.52",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rectorphp/rector.git",
-                "reference": "fdf11ed923d79c1777f993ef755fc8fe111a25a2"
+                "reference": "0a4e8e9f91100c55ae01a6ef706cd8a8f67f17ae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rectorphp/rector/zipball/fdf11ed923d79c1777f993ef755fc8fe111a25a2",
-                "reference": "fdf11ed923d79c1777f993ef755fc8fe111a25a2",
+                "url": "https://api.github.com/repos/rectorphp/rector/zipball/0a4e8e9f91100c55ae01a6ef706cd8a8f67f17ae",
+                "reference": "0a4e8e9f91100c55ae01a6ef706cd8a8f67f17ae",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.1|^8.0",
-                "phpstan/phpstan": "0.12.95"
+                "phpstan/phpstan": "0.12.96"
             },
             "conflict": {
                 "phpstan/phpdoc-parser": "<=0.5.3",
@@ -8545,7 +8609,7 @@
             "description": "Prefixed and PHP 7.1 downgraded version of rector/rector",
             "support": {
                 "issues": "https://github.com/rectorphp/rector/issues",
-                "source": "https://github.com/rectorphp/rector/tree/0.11.49"
+                "source": "https://github.com/rectorphp/rector/tree/0.11.52"
             },
             "funding": [
                 {
@@ -8553,7 +8617,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-08-23T11:18:30+00:00"
+            "time": "2021-08-27T13:02:41+00:00"
         },
         {
             "name": "sebastian/cli-parser",
@@ -9632,16 +9696,16 @@
         },
         {
             "name": "slevomat/coding-standard",
-            "version": "7.0.13",
+            "version": "7.0.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/slevomat/coding-standard.git",
-                "reference": "122a9bf9a4a2195f74100f47dfb8375982f43cc9"
+                "reference": "15b2b4630c148775debea8e412bc7e128d9868a3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/slevomat/coding-standard/zipball/122a9bf9a4a2195f74100f47dfb8375982f43cc9",
-                "reference": "122a9bf9a4a2195f74100f47dfb8375982f43cc9",
+                "url": "https://api.github.com/repos/slevomat/coding-standard/zipball/15b2b4630c148775debea8e412bc7e128d9868a3",
+                "reference": "15b2b4630c148775debea8e412bc7e128d9868a3",
                 "shasum": ""
             },
             "require": {
@@ -9652,12 +9716,12 @@
             },
             "require-dev": {
                 "phing/phing": "2.16.4",
-                "php-parallel-lint/php-parallel-lint": "1.3.0",
-                "phpstan/phpstan": "0.12.93",
+                "php-parallel-lint/php-parallel-lint": "1.3.1",
+                "phpstan/phpstan": "0.12.96",
                 "phpstan/phpstan-deprecation-rules": "0.12.6",
-                "phpstan/phpstan-phpunit": "0.12.21",
-                "phpstan/phpstan-strict-rules": "0.12.10",
-                "phpunit/phpunit": "7.5.20|8.5.5|9.5.7"
+                "phpstan/phpstan-phpunit": "0.12.22",
+                "phpstan/phpstan-strict-rules": "0.12.11",
+                "phpunit/phpunit": "7.5.20|8.5.5|9.5.8"
             },
             "type": "phpcodesniffer-standard",
             "extra": {
@@ -9677,7 +9741,7 @@
             "description": "Slevomat Coding Standard for PHP_CodeSniffer complements Consistence Coding Standard by providing sniffs with additional checks.",
             "support": {
                 "issues": "https://github.com/slevomat/coding-standard/issues",
-                "source": "https://github.com/slevomat/coding-standard/tree/7.0.13"
+                "source": "https://github.com/slevomat/coding-standard/tree/7.0.14"
             },
             "funding": [
                 {
@@ -9689,7 +9753,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-07-29T14:30:22+00:00"
+            "time": "2021-08-26T12:17:56+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
@@ -10336,5 +10400,5 @@
         "php": "^7.4|^8.0"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.0.0"
 }

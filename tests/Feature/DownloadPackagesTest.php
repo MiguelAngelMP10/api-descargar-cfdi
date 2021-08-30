@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Http\Controllers\api\v1\DownloadPackagesController;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Mockery\MockInterface;
@@ -12,7 +13,7 @@ use Tests\TestCase;
 
 class DownloadPackagesTest extends TestCase
 {
-    use WithValidFielTrait;
+    use WithValidFielTrait, RefreshDatabase;
 
     private function mockControllerDownload(StatusCode $statusCode, string $resultContentPath = ''): void
     {
@@ -36,6 +37,7 @@ class DownloadPackagesTest extends TestCase
      */
     public function it_download_package(): void
     {
+        $this->sanctumAuthenticate();
         $this->setUpValidFiel();
         $packageId = 'foo';
         $this->mockControllerDownload(new StatusCode(5000, ''), __DIR__ . '/../_files/fake-download.zip');
@@ -63,6 +65,7 @@ class DownloadPackagesTest extends TestCase
      */
     public function it_capture_error_when_download_fail(): void
     {
+        $this->sanctumAuthenticate();
         $this->setUpValidFiel();
         $errorMessageExpected = 'Certificado Inválido';
         // comment this line to test against SAT servers
@@ -89,6 +92,7 @@ class DownloadPackagesTest extends TestCase
      */
     public function it_refuse_an_invalid_empty_request(): void
     {
+        $this->sanctumAuthenticate();
         $response = $this->postJson('/api/v1/download-packages', []);
         $response->assertStatus(422);
         $response->assertJson([
@@ -108,6 +112,7 @@ class DownloadPackagesTest extends TestCase
      */
     public function it_refuse_an_invalid_type_for_fields(): void
     {
+        $this->sanctumAuthenticate();
         $file = UploadedFile::fake()->create('image.png');
         $response = $this->postJson('/api/v1/download-packages', [
             'RFC' => $file,
@@ -134,6 +139,7 @@ class DownloadPackagesTest extends TestCase
      */
     public function it_refuse_an_invalid_rfc(): void
     {
+        $this->sanctumAuthenticate();
         $response = $this->post('/api/v1/download-packages', [
             'RFC' => 'invalid-rfc',
             'password' => 'password',
@@ -156,6 +162,7 @@ class DownloadPackagesTest extends TestCase
      */
     public function it_refuse_with_non_existing_fiel(): void
     {
+        $this->sanctumAuthenticate();
         $response = $this->post('/api/v1/download-packages', [
             'RFC' => 'AAA010101AAA',
             'password' => 'password',
