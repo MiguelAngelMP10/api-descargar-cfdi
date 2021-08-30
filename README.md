@@ -44,6 +44,19 @@ composer install
    ```
       ./vendor/bin/phpcs --error-severity=1 --warning-severity=8 --extensions=php
    ```
+## Comandos artisan
+
+### Creación de usuario
+*El siguiente comando le preguntará los datos del usuario y como resultado obtendrá un mensaje que contiene el `ID` del usuario.*
+```shell
+php artisan user:create
+```
+
+### Creación de tokens
+*El siguiente comando registrará un token para el `userId` pasado como argumento y como resultado obtendrá el token.*
+```shell
+php artisan token:create {userId}
+```
 
 * Lista de endPoints
    ```
@@ -55,7 +68,8 @@ composer install
     - GET /api/v1/packages/{rfc}/{packageId}
     - DELETE /api/v1/packages/{rfc}/{packageId}
     ```
-    
+
+Los endpoints antes mencionados requieren autenticación (bearer token), por lo que en los requests debera agregar un header `Authorization: Bearer {token}`
 
 link de documentación en **postman** 
 

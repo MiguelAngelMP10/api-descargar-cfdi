@@ -6,13 +6,14 @@ namespace Tests\Feature;
 
 use App\Helpers\SatWsService;
 use App\Http\Controllers\api\v1\PackagesController;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 final class RetrievePackagesTest extends TestCase
 {
-    use WithFaker;
+    use WithFaker, RefreshDatabase;
 
     private SatWsService $service;
 
@@ -49,6 +50,7 @@ final class RetrievePackagesTest extends TestCase
     public function list_of_empty_packages(): void
     {
         $rfc = 'AAAA010101AAA';
+        $this->sanctumAuthenticate();
         $response = $this->getJson("/api/v1/$rfc/packages");
         $response->assertStatus(200);
         $response->assertJson(['rfc' => $rfc], true);
@@ -67,6 +69,7 @@ final class RetrievePackagesTest extends TestCase
         $packageIds = array_keys($this->createPackages($rfc, 3));
         sort($packageIds);
 
+        $this->sanctumAuthenticate();
         $response = $this->getJson("/api/v1/$rfc/packages");
 
         $response->assertStatus(200);
@@ -82,6 +85,7 @@ final class RetrievePackagesTest extends TestCase
     {
         $invalidRfc = 'invalid-rfc';
 
+        $this->sanctumAuthenticate();
         $response = $this->getJson("/api/v1/$invalidRfc/packages");
 
         $response->assertStatus(404);
@@ -101,6 +105,7 @@ final class RetrievePackagesTest extends TestCase
         $packageId = array_key_first($packages);
         $packagePath = $packages[$packageId];
 
+        $this->sanctumAuthenticate();
         $response = $this->get("/api/v1/$rfc/packages/$packageId");
 
         $response->assertStatus(200);
@@ -116,6 +121,7 @@ final class RetrievePackagesTest extends TestCase
         $invalidRfc = 'invalid-rfc';
         $packageId = $this->createPackageId();
 
+        $this->sanctumAuthenticate();
         $response = $this->getJson("/api/v1/$invalidRfc/packages/$packageId");
 
         $response->assertStatus(404);
@@ -133,6 +139,7 @@ final class RetrievePackagesTest extends TestCase
         $rfc = 'AAAA010101AAA';
         $packageId = $this->createPackageId();
 
+        $this->sanctumAuthenticate();
         $response = $this->getJson("/api/v1/$rfc/packages/$packageId");
 
         $response->assertStatus(404);
@@ -152,6 +159,7 @@ final class RetrievePackagesTest extends TestCase
         $packageId = array_key_first($packages);
         $packagePath = $packages[$packageId];
 
+        $this->sanctumAuthenticate();
         $response = $this->deleteJson("/api/v1/$rfc/packages/$packageId");
 
         $response->assertStatus(204);
@@ -167,6 +175,7 @@ final class RetrievePackagesTest extends TestCase
         $rfc = 'AAAA010101AAA';
         $packageId = $this->createPackageId();
 
+        $this->sanctumAuthenticate();
         $response = $this->deleteJson("/api/v1/$rfc/packages/$packageId");
 
         $response->assertStatus(204);
@@ -181,6 +190,7 @@ final class RetrievePackagesTest extends TestCase
         $invalidRfc = 'invalid-rfc';
         $packageId = $this->createPackageId();
 
+        $this->sanctumAuthenticate();
         $response = $this->deleteJson("/api/v1/$invalidRfc/packages/$packageId");
 
         $response->assertStatus(404);
