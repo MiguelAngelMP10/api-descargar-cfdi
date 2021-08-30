@@ -128,7 +128,7 @@ return [
         //        'min-quality' => 0,
         //        'min-complexity' => 0,
         //        'min-architecture' => 0,
-        'min-style' => 0, // full compliance required
+        'min-style' => 100, // full compliance required
         //        'disable-security-check' => false,
     ],
 
