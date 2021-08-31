@@ -60,10 +60,11 @@ Reporta los path de los archivos .cer y .key
         ```
 
 -   **Example**
-
     ```bash
-    curl -X POST 'http://localhost:8000/api/v1/send-cer-key' \
-     --form 'cer=@tests/_files/fake-fiel/EKU9003173C9.cer' \
-     --form 'key=@tests/_files/fake-fiel/EKU9003173C9.key' \
-     --form 'password=12345678a'
+        curl -X POST 'http://localhost:8000/api/v1/send-cer-key' \
+        --form 'cer=@tests/_files/fake-fiel/EKU9003173C9.cer' \
+        --form 'key=@tests/_files/fake-fiel/EKU9003173C9.key' \
+        --form 'password=12345678a' \
+        -H "Accept: application/json" \
+        -H "Authorization: Bearer 1|YTAe4YrL5btDvR5LdKRLcdsRgP0p3VQGaWPfvs8a"
     ```
