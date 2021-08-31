@@ -56,7 +56,10 @@
 -   **Example**
 
     ```bash
-    curl -X POST "http://localhost:8000/api/v1/make-query" -H "Content-Type: application/json" --data-raw '{
+    curl -X POST "http://localhost:8000/api/v1/make-query"  \
+    -H "Authorization: Bearer 1|YTAe4YrL5btDvR5LdKRLcdsRgP0p3VQGaWPfvs8a"
+    -H "Content-Type: application/json"  \
+    --data-raw '{
       "RFC": "RFCSolicitante",
       "password": "password",
       "period": {
