@@ -131,9 +131,9 @@ _El siguiente comando registrará un token para el `userId` pasado como argument
      - POST /api/v1/make-query
      - POST /api/v1/verify-query
      - POST /api/v1/download-packages
-     - GET /api/v1/packages/{rfc}
-     - GET /api/v1/packages/{rfc}/{packageId}
-     - DELETE /api/v1/packages/{rfc}/{packageId}
+     - GET /api/v1/{rfc}/packages
+     - GET /api/v1/{rfc}/packages/{packageId}
+     - DELETE /api/v1/{rfc}/packages/{packageId}
     ```
 
 Los endpoints antes mencionados requieren autenticación (bearer token), por lo que en los requests debera agregar un header `Authorization: Bearer {token}`
