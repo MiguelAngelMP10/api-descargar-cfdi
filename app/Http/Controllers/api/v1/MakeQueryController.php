@@ -4,6 +4,7 @@ namespace App\Http\Controllers\api\v1;
 
 use App\Helpers\SatWsService;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\MakeQueryPostRequest;
 use Exception;
 use Illuminate\Http\Request;
 use PhpCfdi\SatWsDescargaMasiva\Services\Query\QueryParameters;
@@ -15,22 +16,27 @@ use \Illuminate\Http\JsonResponse;
 class MakeQueryController extends Controller
 {
     /**
-     * @param Request $request
+     * @param MakeQueryPostRequest $request
      * @return JsonResponse
      */
-    public function makeQuery(Request $request): JsonResponse
+    public function makeQuery(MakeQueryPostRequest $request): JsonResponse
     {
         $start = $request->input('period.start');
+
         $end = $request->input('period.end');
 
         // Realizar una consulta
         $period = DateTimePeriod::createFromValues($start, $end);
 
-        $downloadType = $request->input('downloadType') === 'issued' ? DownloadType::issued() : DownloadType::received();
+        $downloadType = $request->input('downloadType') === 'issued'
+            ? DownloadType::issued()
+            : DownloadType::received();
 
-        $requestType = $request->input('requestType') === 'cfdi' ? RequestType::cfdi() : RequestType::metadata();
+        $requestType = $request->input('requestType') === 'cfdi'
+            ? RequestType::cfdi()
+            : RequestType::metadata();
 
-        $rfcMatch = $request->input('rfcMatch') ?? '';
+        $rfcMatch = $request->input('rfcMatch') ?? "";
 
         $queryParameters = QueryParameters::create(
             $period,
@@ -40,6 +46,7 @@ class MakeQueryController extends Controller
         );
 
         $satWsServiceHelper = new SatWsService();
+
         try {
             $service = $satWsServiceHelper->createService(
                 $request->input('RFC'),
@@ -54,16 +61,10 @@ class MakeQueryController extends Controller
         $query = $service->query($queryParameters);
 
         // verificar que el proceso de consulta fue correcto
-        if (! $query->getStatus()->isAccepted()) {
-            return response()->json([
-                'message' => $query->getStatus()->getMessage(),
-                'code' => $query->getStatus(),
-            ]);
+        if (!$query->getStatus()->isAccepted()) {
+            return response()->json($query->getStatus(), 400);
         }
-        return response()->json([
-            'message' => $query->getStatus()->getMessage(),
-            'code' => $query->getStatus(),
-            'requestId' => $query->getRequestId(),
-        ]);
+
+        return response()->json([$query->getStatus(), 'requestId' => $query->getRequestId()], 200);
     }
 }
