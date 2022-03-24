@@ -16,7 +16,10 @@ class CreateUser extends Command
     /** @var string */
     protected $description = 'This command is used to create users';
 
-    public function handle()
+    /**
+     * @return int
+     */
+    public function handle(): int
     {
         $name = $this->untilFull('What is your name?');
         $email = $this->untilFull('What is your email?');

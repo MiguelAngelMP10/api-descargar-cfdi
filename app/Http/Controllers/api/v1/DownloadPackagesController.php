@@ -7,10 +7,15 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\DownloadPackagesRequest;
 use PhpCfdi\SatWsDescargaMasiva\Service;
 use PhpCfdi\SatWsDescargaMasiva\Services\Download\DownloadResult;
+use Illuminate\Http\JsonResponse;
 
 class DownloadPackagesController extends Controller
 {
-    public function downloadPackages(DownloadPackagesRequest $request)
+    /**
+     * @param DownloadPackagesRequest $request
+     * @return JsonResponse
+     */
+    public function downloadPackages(DownloadPackagesRequest $request): JsonResponse
     {
         $packagesIds = $request->input('packagesIds');
         $rfc = $request->input('RFC');
@@ -35,6 +40,11 @@ class DownloadPackagesController extends Controller
         return response()->json(['errorMessages' => $errorMessages, 'messages' => $messages]);
     }
 
+    /**
+     * @param Service $service
+     * @param string $packageId
+     * @return DownloadResult
+     */
     protected function download(Service $service, string $packageId): DownloadResult
     {
         return $service->download($packageId);

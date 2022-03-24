@@ -10,10 +10,15 @@ use PhpCfdi\SatWsDescargaMasiva\Services\Query\QueryParameters;
 use PhpCfdi\SatWsDescargaMasiva\Shared\DateTimePeriod;
 use PhpCfdi\SatWsDescargaMasiva\Shared\DownloadType;
 use PhpCfdi\SatWsDescargaMasiva\Shared\RequestType;
+use \Illuminate\Http\JsonResponse;
 
 class MakeQueryController extends Controller
 {
-    public function makeQuery(Request $request)
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function makeQuery(Request $request): JsonResponse
     {
         $start = $request->input('period.start');
         $end = $request->input('period.end');
@@ -21,10 +26,10 @@ class MakeQueryController extends Controller
         // Realizar una consulta
         $period = DateTimePeriod::createFromValues($start, $end);
 
-        $downloadType = $request->input('downloadType') === 'issued'
-            ? DownloadType::issued() : DownloadType::received();
-        $requestType = $request->input('requestType') === 'cfdi'
-            ? RequestType::cfdi() : RequestType::metadata();
+        $downloadType = $request->input('downloadType') === 'issued' ? DownloadType::issued() : DownloadType::received();
+
+        $requestType = $request->input('requestType') === 'cfdi' ? RequestType::cfdi() : RequestType::metadata();
+
         $rfcMatch = $request->input('rfcMatch') ?? '';
 
         $queryParameters = QueryParameters::create(
