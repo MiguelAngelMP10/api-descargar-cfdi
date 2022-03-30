@@ -32,7 +32,6 @@ class SendCerKeyController extends Controller
         }
 
         $rfc = $fiel->getRfc();
-
         $certificatePath = $satWsService->obtainCertificatePath($rfc);
         $privateKeyPath = $satWsService->obtainPrivateKeyPath($rfc);
 
