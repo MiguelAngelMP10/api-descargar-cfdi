@@ -5,11 +5,17 @@ namespace App\Http\Controllers\api\v1;
 use App\Helpers\SatWsService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SendCerKeyRequest;
+use Illuminate\Http\JsonResponse;
 use Throwable;
 
 class SendCerKeyController extends Controller
 {
-    public function sendCerKey(SendCerKeyRequest $request)
+    /**
+     * @param SendCerKeyRequest $request
+     *
+     * @return JsonResponse
+     */
+    public function sendCerKey(SendCerKeyRequest $request): JsonResponse
     {
         $satWsService = new SatWsService();
         try {
@@ -26,7 +32,6 @@ class SendCerKeyController extends Controller
         }
 
         $rfc = $fiel->getRfc();
-
         $certificatePath = $satWsService->obtainCertificatePath($rfc);
         $privateKeyPath = $satWsService->obtainPrivateKeyPath($rfc);
 

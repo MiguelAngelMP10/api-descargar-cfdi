@@ -1,11 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\api\v1;
 
 use App\Helpers\SatWsService;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\MakeQueryPostRequest;
 use Exception;
-use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use PhpCfdi\SatWsDescargaMasiva\Services\Query\QueryParameters;
 use PhpCfdi\SatWsDescargaMasiva\Shared\DateTimePeriod;
 use PhpCfdi\SatWsDescargaMasiva\Shared\DownloadType;
@@ -13,25 +16,25 @@ use PhpCfdi\SatWsDescargaMasiva\Shared\RequestType;
 
 class MakeQueryController extends Controller
 {
-    public function makeQuery(Request $request)
+    private DownloadType $downloadType;
+    private RequestType $requestType;
+    private string $rfcMatch;
+    private DateTimePeriod $period;
+
+    /**
+     * @param MakeQueryPostRequest $request
+     *
+     * @return JsonResponse
+     */
+
+    public function makeQuery(MakeQueryPostRequest $request): JsonResponse
     {
-        $start = $request->input('period.start');
-        $end = $request->input('period.end');
-
-        // Realizar una consulta
-        $period = DateTimePeriod::createFromValues($start, $end);
-
-        $downloadType = $request->input('downloadType') === 'issued'
-            ? DownloadType::issued() : DownloadType::received();
-        $requestType = $request->input('requestType') === 'cfdi'
-            ? RequestType::cfdi() : RequestType::metadata();
-        $rfcMatch = $request->input('rfcMatch') ?? '';
-
+        $this->getParamsQuery($request);
         $queryParameters = QueryParameters::create(
-            $period,
-            $downloadType,
-            $requestType,
-            $rfcMatch
+            $this->period,
+            $this->downloadType,
+            $this->requestType,
+            $this->rfcMatch
         );
 
         $satWsServiceHelper = new SatWsService();
@@ -45,20 +48,32 @@ class MakeQueryController extends Controller
             return response()->json(['message' => $exception->getMessage()], 422);
         }
 
-        // presentar la consulta
         $query = $service->query($queryParameters);
 
-        // verificar que el proceso de consulta fue correcto
         if (! $query->getStatus()->isAccepted()) {
-            return response()->json([
-                'message' => $query->getStatus()->getMessage(),
-                'code' => $query->getStatus(),
-            ]);
+            return response()->json($query->getStatus(), 400);
         }
-        return response()->json([
-            'message' => $query->getStatus()->getMessage(),
-            'code' => $query->getStatus(),
-            'requestId' => $query->getRequestId(),
-        ]);
+        return response()->json([$query->getStatus(), 'requestId' => $query->getRequestId()], 200);
+    }
+
+    /**
+     * @param MakeQueryPostRequest $request
+     *
+     * @return void
+     */
+    private function getParamsQuery(MakeQueryPostRequest $request)
+    {
+        $start = $request->input('period.start');
+        $end = $request->input('period.end');
+
+        $this->downloadType = $request->input('downloadType') === 'issued'
+            ? DownloadType::issued() : DownloadType::received();
+
+        $this->requestType = $request->input('requestType') === 'cfdi'
+            ? RequestType::cfdi() : RequestType::metadata();
+
+        $this->rfcMatch = $request->input('rfcMatch') ?? '';
+
+        $this->period = DateTimePeriod::createFromValues($start, $end);
     }
 }

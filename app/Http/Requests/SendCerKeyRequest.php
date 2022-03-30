@@ -14,7 +14,7 @@ class SendCerKeyRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -24,7 +24,7 @@ class SendCerKeyRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'password' => ['required', 'string'],
@@ -38,7 +38,7 @@ class SendCerKeyRequest extends FormRequest
      *
      * @return array
      */
-    public function messages()
+    public function messages(): array
     {
         return [
             'cer.mimetypes' => 'The certificate file has invalid type.',

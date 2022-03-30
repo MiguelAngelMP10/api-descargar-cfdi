@@ -11,7 +11,7 @@ class RfcValidRule implements Rule
     /**
      * @var string
      */
-    private $message;
+    private string $message;
 
     /**
      * Determine if the validation rule passes.
@@ -21,7 +21,7 @@ class RfcValidRule implements Rule
      *
      * @return bool
      */
-    public function passes($attribute, $value)
+    public function passes($attribute, $value): bool
     {
         try {
             Rfc::parse($value);
@@ -37,7 +37,7 @@ class RfcValidRule implements Rule
      *
      * @return string
      */
-    public function message()
+    public function message(): string
     {
         return $this->message;
     }

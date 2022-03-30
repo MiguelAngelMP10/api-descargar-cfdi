@@ -11,7 +11,7 @@ use PhpCfdi\Rfc\Rfc;
 
 class PackagesController extends Controller
 {
-    public function index(Rfc $rfc)
+    public function index(Rfc $rfc): \Illuminate\Http\JsonResponse
     {
         $satWsServiceHelper = new SatWsService();
         $path = $satWsServiceHelper->obtainPackagePath($rfc->getRfc(), '');

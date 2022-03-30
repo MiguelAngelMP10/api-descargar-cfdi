@@ -15,7 +15,10 @@ class CreateToken extends Command
     /** @var string */
     protected $description = 'This command is used to create tokens';
 
-    public function handle()
+    /**
+     * @return int
+     */
+    public function handle(): int
     {
         $userId = $this->argument('user');
 
