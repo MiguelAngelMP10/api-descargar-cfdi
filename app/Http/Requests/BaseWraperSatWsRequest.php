@@ -25,7 +25,7 @@ class BaseWraperSatWsRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -35,7 +35,7 @@ class BaseWraperSatWsRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'RFC' => ['bail', 'required', 'string', new RfcValidRule()],
