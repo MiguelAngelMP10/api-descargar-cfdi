@@ -6,19 +6,20 @@ use App\Helpers\SatWsService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MakeQueryPostRequest;
 use Exception;
-use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use PhpCfdi\SatWsDescargaMasiva\Services\Query\QueryParameters;
 use PhpCfdi\SatWsDescargaMasiva\Shared\DateTimePeriod;
 use PhpCfdi\SatWsDescargaMasiva\Shared\DownloadType;
 use PhpCfdi\SatWsDescargaMasiva\Shared\RequestType;
-use \Illuminate\Http\JsonResponse;
 
 class MakeQueryController extends Controller
 {
     /**
      * @param MakeQueryPostRequest $request
+     *
      * @return JsonResponse
      */
+
     public function makeQuery(MakeQueryPostRequest $request): JsonResponse
     {
         $start = $request->input('period.start');
@@ -36,7 +37,7 @@ class MakeQueryController extends Controller
             ? RequestType::cfdi()
             : RequestType::metadata();
 
-        $rfcMatch = $request->input('rfcMatch') ?? "";
+        $rfcMatch = $request->input('rfcMatch') ?? '';
 
         $queryParameters = QueryParameters::create(
             $period,
@@ -61,7 +62,7 @@ class MakeQueryController extends Controller
         $query = $service->query($queryParameters);
 
         // verificar que el proceso de consulta fue correcto
-        if (!$query->getStatus()->isAccepted()) {
+        if (! $query->getStatus()->isAccepted()) {
             return response()->json($query->getStatus(), 400);
         }
 

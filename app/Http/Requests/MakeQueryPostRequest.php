@@ -7,7 +7,6 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Validation\Rule;
 
-
 class MakeQueryPostRequest extends FormRequest
 {
     protected $stopOnFirstFailure = false;
@@ -43,7 +42,7 @@ class MakeQueryPostRequest extends FormRequest
                 'required',
                 Rule::in(['cfdi', 'metadata']),
             ],
-            'rfcMatch' => ['string', 'nullable']
+            'rfcMatch' => ['string', 'nullable'],
         ];
     }
 
@@ -69,5 +68,4 @@ class MakeQueryPostRequest extends FormRequest
             response()->json($response, 422)
         );
     }
-
 }

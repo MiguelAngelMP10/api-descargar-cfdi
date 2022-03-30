@@ -5,14 +5,15 @@ namespace App\Http\Controllers\api\v1;
 use App\Helpers\SatWsService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DownloadPackagesRequest;
+use Illuminate\Http\JsonResponse;
 use PhpCfdi\SatWsDescargaMasiva\Service;
 use PhpCfdi\SatWsDescargaMasiva\Services\Download\DownloadResult;
-use Illuminate\Http\JsonResponse;
 
 class DownloadPackagesController extends Controller
 {
     /**
      * @param DownloadPackagesRequest $request
+     *
      * @return JsonResponse
      */
     public function downloadPackages(DownloadPackagesRequest $request): JsonResponse
@@ -43,6 +44,7 @@ class DownloadPackagesController extends Controller
     /**
      * @param Service $service
      * @param string $packageId
+     *
      * @return DownloadResult
      */
     protected function download(Service $service, string $packageId): DownloadResult

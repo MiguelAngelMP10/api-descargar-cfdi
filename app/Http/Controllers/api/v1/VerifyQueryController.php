@@ -5,16 +5,15 @@ namespace App\Http\Controllers\api\v1;
 use App\Helpers\SatWsService;
 use App\Http\Controllers\Controller;
 use Exception;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class VerifyQueryController extends Controller
 {
     /**
      * @param Request $request
-     * @return JsonResponse
+     * @return \Illuminate\Http\JsonResponse|void
      */
-    public function verifyQuery(Request $request): JsonResponse
+    public function verifyQuery(Request $request)
     {
         $satWsServiceHelper = new SatWsService();
         try {

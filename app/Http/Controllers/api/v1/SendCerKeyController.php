@@ -12,6 +12,7 @@ class SendCerKeyController extends Controller
 {
     /**
      * @param SendCerKeyRequest $request
+     *
      * @return JsonResponse
      */
     public function sendCerKey(SendCerKeyRequest $request): JsonResponse
