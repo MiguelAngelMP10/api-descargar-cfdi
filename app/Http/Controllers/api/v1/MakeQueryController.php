@@ -33,8 +33,7 @@ class MakeQueryController extends Controller
         $queryParameters = QueryParameters::create(
             $this->period,
             $this->downloadType,
-            $this->requestType,
-            $this->rfcMatch
+            $this->requestType
         );
 
         $satWsServiceHelper = new SatWsService();
@@ -70,7 +69,7 @@ class MakeQueryController extends Controller
             ? DownloadType::issued() : DownloadType::received();
 
         $this->requestType = $request->input('requestType') === 'cfdi'
-            ? RequestType::cfdi() : RequestType::metadata();
+            ? RequestType::xml() : RequestType::metadata();
 
         $this->rfcMatch = $request->input('rfcMatch') ?? '';
 
