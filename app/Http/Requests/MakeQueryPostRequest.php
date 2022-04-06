@@ -47,8 +47,8 @@ class MakeQueryPostRequest extends FormRequest
                 'nullable',
                 Rule::in(['ingreso', 'I', 'egreso', 'E', 'traslado', 'T', 'nomina', 'N', 'pago', 'P']),
             ],
-            "complementoCfdi" => ['string']
-
+            "complementoCfdi" => ['string'],
+            "documentStatus" => ['string']
         ];
     }
 
