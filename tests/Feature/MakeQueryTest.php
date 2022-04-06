@@ -8,12 +8,12 @@ use Tests\TestCase;
 
 class MakeQueryTest extends TestCase
 {
-    use RefreshDatabase;
+    use WithValidFielTrait, RefreshDatabase;
 
     public function test_it_refuse_an_invalid_empty_request(): void
     {
         $this->sanctumAuthenticate();
-
+        $this->setUpValidFiel();
         $response = $this->post('/api/v1/make-query', []);
 
         $response->assertStatus(422)->assertJson([
@@ -33,6 +33,7 @@ class MakeQueryTest extends TestCase
     public function test_it_refuse_sending_any_value_in_fields_downloadType_and_requestType(): void
     {
         $this->sanctumAuthenticate();
+        $this->setUpValidFiel();
         $response = $this->post(
             '/api/v1/make-query',
             [
@@ -61,6 +62,7 @@ class MakeQueryTest extends TestCase
     public function test_validate_add_rfc_match_empty()
     {
         $this->sanctumAuthenticate();
+        $this->setUpValidFiel();
         $response = $this->post(
             '/api/v1/make-query',
             [
@@ -88,6 +90,7 @@ class MakeQueryTest extends TestCase
     public function test_validate_add_document_type_in()
     {
         $this->sanctumAuthenticate();
+        $this->setUpValidFiel();
         $response = $this->post(
             '/api/v1/make-query',
             [
@@ -116,6 +119,7 @@ class MakeQueryTest extends TestCase
     public function test_validate_add_complemento_cfdi()
     {
         $this->sanctumAuthenticate();
+        $this->setUpValidFiel();
         $response = $this->post(
             '/api/v1/make-query',
             [
@@ -142,6 +146,7 @@ class MakeQueryTest extends TestCase
     public function test_validate_add_document_status()
     {
         $this->sanctumAuthenticate();
+        $this->setUpValidFiel();
         $response = $this->post(
             '/api/v1/make-query',
             [
@@ -157,7 +162,7 @@ class MakeQueryTest extends TestCase
                 "rfcMatch" => [],
                 "documentType" => "E",
                 "complementoCfdi" => "leyendasfisc",
-                "documentStatus" => "f"
+                "documentStatus" => "active"
             ]
         );
 
