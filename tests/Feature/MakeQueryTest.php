@@ -138,4 +138,32 @@ class MakeQueryTest extends TestCase
             'message' => "PhpCfdi\\SatWsDescargaMasiva\\Shared\\ComplementoCfdi value algo was not found"
         ]);
     }
+
+    public function test_validate_add_document_status()
+    {
+        $this->sanctumAuthenticate();
+        $response = $this->post(
+            '/api/v1/make-query',
+            [
+                'RFC' => 'EKU9003173C9',
+                'password' => "12345678a",
+                "period" => [
+                    "start" => "2021-11-01 00:00:01",
+                    "end" => "2021-11-01 23:59:59"
+                ],
+                "retenciones" => false,
+                "downloadType" => "received",
+                "requestType" => "metadata",
+                "rfcMatch" => [],
+                "documentType" => "E",
+                "complementoCfdi" => "leyendasfisc",
+                "documentStatus" => "f"
+            ]
+        );
+
+        $response->assertStatus(400)->assertJson([
+            "code" => 404,
+            'message' => "Error no controlado."
+        ]);
+    }
 }
