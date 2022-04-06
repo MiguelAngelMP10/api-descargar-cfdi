@@ -45,10 +45,10 @@ class MakeQueryPostRequest extends FormRequest
             'rfcMatch' => ['array'],
             'documentType' => [
                 'nullable',
-                Rule::in(['ingreso', 'I', 'egreso', 'E', 'traslado', 'T', 'nomina', 'N', 'pago', 'P']),
+                Rule::in([ 'I', 'E', 'T', 'N', 'P']),
             ],
-            "complementoCfdi" => ['string'],
-            "documentStatus" => ['string']
+            'complementoCfdi' => ['string'],
+            'documentStatus' => ['string'],
         ];
     }
 

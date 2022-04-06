@@ -108,7 +108,7 @@ class MakeQueryTest extends TestCase
         $response->assertStatus(422)->assertJson([
             'message' => 'Invalid data',
             'errors' => [
-                'documentType' => ["The documentType must be one of the following types: ingreso, I, egreso, E, traslado, T, nomina, N, pago, P"]
+                'documentType' => ["The documentType must be one of the following types: I, E, T, N, P"]
             ]
         ]);
     }
