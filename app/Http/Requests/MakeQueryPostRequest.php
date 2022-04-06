@@ -40,9 +40,15 @@ class MakeQueryPostRequest extends FormRequest
             ],
             'requestType' => [
                 'required',
-                Rule::in(['cfdi', 'metadata']),
+                Rule::in(['xml', 'metadata']),
             ],
-            'rfcMatch' => ['string', 'nullable'],
+            'rfcMatch' => ['array'],
+            'documentType' => [
+                'nullable',
+                Rule::in(['ingreso', 'I', 'egreso', 'E', 'traslado', 'T', 'nomina', 'N', 'pago', 'P']),
+            ],
+            "complementoCfdi" => ['string']
+
         ];
     }
 
@@ -55,6 +61,7 @@ class MakeQueryPostRequest extends FormRequest
             'password.string' => 'The password field no is string.',
             'downloadType.in' => 'The downloadType must be one of the following types: :values',
             'requestType.in' => 'The requestType must be one of the following types: :values',
+            'documentType.in' => 'The documentType must be one of the following types: :values',
         ];
     }
 
