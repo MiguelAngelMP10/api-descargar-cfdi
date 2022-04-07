@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\RfcValidRule;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -29,26 +30,27 @@ class MakeQueryPostRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'RFC' => ['required', 'string'],
-            'password' => ['required', 'string'],
-            'period.start' => ['required', 'date'],
-            'period.end' => ['required', 'date'],
-            'retenciones' => ['required', 'boolean'],
+            'RFC' => 'required|string',
+            'password' => 'required|string',
+            'period.start' => 'required|date',
+            'period.end' => 'required|date',
+            'retenciones' => 'required|boolean',
             'downloadType' => [
-                'required',
-                Rule::in(['issued', 'received']),
+                'required', Rule::in(['issued', 'received']),
             ],
             'requestType' => [
-                'required',
-                Rule::in(['xml', 'metadata']),
+                'required', Rule::in(['xml', 'metadata']),
             ],
-            'rfcMatch' => ['array'],
+            'rfcMatch' => 'array',
             'documentType' => [
-                'nullable',
-                Rule::in([ 'I', 'E', 'T', 'N', 'P']),
+                'nullable', Rule::in([ 'I', 'E', 'T', 'N', 'P']),
             ],
-            'complementoCfdi' => ['string'],
-            'documentStatus' => ['string'],
+            'complementoCfdi' => 'string',
+            'documentStatus' => [
+                'nullable', Rule::in([ 'active', 'cancelled']),
+            ],
+            'uuid' => 'uuid',
+            'rfcOnBehalf' => ['bail', 'string', new RfcValidRule()]
         ];
     }
 
