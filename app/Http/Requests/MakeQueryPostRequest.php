@@ -50,7 +50,7 @@ class MakeQueryPostRequest extends FormRequest
                 'nullable', Rule::in([ 'active', 'cancelled']),
             ],
             'uuid' => 'uuid',
-            'rfcOnBehalf' => ['bail', 'string', new RfcValidRule()]
+            'rfcOnBehalf' => ['bail', 'string', new RfcValidRule()],
         ];
     }
 
