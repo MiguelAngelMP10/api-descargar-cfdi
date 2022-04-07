@@ -10,7 +10,6 @@ use App\Http\Requests\MakeQueryPostRequest;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use PhpCfdi\SatWsDescargaMasiva\Services\Query\QueryParameters;
-use PhpCfdi\SatWsDescargaMasiva\Shared\DocumentStatus;
 
 class MakeQueryController extends MakeQueryHelper
 {
@@ -29,10 +28,11 @@ class MakeQueryController extends MakeQueryHelper
                 ->withPeriod($this->period)
                 ->withDownloadType($this->downloadType)
                 ->withRequestType($this->requestType);
-
             $this->addDocumentTypeToQueryParameters($request);
             $this->addComplementoCfdi($request);
             $this->addDocumentStatus($request);
+            $this->addUuid($request);
+            $this->addRfcOnBehalf($request);
 
             $satWsServiceHelper = new SatWsService();
             $service = $satWsServiceHelper->createService(
@@ -50,22 +50,6 @@ class MakeQueryController extends MakeQueryHelper
             return response()->json([$query->getStatus(), 'requestId' => $query->getRequestId()], 200);
         } catch (Exception $exception) {
             return response()->json(['message' => $exception->getMessage()], 422);
-        }
-    }
-
-    protected function addDocumentStatus(MakeQueryPostRequest $request)
-    {
-        if ($request->has('documentStatus')) {
-            $documentStatusMethod = DocumentStatus::undefined();
-            if ($request->input('documentStatus') === 'active') {
-                $documentStatusMethod = DocumentStatus::active();
-            }
-
-            if ($request->input('documentStatus') === 'cancelled') {
-                $documentStatusMethod = DocumentStatus::cancelled();
-            }
-
-            $this->queryParameters = $this->queryParameters->withDocumentStatus($documentStatusMethod);
         }
     }
 }
