@@ -6,12 +6,13 @@ namespace App\Http\Controllers\api\v1;
 
 use App\Helpers\SatWsService;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Storage;
 use PhpCfdi\Rfc\Rfc;
 
 class PackagesController extends Controller
 {
-    public function index(Rfc $rfc): \Illuminate\Http\JsonResponse
+    public function index(Rfc $rfc): JsonResponse
     {
         $satWsServiceHelper = new SatWsService();
         $path = $satWsServiceHelper->obtainPackagePath($rfc->getRfc(), '');
