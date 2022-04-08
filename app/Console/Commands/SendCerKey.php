@@ -29,6 +29,7 @@ EOF;
                             {cer : certificate path}
                             {key : key path}
                             {--p|password= : Paswword FIEL}
+                            {--copyFiel= : Copy the Electronic Signature files to local storage}
                             ';
 
     /**
@@ -40,7 +41,7 @@ EOF;
     protected string $contentCer;
     protected string $contentKey;
     protected Fiel $fiel;
-    protected string $localStore;
+    protected string $localStore = "No";
 
     /**
      * Execute the console command.
@@ -53,8 +54,9 @@ EOF;
         $certificatePath = $this->argument('cer');
         $keyPath = $this->argument('key');
         $password = $this->option('password');
-        $password = is_null($password) ? $this->secret('What is the password?') : '';
+        $password = is_null($password) ? $this->secret('What is the password?') : $password;
         $this->choiceLocalStore();
+
         try {
             $this->contentCer = file_get_contents($certificatePath);
             $this->contentKey = file_get_contents($keyPath);
@@ -67,13 +69,13 @@ EOF;
 
             if ($this->fiel->isValid()) {
                 $this->processIsValidFiel();
-                return 1;
+                return 0;
             }
-            return 0;
+            return 1;
         } catch (\Throwable $exception) {
             $this->newLine();
             $this->error($exception->getMessage());
-            return 0;
+            return 1;
         }
     }
 
@@ -120,10 +122,12 @@ EOF;
      */
     private function choiceLocalStore(): void
     {
-        $this->localStore = $this->choice(
-            'Do you want your FIEL to be stored in our local storage?',
-            ['Yes', 'No'],
-            'No'
-        );
+        if (is_null($this->option('copyFiel'))) {
+            $this->localStore = $this->choice(
+                'Do you want your FIEL to be stored in our local storage?',
+                ['Yes', 'No'],
+                'No'
+            );
+        }
     }
 }
