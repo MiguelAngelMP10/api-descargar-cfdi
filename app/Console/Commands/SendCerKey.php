@@ -41,7 +41,7 @@ EOF;
     protected string $contentCer;
     protected string $contentKey;
     protected Fiel $fiel;
-    protected string $localStore = "No";
+    protected string $localStore = 'No';
 
     /**
      * Execute the console command.
