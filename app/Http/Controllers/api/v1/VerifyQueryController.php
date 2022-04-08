@@ -4,8 +4,8 @@ namespace App\Http\Controllers\api\v1;
 
 use App\Helpers\SatWsService;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\VerifyQueryPostRequest;
 use Exception;
-use Illuminate\Http\Request;
 use PhpCfdi\SatWsDescargaMasiva\Services\Verify\VerifyResult;
 
 class VerifyQueryController extends Controller
@@ -16,12 +16,12 @@ class VerifyQueryController extends Controller
     private string $requestId;
 
     /**
-     * @param Request $request
+     * @param VerifyQueryPostRequest $request
      *
      * @return \Illuminate\Http\JsonResponse|VerifyResult
      */
 
-    public function verifyQuery(Request $request)
+    public function verifyQuery(VerifyQueryPostRequest $request)
     {
         $this->getParamsRequest($request);
         $satWsServiceHelper = new SatWsService();
@@ -37,7 +37,7 @@ class VerifyQueryController extends Controller
         }
     }
 
-    private function getParamsRequest(Request $request)
+    private function getParamsRequest(VerifyQueryPostRequest $request)
     {
         $this->RFC = $request->input('RFC');
         $this->password = $request->input('password');
