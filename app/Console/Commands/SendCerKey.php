@@ -38,6 +38,7 @@ EOF;
      * @var string
      */
     protected $description = 'Send the files of a faithful to the server .cer and .key';
+
     protected string $contentCer;
     protected string $contentKey;
     protected Fiel $fiel;
