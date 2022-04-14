@@ -28,4 +28,11 @@ class MakeQueryTest extends TestCase
             ->expectsOutput('The password field is required.')
             ->assertFailed();
     }
+
+    public function test_password_min_5_characters()
+    {
+        $this->artisan('sw:make:query ' . $this->pathCer . ' ' . $this->pathKey . ' -p 123')
+            ->expectsOutput('The password must be at least 5 characters.')
+            ->assertFailed();
+    }
 }
