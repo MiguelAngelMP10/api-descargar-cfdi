@@ -69,4 +69,12 @@ class MakeQueryTest extends TestCase
             ->expectsOutput('The requestType must be one of the following types: xml, metadata.')
             ->assertFailed();
     }
+
+    public function test_download_type_validate()
+    {
+        $this->artisan('sw:make:query ' . $this->pathCer . ' ' . $this->pathKey . ' -p "' . $this->password .
+            '" --downloadType=another-thing')
+            ->expectsOutput('The downloadType must be one of the following types: issued, received.')
+            ->assertFailed();
+    }
 }
