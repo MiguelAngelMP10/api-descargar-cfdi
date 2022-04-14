@@ -52,4 +52,13 @@ class MakeQueryTest extends TestCase
             ->expectsOutput('The period star does not match the format Y-m-d H:i:s.')
             ->assertFailed();
     }
+
+    public function test_period_end_validate()
+    {
+        $this->artisan('sw:make:query ' . $this->pathCer . ' ' . $this->pathKey . ' -p "' . $this->password .
+            '" -s "2019-01-13 00:00:00" -e "otra"')
+            ->expectsOutput('The period end is not a valid date.')
+            ->expectsOutput('The period end does not match the format Y-m-d H:i:s.')
+            ->assertFailed();
+    }
 }
