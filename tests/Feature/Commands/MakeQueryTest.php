@@ -140,4 +140,23 @@ class MakeQueryTest extends TestCase
         $this->artisan('sw:make:query ' . $this->pathCer . ' ' . $this->plainText . ' -p ' . $this->password)
             ->expectsOutput('Cannot open private key: error:0D07209B:asn1 encoding routines:ASN1_get_object:too long');
     }
+
+
+    public function test_confirm_newQuery()
+    {
+        $command = "sw:make:query $this->pathCer  $this->pathKey -p $this->password
+        -s '2019-01-13 00:00:00'
+        -e '2019-01-13 23:59:59'
+        --requestType='metadata'
+        --downloadType='issued'
+        --documentType='N'
+        --complementCfdi='nomina11'
+        --documentStatus='active'
+         -u '96623061-61fe-49de-b298-c7156476aa8b'
+         --rfcOnBehalf='XXX01010199A'";
+
+        $this->artisan($command)
+            ->expectsConfirmation('Are you sure you submit this query with the above parameters?', 'Yes')
+            ->assertSuccessful();
+    }
 }
