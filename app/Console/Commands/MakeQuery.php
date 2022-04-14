@@ -58,7 +58,7 @@ EOF;
      *
      * @var string
      */
-    protected $description = ' Create a query before the mass download web services before the SAT';
+    protected $description = 'Create a query before the mass download web services before the SAT';
 
     /**
      * Execute the console command.
@@ -74,7 +74,7 @@ EOF;
         return $this->exitCode;
     }
 
-    private function makeQuery()
+    private function makeQuery(): void
     {
         if ($this->exitCode === 0) {
             try {
@@ -94,13 +94,13 @@ EOF;
 
                     if ($this->confirm('Are you sure you submit this query with the above parameters?', true)) {
                         $this->presentQuery();
-                        return 0;
+                        $this->exitCode = 0;
                     }
                 }
-                return 0;
+                return;
             } catch (\Exception $exception) {
                 $this->error($exception->getMessage());
-                return 1;
+                $this->exitCode = 1;
             }
         }
     }
