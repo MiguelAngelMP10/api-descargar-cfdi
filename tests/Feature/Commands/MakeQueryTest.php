@@ -128,12 +128,16 @@ class MakeQueryTest extends TestCase
             ->expectsOutput('The rfcMatch.2 field not appears to be valid.')
             ->assertFailed();
     }
+
     public function test_fiel_invalidate()
     {
         $this->artisan('sw:make:query ' . $this->plainText . ' ' . $this->plainText . ' -p ' . $this->password)
             ->expectsOutput('Cannot parse X509 certificate from contents');
     }
 
-
-
+    public function test_fiel_private_key_invalidate()
+    {
+        $this->artisan('sw:make:query ' . $this->pathCer . ' ' . $this->plainText . ' -p ' . $this->password)
+            ->expectsOutput('Cannot open private key: error:0D07209B:asn1 encoding routines:ASN1_get_object:too long');
+    }
 }
