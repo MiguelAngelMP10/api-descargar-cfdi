@@ -119,4 +119,15 @@ class MakeQueryTest extends TestCase
             ->assertFailed();
     }
 
+    public function test_rfc_match_validate()
+    {
+        $this->artisan('sw:make:query ' . $this->pathCer . ' ' . $this->pathKey .
+            ' -p "' . $this->password . ' --rfcMatch=uno --rfcMatch=dos --rfcMatch=test')
+            ->expectsOutput('The rfcMatch.0 field not appears to be valid.')
+            ->expectsOutput('The rfcMatch.1 field not appears to be valid.')
+            ->expectsOutput('The rfcMatch.2 field not appears to be valid.')
+            ->assertFailed();
+    }
+
+
 }
