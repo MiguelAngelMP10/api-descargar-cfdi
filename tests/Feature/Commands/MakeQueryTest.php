@@ -85,4 +85,13 @@ class MakeQueryTest extends TestCase
             ->expectsOutput('The documentType must be one of the following types: I, E, T, N, P, U.')
             ->assertFailed();
     }
+
+    public function test_complement_cfdi_validate()
+    {
+        $this->artisan('sw:make:query ' . $this->pathCer . ' ' . $this->pathKey .
+            ' -p "' . $this->password . '" --complementCfdi=thing')
+            ->expectsOutput('The complementCfdi must be one of the following types: ' .
+                implode(', ', array_keys(ComplementoCfdiList::COMPLEMENTOS_CFDI_LIST)) . '.')
+            ->assertFailed();
+    }
 }
