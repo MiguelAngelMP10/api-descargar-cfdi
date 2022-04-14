@@ -43,4 +43,13 @@ class MakeQueryTest extends TestCase
             ->expectsOutput('The endPoint must be one of the following types: cfdi, retenciones.')
             ->assertFailed();
     }
+
+    public function test_period_star_validate()
+    {
+        $this->artisan('sw:make:query ' . $this->pathCer . ' ' . $this->pathKey .
+            ' -s "another-thing" -p ' . $this->password)
+            ->expectsOutput('The period star is not a valid date.')
+            ->expectsOutput('The period star does not match the format Y-m-d H:i:s.')
+            ->assertFailed();
+    }
 }
