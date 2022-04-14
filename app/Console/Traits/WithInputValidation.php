@@ -26,4 +26,24 @@ trait WithInputValidation
 
         return $this->askWithValidation($message, $rules, $name, $default);
     }
+
+    public function secretWithValidation(string $message, array $rules = [], string $name = 'value')
+    {
+        $answer = $this->secret($message, false);
+
+        $validator = Validator::make([
+            $name => $answer,
+        ], [
+            $name => $rules,
+        ]);
+
+        if ($validator->passes()) {
+            return $answer;
+        }
+
+        foreach ($validator->errors()->all() as $error) {
+            $this->error($error);
+        }
+        $this->secretWithValidation($message, $rules, $name);
+    }
 }

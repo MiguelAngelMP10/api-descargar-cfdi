@@ -2,9 +2,11 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
+use App\Helpers\MakeQueryCommand;
+use App\Helpers\SatWsService;
+use PhpCfdi\SatWsDescargaMasiva\Services\Query\QueryParameters;
 
-class MakeQuery extends Command
+class MakeQuery extends MakeQueryCommand
 {
     protected string $logo = <<<EOF
    .______    __    __  .______     ______  _______  _______   __
@@ -23,8 +25,32 @@ EOF;
     protected $signature = 'sw:make:query
                             {cer : Certificate path}
                             {key : Key path}
-                             {--p|password= : Paswword FIEL}
+                            {--p|password= : Password FIEL}
 
+                            {--endPoint=cfdi : Service endpoint. [cfdi, retenciones]}
+
+                            {--s|periodStar= : Start date and time in format YYYY-MM-dd hh:mm:ss}
+
+                            {--e|periodEnd= : End date and time in format YYYY-MM-dd hh:mm:ss}
+
+                            {--requestType=metadata : Specifies whether the request is for Metadata or XML files.' .
+    ' [metadata, xml]}
+
+                            {--downloadType=issued : Specifies whether the request is for issued or ' .
+    'received documents. [issued, received]}
+
+                            {--documentType=U : Filter the request by type [E, I, N, P, T, U]}
+
+                            {--complementCfdi= : Filters the request by the existence of a complementCfdi}
+
+                            {--documentStatus=undefined : Filter the request by the document status: ' .
+    '[undefined, active, cancelled]}
+
+                            {--u|uuid= : Filter the request by UUID.}
+
+                            {--rfcOnBehalf= : Filters the request by the RFC used on behalf of third parties.}
+
+                            {--rfcMatch=* : Filtered by RFC counterpart}
                             ';
 
     /**
@@ -33,20 +59,6 @@ EOF;
      * @var string
      */
     protected $description = ' Create a query before the mass download web services before the SAT';
-    /**
-     * @var array|string
-     */
-    private $localStore;
-
-    /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
 
     /**
      * Execute the console command.
@@ -55,7 +67,41 @@ EOF;
      */
     public function handle(): int
     {
+        $this->info($this->logo);
+        $this->validateOptions();
+        $this->makeQuery();
 
-        return 0;
+        return $this->exitCode;
+    }
+
+    private function makeQuery()
+    {
+        if ($this->exitCode === 0) {
+            try {
+                $contentCer = file_get_contents($this->argument('cer'));
+                $contentKey = file_get_contents($this->argument('key'));
+                $satWsService = new SatWsService();
+                $fiel = $satWsService->createFiel(
+                    $contentCer,
+                    $contentKey,
+                    $this->data['password']
+                );
+
+                if ($fiel->isValid()) {
+                    $this->queryParameters = QueryParameters::create();
+                    $this->addParametersQuery();
+                    $this->querySummary();
+
+                    if ($this->confirm('Are you sure you submit this query with the above parameters?', true)) {
+                        $this->presentQuery($fiel);
+                        return 0;
+                    }
+                }
+                return 1;
+            } catch (\Exception $exception) {
+                $this->error($exception->getMessage());
+                return 1;
+            }
+        }
     }
 }
