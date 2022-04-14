@@ -110,4 +110,13 @@ class MakeQueryTest extends TestCase
             ->expectsOutput('The uuid must be a valid UUID.')
             ->assertFailed();
     }
+
+    public function test_rfc_on_behalf_validate()
+    {
+        $this->artisan('sw:make:query ' . $this->pathCer . ' ' . $this->pathKey .
+            ' -p "' . $this->password . '" --rfcOnBehalf=thing')
+            ->expectsOutput('The rfcOnBehalf field not appears to be valid.')
+            ->assertFailed();
+    }
+
 }
