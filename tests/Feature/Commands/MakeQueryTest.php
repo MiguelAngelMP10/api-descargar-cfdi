@@ -94,4 +94,12 @@ class MakeQueryTest extends TestCase
                 implode(', ', array_keys(ComplementoCfdiList::COMPLEMENTOS_CFDI_LIST)) . '.')
             ->assertFailed();
     }
+
+    public function test_document_status_validate()
+    {
+        $this->artisan('sw:make:query ' . $this->pathCer . ' ' . $this->pathKey .
+            ' -p "' . $this->password . '" --documentStatus=thing')
+            ->expectsOutput('The documentStatus must be one of the following types: undefined, active, cancelled.')
+            ->assertFailed();
+    }
 }
