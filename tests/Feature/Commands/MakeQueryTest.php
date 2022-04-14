@@ -128,6 +128,12 @@ class MakeQueryTest extends TestCase
             ->expectsOutput('The rfcMatch.2 field not appears to be valid.')
             ->assertFailed();
     }
+    public function test_fiel_invalidate()
+    {
+        $this->artisan('sw:make:query ' . $this->plainText . ' ' . $this->plainText . ' -p ' . $this->password)
+            ->expectsOutput('Cannot parse X509 certificate from contents');
+    }
+
 
 
 }
