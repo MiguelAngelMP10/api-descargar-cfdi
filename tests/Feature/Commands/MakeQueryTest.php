@@ -159,6 +159,7 @@ class MakeQueryTest extends TestCase
             ->expectsConfirmation('Are you sure you submit this query with the above parameters?', 'Yes')
             ->assertSuccessful();
     }
+
     public function test_table_query_summary()
     {
         $separator = new TableSeparator();
@@ -189,5 +190,23 @@ class MakeQueryTest extends TestCase
                 ['rfcOnBehalf', 'XXX01010199A'],
                 ['rfcMatches',],
             ], 'default');
+    }
+
+    public function test_table_result_query()
+    {
+        $separator = new TableSeparator();
+        $command = "sw:make:query $this->pathCer  $this->pathKey -p $this->password";
+        $this->artisan($command)
+            ->expectsConfirmation('Are you sure you submit this query with the above parameters?', 'Yes')
+            ->expectsTable(
+                [new TableCell('Data Result Query', ['colspan' => 2])],
+                [
+                    [new TableCell('Status', ['colspan' => 2])],
+                    $separator,
+                    ['Code', '305'],
+                    ['Message', 'Certificado Inválido'],
+                    ['RequestId', ''],
+                ]
+            );
     }
 }
