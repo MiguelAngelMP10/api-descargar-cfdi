@@ -102,4 +102,12 @@ class MakeQueryTest extends TestCase
             ->expectsOutput('The documentStatus must be one of the following types: undefined, active, cancelled.')
             ->assertFailed();
     }
+
+    public function test_uuid_validate()
+    {
+        $this->artisan('sw:make:query ' . $this->pathCer . ' ' . $this->pathKey .
+            ' -p "' . $this->password . '" --uuid=thing')
+            ->expectsOutput('The uuid must be a valid UUID.')
+            ->assertFailed();
+    }
 }
