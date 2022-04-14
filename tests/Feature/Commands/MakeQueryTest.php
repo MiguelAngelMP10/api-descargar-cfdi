@@ -35,4 +35,12 @@ class MakeQueryTest extends TestCase
             ->expectsOutput('The password must be at least 5 characters.')
             ->assertFailed();
     }
+
+    public function test_endPoint_validate()
+    {
+        $this->artisan('sw:make:query ' . $this->pathCer . ' ' . $this->pathKey .
+            ' -p "' . $this->password . ' --endPoint=thing ')
+            ->expectsOutput('The endPoint must be one of the following types: cfdi, retenciones.')
+            ->assertFailed();
+    }
 }
