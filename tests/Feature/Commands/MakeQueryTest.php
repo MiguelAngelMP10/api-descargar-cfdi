@@ -209,4 +209,22 @@ class MakeQueryTest extends TestCase
                 ]
             );
     }
+
+    public function test_write_query_result_file()
+    {
+        $command = "sw:make:query $this->pathCer  $this->pathKey -p $this->password
+        -s '2019-01-13 00:00:00'
+        -e '2019-01-13 23:59:59'
+        --requestType='metadata'
+        --downloadType='issued'
+        --documentType='N'
+        --complementCfdi='nomina11'
+        --documentStatus='active'
+         -u '96623061-61fe-49de-b298-c7156476aa8b'
+         --rfcOnBehalf='XXX01010199A'";
+
+        $this->artisan($command)
+            ->expectsConfirmation('Are you sure you submit this query with the above parameters?', 'Yes')
+            ->expectsOutput('The query result is stored in the following path');
+    }
 }
