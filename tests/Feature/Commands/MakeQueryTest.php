@@ -61,4 +61,12 @@ class MakeQueryTest extends TestCase
             ->expectsOutput('The period end does not match the format Y-m-d H:i:s.')
             ->assertFailed();
     }
+
+    public function test_request_type_validate()
+    {
+        $this->artisan('sw:make:query ' . $this->pathCer . ' ' . $this->pathKey . ' -p "' . $this->password .
+            '" --requestType=another-thing ')
+            ->expectsOutput('The requestType must be one of the following types: xml, metadata.')
+            ->assertFailed();
+    }
 }
