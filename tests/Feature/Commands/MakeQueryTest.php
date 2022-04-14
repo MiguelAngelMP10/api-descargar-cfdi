@@ -77,4 +77,12 @@ class MakeQueryTest extends TestCase
             ->expectsOutput('The downloadType must be one of the following types: issued, received.')
             ->assertFailed();
     }
+
+    public function test_document_type_validate()
+    {
+        $this->artisan('sw:make:query ' . $this->pathCer . ' ' . $this->pathKey .
+            ' -p "' . $this->password . '" --documentType=thing')
+            ->expectsOutput('The documentType must be one of the following types: I, E, T, N, P, U.')
+            ->assertFailed();
+    }
 }
