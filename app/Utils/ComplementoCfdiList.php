@@ -5,7 +5,7 @@ namespace App\Utils;
 class ComplementoCfdiList
 {
     public const COMPLEMENTOS_CFDI_LIST = [
-        'undefined' => 'Sin complemento definido',
+        '' => 'Sin complemento definido',
         'acreditamientoIeps10' => 'Acreditamiento del IEPS 1.0',
         'aerolineas10' => 'Aerolíneas 1.0',
         'certificadoDestruccion10' => 'Certificado de destrucción 1.0',
