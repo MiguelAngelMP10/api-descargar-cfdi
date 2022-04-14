@@ -4,9 +4,12 @@ namespace App\Helpers;
 
 use App\Console\Traits\ValidateOptionsMakeQuery;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Storage;
+use PhpCfdi\SatWsDescargaMasiva\RequestBuilder\FielRequestBuilder\Fiel;
 use PhpCfdi\SatWsDescargaMasiva\RequestBuilder\FielRequestBuilder\FielRequestBuilder;
 use PhpCfdi\SatWsDescargaMasiva\Service;
 use PhpCfdi\SatWsDescargaMasiva\Services\Query\QueryParameters;
+use PhpCfdi\SatWsDescargaMasiva\Services\Query\QueryResult;
 use PhpCfdi\SatWsDescargaMasiva\Shared\ComplementoCfdi;
 use PhpCfdi\SatWsDescargaMasiva\Shared\DateTimePeriod;
 use PhpCfdi\SatWsDescargaMasiva\Shared\DocumentStatus;
@@ -27,17 +30,20 @@ class MakeQueryCommand extends Command
 
     protected QueryParameters $queryParameters;
     protected ServiceEndpoints $endpoints;
+    protected Fiel $fiel;
+    protected QueryResult $query;
 
-    protected function presentQuery($fiel)
+    protected function presentQuery()
     {
         $webClient = new GuzzleWebClient();
-        $requestBuilder = new FielRequestBuilder($fiel);
+        $requestBuilder = new FielRequestBuilder($this->fiel);
         $service = new Service($requestBuilder, $webClient, null, $this->endpoints);
-        $query = $service->query($this->queryParameters);
-        $this->tableResultQuery($query);
+        $this->query = $service->query($this->queryParameters);
+        $this->tableResultQuery();
+        $this->writeQueryResultFile();
     }
 
-    protected function tableResultQuery($query)
+    protected function tableResultQuery()
     {
         $separator = new TableSeparator();
         $this->table(
@@ -45,9 +51,9 @@ class MakeQueryCommand extends Command
             [
                 [new TableCell('Status', ['colspan' => 2])],
                 $separator,
-                ['Code', $query->getStatus()->getCode()],
-                ['Message', $query->getStatus()->getMessage()],
-                ['RequestId', $query->getRequestId()],
+                ['Code', $this->query->getStatus()->getCode()],
+                ['Message', $this->query->getStatus()->getMessage()],
+                ['RequestId', $this->query->getRequestId()],
             ]
         );
     }
@@ -141,5 +147,28 @@ class MakeQueryCommand extends Command
                 RfcMatches::createFromValues($this->data['rfcMatch'])
             );
         }
+    }
+
+    protected function writeQueryResultFile()
+    {
+        $nameFile =
+            $this->fiel->getRfc()
+            . '_' . $this->queryParameters->getPeriod()->getStart()->formatSat()
+            . '_' . $this->queryParameters->getPeriod()->getEnd()->formatSat()
+            . '_' . $this->queryParameters->getRequestType()->value()
+            . '_' . $this->queryParameters->getDownloadType()->value()
+            . '-' . $this->queryParameters->getDocumentStatus()->value();
+
+        $content = 'Status'
+            . "\n -Code: " . $this->query->getStatus()->getCode()
+            . "\n -message: " . $this->query->getStatus()->getMessage()
+            . "\n -requestId: " . $this->query->getRequestId();
+
+        Storage::disk('local')
+            ->put('datos/' . $this->fiel->getRfc()
+                . '/' . $nameFile . '.txt', $content);
+        $path = Storage::path('datos/' . $this->fiel->getRfc() . '/' . $nameFile . '.txt');
+        $this->info('The query result is stored in the following path');
+        $this->info($path);
     }
 }

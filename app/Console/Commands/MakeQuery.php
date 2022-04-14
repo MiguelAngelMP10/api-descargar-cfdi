@@ -81,23 +81,23 @@ EOF;
                 $contentCer = file_get_contents($this->argument('cer'));
                 $contentKey = file_get_contents($this->argument('key'));
                 $satWsService = new SatWsService();
-                $fiel = $satWsService->createFiel(
+                $this->fiel = $satWsService->createFiel(
                     $contentCer,
                     $contentKey,
                     $this->data['password']
                 );
 
-                if ($fiel->isValid()) {
+                if ($this->fiel->isValid()) {
                     $this->queryParameters = QueryParameters::create();
                     $this->addParametersQuery();
                     $this->querySummary();
 
                     if ($this->confirm('Are you sure you submit this query with the above parameters?', true)) {
-                        $this->presentQuery($fiel);
+                        $this->presentQuery();
                         return 0;
                     }
                 }
-                return 1;
+                return 0;
             } catch (\Exception $exception) {
                 $this->error($exception->getMessage());
                 return 1;
