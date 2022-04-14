@@ -159,4 +159,35 @@ class MakeQueryTest extends TestCase
             ->expectsConfirmation('Are you sure you submit this query with the above parameters?', 'Yes')
             ->assertSuccessful();
     }
+    public function test_table_query_summary()
+    {
+        $separator = new TableSeparator();
+        $command = "sw:make:query $this->pathCer  $this->pathKey -p $this->password
+        -s '2019-01-13 00:00:00'
+        -e '2019-01-13 23:59:59'
+        --requestType='metadata'
+        --downloadType='issued'
+        --documentType='N'
+        --complementCfdi='nomina11'
+        --documentStatus='active'
+         -u '96623061-61fe-49de-b298-c7156476aa8b'
+         --rfcOnBehalf='XXX01010199A'";
+
+        $this->artisan($command)
+            ->expectsTable([new TableCell('Query summary', ['colspan' => 2])], [
+                ['Data', 'Value'],
+                [new TableCell('Period', ['colspan' => 2])],
+                $separator,
+                ['Start', '2019-01-13T00:00:00.000UTC'],
+                ['End', '2019-01-13T23:59:59.000UTC'],
+                $separator,
+                ['Download Type', 'RfcEmisor'],
+                ['Document Type', 'N'],
+                ['Request Type', 'metadata'],
+                ['Complemento Cfdi', 'nomina11'],
+                ['uuid', '96623061-61fe-49de-b298-c7156476aa8b'],
+                ['rfcOnBehalf', 'XXX01010199A'],
+                ['rfcMatches',],
+            ], 'default');
+    }
 }
