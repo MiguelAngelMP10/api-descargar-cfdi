@@ -16,8 +16,14 @@ class VerifyQueryTest extends TestCase
     public function test_cer_and_key_empty_command()
     {
         $this->expectException(\RuntimeException::class);
-        $this->artisan('sw:make:query sw:verify:query');
+        $this->artisan('sw:verify:query');
         $this->expectExceptionMessage('Not enough arguments (missing: "cer, key").');
     }
 
+    public function test_password_required()
+    {
+        $this->artisan('sw:verify:query ' . $this->pathCer . ' ' . $this->pathKey)
+            ->expectsOutput('The password field is required.')
+            ->assertFailed();
+    }
 }
