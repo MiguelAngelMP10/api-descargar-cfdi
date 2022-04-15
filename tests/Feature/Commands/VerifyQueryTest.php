@@ -41,4 +41,12 @@ class VerifyQueryTest extends TestCase
             ->expectsOutput('The endPoint field is required.')
             ->assertFailed();
     }
+
+    public function test_end_point_in()
+    {
+        $this->artisan('sw:verify:query ' . $this->pathCer . ' ' . $this->pathKey .
+            ' -p "' . $this->password . ' --endPoint=thing ')
+            ->expectsOutput('The endPoint must be one of the following types: cfdi, retenciones.')
+            ->assertFailed();
+    }
 }
