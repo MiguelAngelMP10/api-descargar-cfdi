@@ -57,4 +57,12 @@ class VerifyQueryTest extends TestCase
             ->expectsOutput('The requestId field is required.')
             ->assertFailed();
     }
+
+    public function test_request_id_type_uuid()
+    {
+        $this->artisan('sw:verify:query ' . $this->pathCer . ' ' . $this->pathKey .
+            ' -p "' . $this->password .' -i 123')
+            ->expectsOutput('The requestId must be a valid UUID.')
+            ->assertFailed();
+    }
 }
