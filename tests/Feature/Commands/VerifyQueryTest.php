@@ -49,4 +49,12 @@ class VerifyQueryTest extends TestCase
             ->expectsOutput('The endPoint must be one of the following types: cfdi, retenciones.')
             ->assertFailed();
     }
+
+    public function test_request_id_required()
+    {
+        $this->artisan('sw:verify:query ' . $this->pathCer . ' ' . $this->pathKey .
+            ' -p "' . $this->password)
+            ->expectsOutput('The requestId field is required.')
+            ->assertFailed();
+    }
 }
