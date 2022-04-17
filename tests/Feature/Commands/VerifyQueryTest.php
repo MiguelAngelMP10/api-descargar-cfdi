@@ -102,4 +102,13 @@ class VerifyQueryTest extends TestCase
             ]
         ]);
     }
+
+    public function test_write_query_result_file()
+    {
+        $command = "sw:verify:query $this->pathCer $this->pathKey
+                        -p $this->password
+                        -i '865ccb11-5072-4849-be37-640d16c50aee'";
+
+        $this->artisan($command)->expectsOutput('The query result is stored in the following path');
+    }
 }
