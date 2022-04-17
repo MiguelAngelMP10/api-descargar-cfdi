@@ -4,6 +4,9 @@ namespace Tests\Feature\Commands;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Symfony\Component\Console\Helper\TableCell;
+use Symfony\Component\Console\Helper\TableCellStyle;
+use Symfony\Component\Console\Helper\TableSeparator;
 use Tests\TestCase;
 
 class VerifyQueryTest extends TestCase
@@ -61,8 +64,42 @@ class VerifyQueryTest extends TestCase
     public function test_request_id_type_uuid()
     {
         $this->artisan('sw:verify:query ' . $this->pathCer . ' ' . $this->pathKey .
-            ' -p "' . $this->password .' -i 123')
+            ' -p "' . $this->password . ' -i 123')
             ->expectsOutput('The requestId must be a valid UUID.')
             ->assertFailed();
+    }
+
+    public function test_table_verify_query()
+    {
+        $cellStyle = new TableCellStyle(['align' => 'center', 'fg' => 'green']);
+        $separator = new TableSeparator();
+
+        $command = "sw:verify:query $this->pathCer $this->pathKey
+                        -p $this->password
+                        -i '865ccb11-5072-4849-be37-640d16c50aee'";
+        
+        $this->artisan($command)->expectsTable([
+            new TableCell('Verify Query', ['colspan' => 6, 'style' => $cellStyle]),
+        ], [
+            [
+                new TableCell('Status', ['colspan' => 2, 'style' => $cellStyle]),
+                new TableCell('Status Request', ['colspan' => 2, 'style' => $cellStyle]),
+                new TableCell('Code Request', ['colspan' => 2, 'style' => $cellStyle]),
+            ],
+            $separator,
+            ['name', 'message', 'name', 'message', 'name', 'message'],
+            $separator,
+            ['305', 'Certificado Inválido', 'Unknown', 'Desconocida', 'Unknown', 'Desconocida'],
+            $separator,
+            [
+                new TableCell('Number Cfdis', ['colspan' => 3, 'style' => $cellStyle]),
+                new TableCell('Packages Ids', ['colspan' => 3, 'style' => $cellStyle]),
+            ],
+            $separator,
+            [
+                new TableCell('0', ['colspan' => 3, 'style' => $cellStyle]),
+                new TableCell('', ['colspan' => 3, 'style' => $cellStyle]),
+            ]
+        ]);
     }
 }
