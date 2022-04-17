@@ -6,6 +6,7 @@ use App\Console\Traits\ValidateOptionsVerifyQuery;
 use App\Helpers\SatWsService;
 use Exception;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Storage;
 use PhpCfdi\SatWsDescargaMasiva\RequestBuilder\FielRequestBuilder\Fiel;
 use PhpCfdi\SatWsDescargaMasiva\RequestBuilder\FielRequestBuilder\FielRequestBuilder;
 use PhpCfdi\SatWsDescargaMasiva\Service;
@@ -19,6 +20,7 @@ use Symfony\Component\Console\Helper\TableSeparator;
 class VerifyQuery extends Command
 {
     use ValidateOptionsVerifyQuery;
+
     protected string $logo = <<<EOF
    .______    __    __  .______     ______  _______  _______   __
    |   _  \  |  |  |  | |   _  \   /      ||   ____||       \ |  |
@@ -64,6 +66,7 @@ EOF;
                 if ($this->fiel->isValid()) {
                     $this->processVerifyQuery();
                     $this->tableVerifyQuery();
+                    $this->writeQueryResultFile();
                     return 0;
                 }
                 return 1;
@@ -161,5 +164,21 @@ EOF;
                 ['colspan' => 3, 'style' => $cellStyle]
             ),
         ];
+    }
+
+    private function writeQueryResultFile()
+    {
+        $nameFile =
+            $this->fiel->getRfc() . '_' . $this->option('requestId');
+
+        $content = 'Request Id: ' . $this->option('requestId') .
+            "\nPackages Ids: " . implode(', ', $this->verify->getPackagesIds());
+
+        Storage::disk('local')
+            ->put('datos/' . $this->fiel->getRfc()
+                . '/verify_query/' . $nameFile . '.txt', $content);
+        $path = Storage::path('datos/verify_query/' . $this->fiel->getRfc() . '/' . $nameFile . '.txt');
+        $this->info('The query result is stored in the following path');
+        $this->info($path);
     }
 }
