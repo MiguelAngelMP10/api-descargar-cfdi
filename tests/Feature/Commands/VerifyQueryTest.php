@@ -77,7 +77,7 @@ class VerifyQueryTest extends TestCase
         $command = "sw:verify:query $this->pathCer $this->pathKey
                         -p $this->password
                         -i '865ccb11-5072-4849-be37-640d16c50aee'";
-        
+
         $this->artisan($command)->expectsTable([
             new TableCell('Verify Query', ['colspan' => 6, 'style' => $cellStyle]),
         ], [
