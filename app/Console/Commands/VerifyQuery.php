@@ -2,11 +2,10 @@
 
 namespace App\Console\Commands;
 
+use App\Console\Traits\ValidateOptionsVerifyQuery;
 use App\Helpers\SatWsService;
 use Exception;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
 use PhpCfdi\SatWsDescargaMasiva\RequestBuilder\FielRequestBuilder\Fiel;
 use PhpCfdi\SatWsDescargaMasiva\RequestBuilder\FielRequestBuilder\FielRequestBuilder;
 use PhpCfdi\SatWsDescargaMasiva\Service;
@@ -19,6 +18,7 @@ use Symfony\Component\Console\Helper\TableSeparator;
 
 class VerifyQuery extends Command
 {
+    use ValidateOptionsVerifyQuery;
     protected string $logo = <<<EOF
    .______    __    __  .______     ______  _______  _______   __
    |   _  \  |  |  |  | |   _  \   /      ||   ____||       \ |  |
@@ -48,7 +48,6 @@ EOF;
     protected $description = 'Check request status';
     private Fiel $fiel;
     private VerifyResult $verify;
-    private $validator;
 
     /**
      * Execute the console command.
@@ -101,23 +100,6 @@ EOF;
             ? ServiceEndpoints::cfdi() : ServiceEndpoints::retenciones();
         $service = new Service($requestBuilder, $webClient, null, $endpoints);
         $this->verify = $service->verify($this->option('requestId'));
-    }
-
-    private function validateData()
-    {
-        $this->validator = Validator::make([
-            'password' => $this->option('password'),
-            'endPoint' => $this->option('endPoint'),
-            'requestId' => $this->option('requestId'),
-        ], ['password' => ['required', 'min:5'],
-            'endPoint' => ['required', Rule::in(['cfdi', 'retenciones'])],
-            'requestId' => ['required', 'uuid'],
-        ], [
-            'requestId.required' => 'The requestId field is required.',
-            'endPoint.required' => 'The endPoint field is required.',
-            'endPoint.in' => 'The endPoint must be one of the following types: :values.',
-            'requestId.uuid' => 'The requestId must be a valid UUID.',
-        ]);
     }
 
     private function printErrors()
