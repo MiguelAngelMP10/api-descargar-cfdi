@@ -6,9 +6,8 @@ use App\Rules\RfcValidRule;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Validation\Rule;
 
-class MakeQueryPostRequest extends FormRequest
+class VerifyQueryPostRequest extends FormRequest
 {
     protected $stopOnFirstFailure = false;
 
@@ -30,27 +29,15 @@ class MakeQueryPostRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'RFC' => 'required|string',
+            'RFC' => [
+                'bail',
+                'string',
+                'required',
+                new RfcValidRule(),
+            ],
             'password' => 'required|string',
-            'period.start' => 'required|date',
-            'period.end' => 'required|date',
             'retenciones' => 'required|boolean',
-            'downloadType' => [
-                'required', Rule::in(['issued', 'received']),
-            ],
-            'requestType' => [
-                'required', Rule::in(['xml', 'metadata']),
-            ],
-            'rfcMatch' => 'array',
-            'documentType' => [
-                'nullable', Rule::in([ 'I', 'E', 'T', 'N', 'P']),
-            ],
-            'complementoCfdi' => 'string',
-            'documentStatus' => [
-                'nullable', Rule::in([ 'active', 'cancelled']),
-            ],
-            'uuid' => 'uuid',
-            'rfcOnBehalf' => ['bail', 'string', new RfcValidRule()],
+            'requestId' => 'required|uuid',
         ];
     }
 
@@ -61,9 +48,8 @@ class MakeQueryPostRequest extends FormRequest
             'RFC.string' => 'The RFC field no is string.',
             'password.required' => 'The password field is required.',
             'password.string' => 'The password field no is string.',
-            'downloadType.in' => 'The downloadType must be one of the following types: :values',
-            'requestType.in' => 'The requestType must be one of the following types: :values',
-            'documentType.in' => 'The documentType must be one of the following types: :values',
+            'requestId.required' => 'The requestId field is required.',
+            'requestId.uuid' => 'The requestId must be a valid UUID.',
         ];
     }
 

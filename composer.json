@@ -13,7 +13,7 @@
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
         "phpcfdi/rfc": "^1.1",
-        "phpcfdi/sat-ws-descarga-masiva": "^0.4.2"
+        "phpcfdi/sat-ws-descarga-masiva": "dev-solicitud-v1.2"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
@@ -65,5 +65,11 @@
         "sort-packages": true
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/eclipxe13/sat-ws-descarga-masiva"
+        }
+    ]
 }
