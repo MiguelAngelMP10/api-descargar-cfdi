@@ -48,4 +48,11 @@ class DownloadPackagesTest extends TestCase
             ->expectsOutput('The endPoint must be one of the following types: cfdi, retenciones.')
             ->assertFailed();
     }
+
+    public function test_packages_id_required()
+    {
+        $this->artisan('sw:download:packages ' . $this->pathCer . ' ' . $this->pathKey . ' -p ' . $this->password)
+            ->expectsOutput('The package id field is required.')
+            ->assertFailed();
+    }
 }
