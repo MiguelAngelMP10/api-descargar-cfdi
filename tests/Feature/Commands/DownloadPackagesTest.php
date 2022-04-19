@@ -32,4 +32,12 @@ class DownloadPackagesTest extends TestCase
             ->expectsOutput('The password must be at least 5 characters.')
             ->assertFailed();
     }
+
+    public function test_end_point_required()
+    {
+        $this->artisan('sw:download:packages ' . $this->pathCer . ' ' . $this->pathKey .
+            ' -p "' . $this->password . ' --endPoint=')
+            ->expectsOutput('The endPoint field is required.')
+            ->assertFailed();
+    }
 }
