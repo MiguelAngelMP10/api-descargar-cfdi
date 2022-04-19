@@ -18,4 +18,11 @@ class DownloadPackagesTest extends TestCase
         $this->artisan('sw:download:packages ');
         $this->expectExceptionMessage('Not enough arguments (missing: "cer, key").');
     }
+
+    public function test_password_required()
+    {
+        $this->artisan('sw:download:packages ' . $this->pathCer . ' ' . $this->pathKey)
+            ->expectsOutput('The password field is required.')
+            ->assertFailed();
+    }
 }
