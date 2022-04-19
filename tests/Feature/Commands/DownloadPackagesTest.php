@@ -55,4 +55,19 @@ class DownloadPackagesTest extends TestCase
             ->expectsOutput('The package id field is required.')
             ->assertFailed();
     }
+
+    public function test_multiple_packages_id()
+    {
+        $packageid = Uuid::uuid();
+        $stringPakages = '';
+        for ($i = 0; $i < 10; $i++) {
+            $stringPakages .= " -i '{$packageid}_0{$i}'";
+        }
+        $command = "sw:download:packages $this->pathCer $this->pathKey -p $this->password $stringPakages ";
+        $test = $this->artisan($command);
+        for ($i = 0; $i < 10; $i++) {
+            $test->expectsOutput("The package {$packageid}_0{$i} unable to download: Certificado Inválido");
+        }
+        $test->assertSuccessful();
+    }
 }
