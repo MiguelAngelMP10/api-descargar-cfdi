@@ -8,15 +8,12 @@ use Tests\TestCase;
 
 class MetadataPackageReaderTest extends TestCase
 {
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
-    public function test_example()
-    {
-        $response = $this->get('/');
 
-        $response->assertStatus(200);
+    public function test_path_empty_command()
+    {
+        $this->expectException(\RuntimeException::class);
+        $this->artisan('sw:metadata:package:reader');
+        $this->expectExceptionMessage('Not enough arguments (missing: "path").');
     }
+
 }
