@@ -43,21 +43,4 @@ class SyncSatCatalogsTest extends TestCase
         Storage::put('v5.5.20220419.zip', $response);
         $this->assertTrue(Storage::exists('v5.5.20220419.zip'));
     }
-
-    public function test_command_full()
-    {
-        Config::create([
-            'name' => 'resources-sat-catalogs-version',
-            'value' => '',
-        ]);
-        $this->addResponseFake();
-        Storage::fake('local');
-        $this->artisan('sw:sync:sat:catalogs')
-            ->expectsOutput('Getting last tag from phpcfdi/resources-sat-catalogs...')
-            ->expectsOutput('starting download of v5.5.20220419.zip')
-            ->expectsOutput('Download completed')
-            ->expectsOutput('Start ExtractZip')
-            ->expectsOutput('End ExtractZip')
-            ->expectsOutput('Database created in path db/catalogs.sqlite');
-    }
 }
