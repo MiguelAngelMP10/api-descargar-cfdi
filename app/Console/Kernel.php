@@ -25,7 +25,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        $schedule->command('sw:sync:sat:catalogs')
+            ->everyMinute()
+            ->appendOutputTo(storage_path('logs/sw_sync_sat_catalogs.log'));
     }
 
     /**

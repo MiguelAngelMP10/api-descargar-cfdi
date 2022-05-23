@@ -1,0 +1,302 @@
+[
+  {
+    "name": "v5.5.20220419",
+    "zipball_url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/zipball/refs/tags/v5.5.20220419",
+    "tarball_url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/tarball/refs/tags/v5.5.20220419",
+    "commit": {
+      "sha": "95d10bfab7e081614c0ddd331acffd8404b1d4cc",
+      "url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/commits/95d10bfab7e081614c0ddd331acffd8404b1d4cc"
+    },
+    "node_id": "MDM6UmVmMjc3MDQwNjAyOnJlZnMvdGFncy92NS41LjIwMjIwNDE5"
+  },
+  {
+    "name": "v5.4.20220401",
+    "zipball_url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/zipball/refs/tags/v5.4.20220401",
+    "tarball_url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/tarball/refs/tags/v5.4.20220401",
+    "commit": {
+      "sha": "0682d8d6ff695d1b7001ccdff5476563c193bd12",
+      "url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/commits/0682d8d6ff695d1b7001ccdff5476563c193bd12"
+    },
+    "node_id": "MDM6UmVmMjc3MDQwNjAyOnJlZnMvdGFncy92NS40LjIwMjIwNDAx"
+  },
+  {
+    "name": "v5.3.20220331",
+    "zipball_url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/zipball/refs/tags/v5.3.20220331",
+    "tarball_url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/tarball/refs/tags/v5.3.20220331",
+    "commit": {
+      "sha": "ef164d953338abd5cd7d2e62e3b7d7e59600515b",
+      "url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/commits/ef164d953338abd5cd7d2e62e3b7d7e59600515b"
+    },
+    "node_id": "MDM6UmVmMjc3MDQwNjAyOnJlZnMvdGFncy92NS4zLjIwMjIwMzMx"
+  },
+  {
+    "name": "v5.2.20220316",
+    "zipball_url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/zipball/refs/tags/v5.2.20220316",
+    "tarball_url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/tarball/refs/tags/v5.2.20220316",
+    "commit": {
+      "sha": "3c82900ce7f7dbb653291e945703130b704dd5b2",
+      "url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/commits/3c82900ce7f7dbb653291e945703130b704dd5b2"
+    },
+    "node_id": "MDM6UmVmMjc3MDQwNjAyOnJlZnMvdGFncy92NS4yLjIwMjIwMzE2"
+  },
+  {
+    "name": "v5.1.20220315",
+    "zipball_url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/zipball/refs/tags/v5.1.20220315",
+    "tarball_url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/tarball/refs/tags/v5.1.20220315",
+    "commit": {
+      "sha": "760b572c923b9f2eae1e9ae414ae7c7fcf108f31",
+      "url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/commits/760b572c923b9f2eae1e9ae414ae7c7fcf108f31"
+    },
+    "node_id": "MDM6UmVmMjc3MDQwNjAyOnJlZnMvdGFncy92NS4xLjIwMjIwMzE1"
+  },
+  {
+    "name": "v5.0.20220307",
+    "zipball_url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/zipball/refs/tags/v5.0.20220307",
+    "tarball_url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/tarball/refs/tags/v5.0.20220307",
+    "commit": {
+      "sha": "e89fa04246d5ff7e27241a23b399e14b464ad593",
+      "url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/commits/e89fa04246d5ff7e27241a23b399e14b464ad593"
+    },
+    "node_id": "MDM6UmVmMjc3MDQwNjAyOnJlZnMvdGFncy92NS4wLjIwMjIwMzA3"
+  },
+  {
+    "name": "v4.0.20220305",
+    "zipball_url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/zipball/refs/tags/v4.0.20220305",
+    "tarball_url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/tarball/refs/tags/v4.0.20220305",
+    "commit": {
+      "sha": "91f1840002ed81b6a340ee63615b6303edb84f2b",
+      "url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/commits/91f1840002ed81b6a340ee63615b6303edb84f2b"
+    },
+    "node_id": "MDM6UmVmMjc3MDQwNjAyOnJlZnMvdGFncy92NC4wLjIwMjIwMzA1"
+  },
+  {
+    "name": "v3.2.20220304",
+    "zipball_url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/zipball/refs/tags/v3.2.20220304",
+    "tarball_url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/tarball/refs/tags/v3.2.20220304",
+    "commit": {
+      "sha": "b25ffe82e4067e4a5d1398787aef8775154479d1",
+      "url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/commits/b25ffe82e4067e4a5d1398787aef8775154479d1"
+    },
+    "node_id": "MDM6UmVmMjc3MDQwNjAyOnJlZnMvdGFncy92My4yLjIwMjIwMzA0"
+  },
+  {
+    "name": "v3.1.20220216",
+    "zipball_url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/zipball/refs/tags/v3.1.20220216",
+    "tarball_url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/tarball/refs/tags/v3.1.20220216",
+    "commit": {
+      "sha": "e555eb4258804ac24c3ade7c9cdc3f67e1114b81",
+      "url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/commits/e555eb4258804ac24c3ade7c9cdc3f67e1114b81"
+    },
+    "node_id": "MDM6UmVmMjc3MDQwNjAyOnJlZnMvdGFncy92My4xLjIwMjIwMjE2"
+  },
+  {
+    "name": "v3.0.20220210",
+    "zipball_url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/zipball/refs/tags/v3.0.20220210",
+    "tarball_url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/tarball/refs/tags/v3.0.20220210",
+    "commit": {
+      "sha": "1461b8ccaf801801586d3261dbe023457ee8a206",
+      "url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/commits/1461b8ccaf801801586d3261dbe023457ee8a206"
+    },
+    "node_id": "MDM6UmVmMjc3MDQwNjAyOnJlZnMvdGFncy92My4wLjIwMjIwMjEw"
+  },
+  {
+    "name": "v2.34.20220120",
+    "zipball_url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/zipball/refs/tags/v2.34.20220120",
+    "tarball_url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/tarball/refs/tags/v2.34.20220120",
+    "commit": {
+      "sha": "15bf6bd1fb9d4787b26909191c4934b8a944b0d7",
+      "url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/commits/15bf6bd1fb9d4787b26909191c4934b8a944b0d7"
+    },
+    "node_id": "MDM6UmVmMjc3MDQwNjAyOnJlZnMvdGFncy92Mi4zNC4yMDIyMDEyMA=="
+  },
+  {
+    "name": "v2.33.20211222",
+    "zipball_url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/zipball/refs/tags/v2.33.20211222",
+    "tarball_url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/tarball/refs/tags/v2.33.20211222",
+    "commit": {
+      "sha": "154a655e0fb1d64926711f44996d6d7ab8a6c81a",
+      "url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/commits/154a655e0fb1d64926711f44996d6d7ab8a6c81a"
+    },
+    "node_id": "MDM6UmVmMjc3MDQwNjAyOnJlZnMvdGFncy92Mi4zMy4yMDIxMTIyMg=="
+  },
+  {
+    "name": "v2.32.20211210",
+    "zipball_url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/zipball/refs/tags/v2.32.20211210",
+    "tarball_url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/tarball/refs/tags/v2.32.20211210",
+    "commit": {
+      "sha": "eec58d0728b0fc236e23219c4333664b04b60bf8",
+      "url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/commits/eec58d0728b0fc236e23219c4333664b04b60bf8"
+    },
+    "node_id": "MDM6UmVmMjc3MDQwNjAyOnJlZnMvdGFncy92Mi4zMi4yMDIxMTIxMA=="
+  },
+  {
+    "name": "v2.31.20211207",
+    "zipball_url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/zipball/refs/tags/v2.31.20211207",
+    "tarball_url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/tarball/refs/tags/v2.31.20211207",
+    "commit": {
+      "sha": "61087ade08c0f8ba0db3541a511b8a2cd9d4b15a",
+      "url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/commits/61087ade08c0f8ba0db3541a511b8a2cd9d4b15a"
+    },
+    "node_id": "MDM6UmVmMjc3MDQwNjAyOnJlZnMvdGFncy92Mi4zMS4yMDIxMTIwNw=="
+  },
+  {
+    "name": "v2.30.20211203",
+    "zipball_url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/zipball/refs/tags/v2.30.20211203",
+    "tarball_url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/tarball/refs/tags/v2.30.20211203",
+    "commit": {
+      "sha": "79dfe224db2ab54b37b838fa025cc1568ec104ae",
+      "url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/commits/79dfe224db2ab54b37b838fa025cc1568ec104ae"
+    },
+    "node_id": "MDM6UmVmMjc3MDQwNjAyOnJlZnMvdGFncy92Mi4zMC4yMDIxMTIwMw=="
+  },
+  {
+    "name": "v2.29.20211203",
+    "zipball_url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/zipball/refs/tags/v2.29.20211203",
+    "tarball_url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/tarball/refs/tags/v2.29.20211203",
+    "commit": {
+      "sha": "bf35d95089c0c24dadceb477b97caf1a4dfade29",
+      "url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/commits/bf35d95089c0c24dadceb477b97caf1a4dfade29"
+    },
+    "node_id": "MDM6UmVmMjc3MDQwNjAyOnJlZnMvdGFncy92Mi4yOS4yMDIxMTIwMw=="
+  },
+  {
+    "name": "v2.28.20211123",
+    "zipball_url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/zipball/refs/tags/v2.28.20211123",
+    "tarball_url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/tarball/refs/tags/v2.28.20211123",
+    "commit": {
+      "sha": "f62a678773b8716235deda46f4cddde5b2849f21",
+      "url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/commits/f62a678773b8716235deda46f4cddde5b2849f21"
+    },
+    "node_id": "MDM6UmVmMjc3MDQwNjAyOnJlZnMvdGFncy92Mi4yOC4yMDIxMTEyMw=="
+  },
+  {
+    "name": "v2.27.20211123",
+    "zipball_url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/zipball/refs/tags/v2.27.20211123",
+    "tarball_url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/tarball/refs/tags/v2.27.20211123",
+    "commit": {
+      "sha": "9684084c121ef3e6bce9043237aca85a00c1afd1",
+      "url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/commits/9684084c121ef3e6bce9043237aca85a00c1afd1"
+    },
+    "node_id": "MDM6UmVmMjc3MDQwNjAyOnJlZnMvdGFncy92Mi4yNy4yMDIxMTEyMw=="
+  },
+  {
+    "name": "v2.26.20211109",
+    "zipball_url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/zipball/refs/tags/v2.26.20211109",
+    "tarball_url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/tarball/refs/tags/v2.26.20211109",
+    "commit": {
+      "sha": "115e8b24e8a9440a9379e82035974894b9916733",
+      "url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/commits/115e8b24e8a9440a9379e82035974894b9916733"
+    },
+    "node_id": "MDM6UmVmMjc3MDQwNjAyOnJlZnMvdGFncy92Mi4yNi4yMDIxMTEwOQ=="
+  },
+  {
+    "name": "v2.25.20211027",
+    "zipball_url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/zipball/refs/tags/v2.25.20211027",
+    "tarball_url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/tarball/refs/tags/v2.25.20211027",
+    "commit": {
+      "sha": "6c51a54f3d78d86472d9c4d6583c922b4800a011",
+      "url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/commits/6c51a54f3d78d86472d9c4d6583c922b4800a011"
+    },
+    "node_id": "MDM6UmVmMjc3MDQwNjAyOnJlZnMvdGFncy92Mi4yNS4yMDIxMTAyNw=="
+  },
+  {
+    "name": "v2.24.20211012",
+    "zipball_url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/zipball/refs/tags/v2.24.20211012",
+    "tarball_url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/tarball/refs/tags/v2.24.20211012",
+    "commit": {
+      "sha": "d680908199b01967ac4ac8a279c258eb22ce40fb",
+      "url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/commits/d680908199b01967ac4ac8a279c258eb22ce40fb"
+    },
+    "node_id": "MDM6UmVmMjc3MDQwNjAyOnJlZnMvdGFncy92Mi4yNC4yMDIxMTAxMg=="
+  },
+  {
+    "name": "v2.23.20211006",
+    "zipball_url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/zipball/refs/tags/v2.23.20211006",
+    "tarball_url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/tarball/refs/tags/v2.23.20211006",
+    "commit": {
+      "sha": "00b182f00befcf60684544b0e1cf3bca715ccba8",
+      "url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/commits/00b182f00befcf60684544b0e1cf3bca715ccba8"
+    },
+    "node_id": "MDM6UmVmMjc3MDQwNjAyOnJlZnMvdGFncy92Mi4yMy4yMDIxMTAwNg=="
+  },
+  {
+    "name": "v2.22.20210928",
+    "zipball_url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/zipball/refs/tags/v2.22.20210928",
+    "tarball_url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/tarball/refs/tags/v2.22.20210928",
+    "commit": {
+      "sha": "5b4371bbb363ca26702c078faf7bc23bfe045763",
+      "url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/commits/5b4371bbb363ca26702c078faf7bc23bfe045763"
+    },
+    "node_id": "MDM6UmVmMjc3MDQwNjAyOnJlZnMvdGFncy92Mi4yMi4yMDIxMDkyOA=="
+  },
+  {
+    "name": "v2.21.20210914",
+    "zipball_url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/zipball/refs/tags/v2.21.20210914",
+    "tarball_url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/tarball/refs/tags/v2.21.20210914",
+    "commit": {
+      "sha": "4cf08c4da600edc66e4c1390fc10832247bab130",
+      "url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/commits/4cf08c4da600edc66e4c1390fc10832247bab130"
+    },
+    "node_id": "MDM6UmVmMjc3MDQwNjAyOnJlZnMvdGFncy92Mi4yMS4yMDIxMDkxNA=="
+  },
+  {
+    "name": "v2.20.20210831",
+    "zipball_url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/zipball/refs/tags/v2.20.20210831",
+    "tarball_url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/tarball/refs/tags/v2.20.20210831",
+    "commit": {
+      "sha": "4cb5ac38ff7883dfaade8d8f2076fad50d1596ff",
+      "url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/commits/4cb5ac38ff7883dfaade8d8f2076fad50d1596ff"
+    },
+    "node_id": "MDM6UmVmMjc3MDQwNjAyOnJlZnMvdGFncy92Mi4yMC4yMDIxMDgzMQ=="
+  },
+  {
+    "name": "v2.19.20210817",
+    "zipball_url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/zipball/refs/tags/v2.19.20210817",
+    "tarball_url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/tarball/refs/tags/v2.19.20210817",
+    "commit": {
+      "sha": "266de6234fb116daf8f51e200006215c451de91a",
+      "url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/commits/266de6234fb116daf8f51e200006215c451de91a"
+    },
+    "node_id": "MDM6UmVmMjc3MDQwNjAyOnJlZnMvdGFncy92Mi4xOS4yMDIxMDgxNw=="
+  },
+  {
+    "name": "v2.18.20210810",
+    "zipball_url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/zipball/refs/tags/v2.18.20210810",
+    "tarball_url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/tarball/refs/tags/v2.18.20210810",
+    "commit": {
+      "sha": "d221b3adb3e32afb808009d20135314ece00dde1",
+      "url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/commits/d221b3adb3e32afb808009d20135314ece00dde1"
+    },
+    "node_id": "MDM6UmVmMjc3MDQwNjAyOnJlZnMvdGFncy92Mi4xOC4yMDIxMDgxMA=="
+  },
+  {
+    "name": "v2.17.20210727",
+    "zipball_url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/zipball/refs/tags/v2.17.20210727",
+    "tarball_url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/tarball/refs/tags/v2.17.20210727",
+    "commit": {
+      "sha": "869cd5ca0522cae63774ba4413d2c0a07f428e6d",
+      "url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/commits/869cd5ca0522cae63774ba4413d2c0a07f428e6d"
+    },
+    "node_id": "MDM6UmVmMjc3MDQwNjAyOnJlZnMvdGFncy92Mi4xNy4yMDIxMDcyNw=="
+  },
+  {
+    "name": "v2.16.20210713",
+    "zipball_url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/zipball/refs/tags/v2.16.20210713",
+    "tarball_url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/tarball/refs/tags/v2.16.20210713",
+    "commit": {
+      "sha": "c61214bfaa84d3454e538b3fad1317f2edb19f61",
+      "url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/commits/c61214bfaa84d3454e538b3fad1317f2edb19f61"
+    },
+    "node_id": "MDM6UmVmMjc3MDQwNjAyOnJlZnMvdGFncy92Mi4xNi4yMDIxMDcxMw=="
+  },
+  {
+    "name": "v2.15.20210706",
+    "zipball_url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/zipball/refs/tags/v2.15.20210706",
+    "tarball_url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/tarball/refs/tags/v2.15.20210706",
+    "commit": {
+      "sha": "193029830711eaf10ef987b10ac07b6e133433ee",
+      "url": "https://api.github.com/repos/phpcfdi/resources-sat-catalogs/commits/193029830711eaf10ef987b10ac07b6e133433ee"
+    },
+    "node_id": "MDM6UmVmMjc3MDQwNjAyOnJlZnMvdGFncy92Mi4xNS4yMDIxMDcwNg=="
+  }
+]

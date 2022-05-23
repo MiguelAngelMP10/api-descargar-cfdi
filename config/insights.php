@@ -73,6 +73,7 @@ return [
         'app/Providers/RouteServiceProvider.php',
         'app/Console/Kernel.php',
         'app/Exceptions/Handler.php',
+        'app/Models/Catalogs/'
     ],
 
     'add' => [
