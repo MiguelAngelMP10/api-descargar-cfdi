@@ -33,7 +33,8 @@ class MetadataPackageReaderTest extends TestCase
     {
         $cellStyle = new TableCellStyle(['align' => 'center', 'fg' => 'green']);
         $separator = new TableSeparator();
-        $test = $this->artisan('sw:metadata:package:reader ' . $this->fakeMetadataNormal);
+        $command = 'sw:metadata:package:reader ' . $this->fakeMetadataNormal;
+        $test = $this->artisan($command);
         $test->expectsTable(
             [
                 new TableCell(
@@ -53,6 +54,8 @@ class MetadataPackageReaderTest extends TestCase
                     new TableCell('efectoComprobante', ['style' => $cellStyle]),
                     new TableCell('estatus', ['style' => $cellStyle]),
                     new TableCell('fechaCancelacion', ['style' => $cellStyle]),
+                    new TableCell('rfcACuentaTerceros', ['style' => $cellStyle]),
+                    new TableCell('nombreACuentaTerceros', ['style' => $cellStyle]),
                 ],
                 $separator,
                 [
@@ -65,6 +68,8 @@ class MetadataPackageReaderTest extends TestCase
                     '8275.86',
                     'I',
                     '1',
+                    '',
+                    '',
                     ''
                 ]
             ]
@@ -75,7 +80,8 @@ class MetadataPackageReaderTest extends TestCase
     {
         $cellStyle = new TableCellStyle(['align' => 'center', 'fg' => 'green']);
         $separator = new TableSeparator();
-        $test = $this->artisan('sw:metadata:package:reader ' . $this->fakeMetadataRetencionNormal);
+        $command = 'sw:metadata:package:reader ' . $this->fakeMetadataRetencionNormal;
+        $test = $this->artisan($command);
         $test->expectsTable(
             [
                 new TableCell(
@@ -95,6 +101,8 @@ class MetadataPackageReaderTest extends TestCase
                     new TableCell('montoRet', ['style' => $cellStyle]),
                     new TableCell('estatus', ['style' => $cellStyle]),
                     new TableCell('fechaCancelacion', ['style' => $cellStyle]),
+                    new TableCell('rfcACuentaTerceros', ['style' => $cellStyle]),
+                    new TableCell('nombreACuentaTerceros', ['style' => $cellStyle]),
                 ],
                 $separator,
                 [
@@ -107,6 +115,8 @@ class MetadataPackageReaderTest extends TestCase
                     '4495833.0000',
                     '674375.0000',
                     '1',
+                    '',
+                    '',
                     ''
                 ]
             ]

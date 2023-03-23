@@ -16,7 +16,7 @@
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
         "phpcfdi/rfc": "^1.1",
-        "phpcfdi/sat-ws-descarga-masiva": "dev-solicitud-v1.2"
+        "phpcfdi/sat-ws-descarga-masiva": "^0.5.2"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
@@ -65,14 +65,11 @@
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": false
+        }
     },
     "minimum-stability": "dev",
-    "prefer-stable": true,
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/eclipxe13/sat-ws-descarga-masiva"
-        }
-    ]
+    "prefer-stable": true
 }

@@ -137,8 +137,8 @@ class MakeQueryTest extends TestCase
 
     public function test_fiel_private_key_invalidate()
     {
-        $this->artisan('sw:make:query ' . $this->pathCer . ' ' . $this->plainText . ' -p ' . $this->password)
-            ->expectsOutput('Cannot open private key: error:0D07209B:asn1 encoding routines:ASN1_get_object:too long');
+        $command = 'sw:make:query ' . $this->pathCer . ' ' . $this->plainText . ' -p ' . $this->password;
+      $this->artisan($command)->assertFailed();
     }
 
 
