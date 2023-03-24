@@ -13,7 +13,7 @@ jobs:
 
     strategy:
       matrix:
-        php-versions: [ '7.4', '8.0', '8.1' ]
+        php-versions: ['8.1', '8.2' ]
 
     steps:
 
@@ -52,7 +52,7 @@ jobs:
         run: php artisan key:generate
 
       - name: Tests (phpunit)
-        run: vendor/bin/phpunit --testdox --verbose
+        run: php artisan test
 
       - name: PHP Insights
         run: php artisan insights --no-interaction --ansi --format=github-action

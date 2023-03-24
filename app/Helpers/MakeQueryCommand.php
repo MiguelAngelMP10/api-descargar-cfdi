@@ -76,6 +76,7 @@ class MakeQueryCommand extends Command
                 ['Complemento Cfdi', $this->queryParameters->getComplement()->value()],
                 ['uuid', $this->queryParameters->getUuid()->getValue()],
                 ['rfcOnBehalf', $this->queryParameters->getRfcOnBehalf()->getValue()],
+                /** @phpstan-ignore-next-line */
                 ['rfcMatches', implode(',', $this->queryParameters->getRfcMatches()->jsonSerialize())],
             ]
         );
