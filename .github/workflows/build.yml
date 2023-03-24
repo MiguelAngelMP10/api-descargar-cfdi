@@ -52,7 +52,7 @@ jobs:
         run: php artisan key:generate
 
       - name: Tests (phpunit)
-        run: vendor/bin/phpunit --testdox --verbose
+        run: php artisan test
 
       - name: PHP Insights
         run: php artisan insights --no-interaction --ansi --format=github-action
