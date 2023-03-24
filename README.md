@@ -144,7 +144,7 @@ Los endpoints antes mencionados requieren autenticación (bearer token), por lo 
 
 ## Ejecución con _Docker_
 
-Usa [`laravel/sail`](https://laravel.com/docs/8.x/sail) si estás familiarizado.
+Usa [`laravel/sail`](https://laravel.com/docs/10.x/sail) si estás familiarizado.
 
 También puedes crear la imagen de docker en tu máquina y levantar un contenedor,
 como se muestra en [`docker/Docker.md`](docker/Docker.md).
