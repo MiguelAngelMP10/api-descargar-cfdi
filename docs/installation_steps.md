@@ -80,4 +80,9 @@ composer install
         Migrating: 2019_12_14_000001_create_personal_access_tokens_table
         Migrated:  2019_12_14_000001_create_personal_access_tokens_table (94.67ms)
     ```
+## Arrancamos el proyecto con
+
+```bash
+    php artisan serve
+```
 
