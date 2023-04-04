@@ -32,7 +32,7 @@ class MakeQueryHelper extends Controller
      *
      * @return void
      */
-    protected function getParamsQuery(MakeQueryPostRequest $request)
+    protected function getParamsQuery(MakeQueryPostRequest $request): void
     {
         $this->RFC = $request->input('RFC');
         $this->password = $request->input('password');
@@ -54,9 +54,19 @@ class MakeQueryHelper extends Controller
 
     protected function addDocumentTypeToQueryParameters(MakeQueryPostRequest $request)
     {
-        $documentType = $request->input('documentType');
-        $this->queryParameters = $this->queryParameters
-            ->withDocumentType($this->evaluateDocumentTypeMethod($documentType));
+        if ($request->has("documentType")) {
+            $documentType = $request->input('documentType');
+            if (is_null($documentType)) {
+                $this->queryParameters = $this->queryParameters
+                    ->withDocumentType(DocumentType::undefined());
+            } else {
+                $this->queryParameters = $this->queryParameters
+                    ->withDocumentType($this->evaluateDocumentTypeMethod($documentType));
+            }
+        } else {
+            $this->queryParameters = $this->queryParameters
+                ->withDocumentType(DocumentType::undefined());
+        }
     }
 
     protected function evaluateDocumentTypeMethod(string $documentType): DocumentType
