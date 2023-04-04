@@ -19,7 +19,7 @@ Este EndPoint
     - `retenciones=[boolean] required`
     
 
--   **Success Response:**
+-   **Success Response: Aceptada**
 
     **Code:** 200
 
@@ -44,6 +44,34 @@ Este EndPoint
         }
     ```
 
+-   **Success Response: Terminada**
+
+    **Code:** 200
+
+    **Content:**
+
+```json
+        {
+            "status": {
+                "code": 5000,
+                "message": "Solicitud Aceptada"
+            },
+            "codeRequest": {
+                "value": 5000,
+                "message": "Solicitud recibida con éxito"
+            },
+            "statusRequest": {
+                "value": 3,
+                "message": "Terminada"
+            },
+            "numberCfdis": 115,
+            "packagesIds": [
+                "CE4B88D3-7D44-4345-96A9-10F19D570F71_01"
+            ]
+        }
+        
+```
+ 
 
 * **Error Response:**
 
