@@ -47,7 +47,7 @@ class MakeQueryController extends MakeQueryHelper
                 return response()->json($query->getStatus(), 400);
             }
 
-            return response()->json([$query->getStatus(), 'requestId' => $query->getRequestId()], 200);
+            return response()->json([$query->getStatus(), 'requestId' => $query->getRequestId()]);
         } catch (Exception $exception) {
             return response()->json(['message' => $exception->getMessage()], 422);
         }
