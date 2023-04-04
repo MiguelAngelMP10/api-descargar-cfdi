@@ -1,6 +1,6 @@
-# Examples in Curl
+# Ejemplos de uso via http
 
-### En los siguientes enlaces se encuentan ejemplos de cada uno de los endpoints. 
+## En los siguientes enlaces se encuentan ejemplos de cada uno de los endpoints. 
 
 [Send cer and key](ExampleSendCerKey.md)
 
