@@ -3,14 +3,11 @@
 
 ## Tabla de contenido
 
-- [Intalación y configuración en local](docs/installation_steps.md)
-- [Comandos artisan para crear usuario y generar Bearer token](docs/create_user_and_add_token.md)
+* [Instalación y configuración en local](docs/installation_steps.md)
+* [Comandos artisan para crear usuario y generar Bearer token](docs/create_user_and_add_token.md)
+* [Ejemplos de uso vía http](docs/ejemplos_http.md)
+* [Ejemplos de uso vía CLI]()
 
-## Arrancamos el proyecto con
-
-```bash
-    php artisan serve
-```
 
 ## Validaciones de código
 
@@ -44,10 +41,6 @@
     ```
 
 Los endpoints antes mencionados requieren autenticación (bearer token), por lo que en los requests debera agregar un header `Authorization: Bearer {token}`
-
-## Ejemplos
-
-[Ejemplos de end points](docs)
 
 ## Ejecución con _Docker_
 

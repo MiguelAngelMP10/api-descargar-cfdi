@@ -1,4 +1,4 @@
-# Intalación y configuración en local
+# Instalación y configuración en local
 
 pasos para iniciar el proyecto de forma local
 
