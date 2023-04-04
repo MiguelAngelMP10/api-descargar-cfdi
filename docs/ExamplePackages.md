@@ -44,7 +44,7 @@ Reporta los la lista de los paquetes en el almacenamiento local
 ![example-{rfc}-packages](../docs/img/{rfc}-packages.png)
 
 ## GET /{rfc}/packages/{packageId}
-Permite obtenerun paquete  almacenamiento local dato un packageId
+Permite obtener un paquete  almacenamiento local dato un packageId
 -   **URL**
 
     - `GET /api/v1/{rfc}/packages/{packageId}`
