@@ -54,7 +54,7 @@ class MakeQueryHelper extends Controller
 
     protected function addDocumentTypeToQueryParameters(MakeQueryPostRequest $request)
     {
-        if ($request->has("documentType")) {
+        if ($request->has('documentType')) {
             $documentType = $request->input('documentType');
             if (is_null($documentType)) {
                 $this->queryParameters = $this->queryParameters
