@@ -54,6 +54,11 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
+        ],
+        "pre-merge": [
+            "php artisan test",
+            "php artisan insights --no-interaction --ansi --format=github-action",
+            "vendor/bin/phpstan analyse --verbose --no-progress --no-interaction --ansi"
         ]
     },
     "extra": {
