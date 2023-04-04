@@ -1,6 +1,7 @@
 ## Download Packages
 
-Este Servicio permite descagar todos los packagesIds de una petición
+Este Servicio permite descagar todos los packagesIds de una petición 
+en la ruta /api-descargar-cfdi/storage/app/datos/{RFC}/packages
 
 -   **URL**
 
