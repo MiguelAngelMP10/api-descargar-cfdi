@@ -1,7 +1,6 @@
 ## Verify Query
 
-Ejemplo en construcción 
-
+Este EndPoint 
 -   **URL**
 
     `POST /api/v1/verify-query`
@@ -14,37 +13,87 @@ Ejemplo en construcción
 
     **Required:**
 
-    -   `cer=[file.cer]`
-    -   `key=[file.key]`
-    -   `password=[string]`
+    - `RFC=[string]`
+    - `password=[string]`
+    - `requestId=[string]`
+    - `retenciones=[boolean] required`
+    
 
--   **Success Response:**
+-   **Success Response: Aceptada**
 
     **Code:** 200
 
     **Content:**
 
     ```json
-    {
-        "pathCer": "datos/EKU9003173C9/EKU9003173C9.cer",
-        "pathKey": "datos/EKU9003173C9/EKU9003173C9.key"
-    }
+        {
+            "status": {
+                "code": 5000,
+                "message": "Solicitud Aceptada"
+            },
+            "codeRequest": {
+                "value": 5000,
+                "message": "Solicitud recibida con éxito"
+            },
+            "statusRequest": {
+                "value": 1,
+                "message": "Aceptada"
+            },
+            "numberCfdis": 0,
+            "packagesIds": []
+        }
     ```
 
+-   **Success Response: Terminada**
+
+    **Code:** 200
+
+    **Content:**
+
+```json
+        {
+            "status": {
+                "code": 5000,
+                "message": "Solicitud Aceptada"
+            },
+            "codeRequest": {
+                "value": 5000,
+                "message": "Solicitud recibida con éxito"
+            },
+            "statusRequest": {
+                "value": 3,
+                "message": "Terminada"
+            },
+            "numberCfdis": 115,
+            "packagesIds": [
+                "CE4B88D3-7D44-4345-96A9-10F19D570F71_01"
+            ]
+        }
+        
+```
+ 
 
 * **Error Response:**
 
-  * **Code:** 404 NOT FOUND <br />
+  * **Code:** 401 Unauthorized <br />
     **Content:** 
     ```bash
-        { error : "User doesn't exist" }
+        {
+            "message": "Unauthenticated."
+        }
      ```
 
--   **Example**
+    -   **Example**
 
-    ```bash
-    curl -X POST 'http://localhost:8000/api/v1/send-cer-key' \
-     --form 'cer=@tests/_files/fake-fiel/EKU9003173C9.cer' \
-     --form 'key=@tests/_files/fake-fiel/EKU9003173C9.key' \
-     --form 'password=12345678a'
-    ```
+        ```bash
+        curl -X POST 'http://localhost:8000/api/v1/verify-query' \
+        --header 'Accept: application/json' \
+        --header 'Authorization: Bearer 1|iIGxeYBekhJvXD0C2YYqoAz3tTbsS3lXPL18Mjbg' \
+        --header 'Content-Type: application/json' \
+        --data-raw '{
+           "RFC": "EKU9003173C9",
+           "password": "12345678a",
+            "requestId": "9f25a41a-19d9-409d-927a-87238f006292",
+            "retenciones": false
+        }'
+        ```

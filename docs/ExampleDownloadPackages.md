@@ -1,6 +1,7 @@
-## Verify Query
+## Download Packages
 
-Ejemplo en construcción 
+Este Servicio permite descagar todos los packagesIds de una petición 
+en la ruta /api-descargar-cfdi/storage/app/datos/{RFC}/packages
 
 -   **URL**
 
@@ -14,31 +15,50 @@ Ejemplo en construcción
 
     **Required:**
 
-    -   `name=[tipo]`
+    - `RFC=[string] required`
+    - `password=[string] required`
+    - `retenciones=[boolean] required`
+    - `packagesIds=[array -> string]`
 
--   **Success Response:**
+  -   **Success Response:**
 
-    **Code:** 200
+      **Code:** 200
 
-    **Content:**
+      **Content:**
 
-    ```json
-    {
-       
-    }
-    ```
+      ```json
+      {
+      "errorMessages": [],
+      "messages": [
+          "El paquete CE4B88D3-7D44-4345-96A9-10F19D570F71_01 se ha almacenado"
+        ]
+      }
+      ```
 
 
 * **Error Response:**
 
-  * **Code:** 404 NOT FOUND <br />
-    **Content:** 
-    ```bash
-        { error : "" }
-     ```
+    * **Code:** 401 Unauthorized <br />
+      **Content:**
+      ```bash
+          {
+              "message": "Unauthenticated."
+          }
+       ```
 
--   **Example**
+    -   **Example Request**
 
-    ```bash
-    curl -X POST 'http://localhost:8000/' 
-    ```
+        ```bash
+        curl -X POST 'http://localhost:8000/api/v1/download-packages' \
+        --header 'Accept: application/json' \
+        --header 'Authorization: Bearer 1|iIGxeYBekhJvXD0C2YYqoAz3tTbsS3lXPL18Mjbg' \
+        --header 'Content-Type: application/json' \
+        --data-raw '{
+        "RFC": "EKU9003173C9",
+        "password": "12345678a",
+        "retenciones": false,
+        "packagesIds": [
+                "CE4B88D3-7D44-4345-96A9-10F19D570F71_01"
+            ]
+        }' 
+        ```
