@@ -6,6 +6,7 @@ namespace App\Helpers;
 
 use Exception;
 use Illuminate\Support\Facades\Storage;
+use PhpCfdi\Rfc\Exceptions\InvalidExpressionToParseException;
 use PhpCfdi\Rfc\Rfc;
 use PhpCfdi\SatWsDescargaMasiva\RequestBuilder\FielRequestBuilder\Fiel;
 use PhpCfdi\SatWsDescargaMasiva\RequestBuilder\FielRequestBuilder\FielRequestBuilder;
@@ -16,6 +17,10 @@ use PhpCfdi\SatWsDescargaMasiva\WebClient\GuzzleWebClient;
 
 class SatWsService
 {
+    /**
+     * @throws InvalidExpressionToParseException
+     * @throws Exception
+     */
     public function createService(string $rfc, string $password, bool $retenciones): Service
     {
         // parse will throw an exception if rfc is incorrect
@@ -38,6 +43,9 @@ class SatWsService
         return new Service($requestBuilder, $webClient, null, $endpoints);
     }
 
+    /**
+     * @throws Exception
+     */
     public function createFiel(string $contentCer, string $contentKey, string $password): Fiel
     {
         $fiel = Fiel::create($contentCer, $contentKey, $password);

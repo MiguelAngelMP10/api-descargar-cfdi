@@ -68,3 +68,7 @@ Reporta los path de los archivos .cer y .key
         -H "Accept: application/json" \
         -H "Authorization: Bearer 1|YTAe4YrL5btDvR5LdKRLcdsRgP0p3VQGaWPfvs8a"
     ```
+    
+
+![example-send-cer-key](../docs/img/example-send-cer-key.png)
+
