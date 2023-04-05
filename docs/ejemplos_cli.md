@@ -22,11 +22,34 @@ Otros comando implementados
  ```
 ![sw:make:query](../docs/img/sw:make:query-example.png)
 
-
-
 ## sw:verify:query
 
+```bash
+  php artisan sw:verify:query -h
+ ```
+![sw:verify:query](../docs/img/sw:verify:query.png)
+
+
+```bash
+  php artisan sw:verify:query tests/_files/fake-fiel/EKU9003173C9.cer tests/_files/fake-fiel/EKU9003173C9.key -p 12345678a --requestId='7e2fe3f0-6086-4308-90b1-e525d2312e31'
+ ```
+![sw:make:query](../docs/img/sw:verify:query-example.png)
+
 ## sw:download:packages
+
+```bash
+  php artisan sw:download:packages -h
+ ```
+![sw:download:packages](../docs/img/sw:download:packages.png)
+
+
+```bash
+  php artisan sw:download:packages  tests/_files/fake-fiel/EKU9003173C9.cer tests/_files/fake-fiel/EKU9003173C9.key -p 12345678a --packageId='7E2FE3F0-6086-4308-90B1-E525D2312E31_01' --pathSave='/home/miguelangelmp10/Descargas/'
+ ```
+Resultado
+```text
+El paquete /home/miguelangelmp10/Descargas/7E2FE3F0-6086-4308-90B1-E525D2312E31_01 se ha almacena
+ ```
 
 ## sw:send:cer-key
 
