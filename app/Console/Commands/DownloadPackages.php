@@ -34,7 +34,7 @@ class DownloadPackages extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Download web service packages';
     protected $validator;
     private Fiel $fiel;
 
