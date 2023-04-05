@@ -53,6 +53,7 @@ class SyncSatCatalogs extends Command
             return 0;
         }
         $this->question('Sat catalogs resources are synchronized');
+
         return 0;
     }
 
@@ -68,7 +69,7 @@ class SyncSatCatalogs extends Command
         $this->comment('Getting last tag from phpcfdi/resources-sat-catalogs...');
         $response = Http::get('https://api.github.com/repos/phpcfdi/resources-sat-catalogs/tags');
         $versionZip = $response->collect()->get(0);
-        return (object) [
+        return (object)[
             'nameZip' => $versionZip['name'] . '.zip',
             'urlZip' => $versionZip['zipball_url'],
             'version' => $versionZip['name'],
@@ -87,7 +88,7 @@ class SyncSatCatalogs extends Command
         $process = Process::fromShellCommandline($command);
         $process->run();
 
-        if (! $process->isSuccessful()) {
+        if (!$process->isSuccessful()) {
             throw new ProcessFailedException($process);
         }
     }
@@ -109,7 +110,7 @@ class SyncSatCatalogs extends Command
             $zip = new ZipArchive();
             $res = $zip->open($path);
             if ($res === true) {
-                $zip->extractTo($storagePath .'phpcfdi-resources-sat-catalogs');
+                $zip->extractTo($storagePath . 'phpcfdi-resources-sat-catalogs');
                 $zip->close();
             }
         }

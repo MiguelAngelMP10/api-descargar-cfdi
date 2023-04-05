@@ -52,7 +52,17 @@ El paquete /home/miguelangelmp10/Descargas/7E2FE3F0-6086-4308-90B1-E525D2312E31_
  ```
 
 ## sw:send:cer-key
+```bash
+  php artisan sw:send:cer-key  tests/_files/fake-fiel/EKU9003173C9.cer tests/_files/fake-fiel/EKU9003173C9.key -p 12345678a --copyFiel No
+ ```
+![sw:send:cer-key](../docs/img/sw:send:cer-key.png)
 
 ## sw:sync:sat:catalogs
+```bash
+  php artisan sw:sync:sat:catalogs
+```
+![sw:sync:sat:catalogs-1.png](../docs/img/sw:sync:sat:catalogs-1.png)
+![sw:sync:sat:catalogs-2.png](../docs/img/sw:sync:sat:catalogs-2.png)
+
 
 ## sw:metadata:package:reader
