@@ -1,6 +1,6 @@
 # Ejemplos de uso vía cli
 
-* [sw:make:query](ejemplos_cli.md#sw:make:query)
+* [sw:make:query](/docs/update-docs/docs/ejemplos_cli.md#swmakequery)
 * [sw:verify:query](ExampleMakeQuery.md)
 * [sw:download:packages](ExampleVerifyQuery.md)
 
