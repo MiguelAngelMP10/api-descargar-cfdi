@@ -53,10 +53,11 @@ class SyncSatCatalogs extends Command
             return 0;
         }
         $this->question('Sat catalogs resources are synchronized');
+
         return 0;
     }
 
-    private function downloadLastTagResourcesSatCatalogs($nameZip, $urlZip)
+    private function downloadLastTagResourcesSatCatalogs($nameZip, $urlZip): void
     {
         $this->info('starting download of ' . $nameZip);
         Storage::disk('local')->put($nameZip, Http::get($urlZip)->body());
@@ -75,7 +76,7 @@ class SyncSatCatalogs extends Command
         ];
     }
 
-    private function importSchemaAndData()
+    private function importSchemaAndData(): void
     {
         $directory = Storage::disk('local')->directories('phpcfdi-resources-sat-catalogs')[0];
         $storagePath = $this->getStoragePath();
@@ -92,7 +93,7 @@ class SyncSatCatalogs extends Command
         }
     }
 
-    private function deleteFileZipAndSatCatalogs($nameFileZip)
+    private function deleteFileZipAndSatCatalogs($nameFileZip): void
     {
         Storage::delete($nameFileZip);
         $this->comment('Delete ' . $nameFileZip);
@@ -109,21 +110,21 @@ class SyncSatCatalogs extends Command
             $zip = new ZipArchive();
             $res = $zip->open($path);
             if ($res === true) {
-                $zip->extractTo($storagePath .'phpcfdi-resources-sat-catalogs');
+                $zip->extractTo($storagePath . 'phpcfdi-resources-sat-catalogs');
                 $zip->close();
             }
         }
         $this->info('End ExtractZip');
     }
 
-    private function createFileDataBaseCatalogs()
+    private function createFileDataBaseCatalogs(): void
     {
         $pathDataBase = 'db/catalogs.sqlite';
         Storage::disk('local')->put($pathDataBase, '');
         $this->info('Database created in path ' . $pathDataBase);
     }
 
-    private function createModelTableCatalog()
+    private function createModelTableCatalog(): void
     {
         $connection = DB::connection('sqlite_catalogs');
         $tables = $connection->select("SELECT name FROM sqlite_master WHERE type = 'table'");
@@ -134,7 +135,7 @@ class SyncSatCatalogs extends Command
         }
     }
 
-    private function getStoragePath()
+    private function getStoragePath(): string
     {
         $storagePath = Storage::disk('local')->path('');
         return explode('/api-descargar-cfdi/', $storagePath)[1];

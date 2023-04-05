@@ -46,7 +46,7 @@ return [
         'sqlite_catalogs' => [
             'driver' => 'sqlite',
             'url' => env('DATABASE_URL'),
-            'database' => env('DB_DATABASE_CATALOGS'),
+            'database' => env('DATABASE_URL_CATALOGS'),
             'prefix' => '',
             'foreign_key_constraints' => env('DB_FOREIGN_KEYS', true),
         ],

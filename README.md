@@ -6,7 +6,7 @@
 * [Instalación y configuración en local](docs/installation_steps.md)
 * [Comandos artisan para crear usuario y generar Bearer token](docs/create_user_and_add_token.md)
 * [Ejemplos de uso vía http](docs/ejemplos_http.md)
-* [Ejemplos de uso vía CLI]()
+* [Ejemplos de uso vía CLI](docs/ejemplos_cli.md)
 
 
 ## Validaciones de código
@@ -27,17 +27,6 @@
 
     ```bash
        ./vendor/bin/phpcs --error-severity=1 --warning-severity=8 --extensions=php
-    ```
-
--   Lista de endPoints
-    ```text
-     - POST /api/v1/send-cer-key
-     - POST /api/v1/make-query
-     - POST /api/v1/verify-query
-     - POST /api/v1/download-packages
-     - GET /api/v1/{rfc}/packages
-     - GET /api/v1/{rfc}/packages/{packageId}
-     - DELETE /api/v1/{rfc}/packages/{packageId}
     ```
 
 Los endpoints antes mencionados requieren autenticación (bearer token), por lo que en los requests debera agregar un header `Authorization: Bearer {token}`

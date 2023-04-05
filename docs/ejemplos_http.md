@@ -12,10 +12,13 @@
 
 * [Packages](ExamplePackages.md)
 
-
-<!--
-    GET /api/v1/packages/{rfc}
-    GET /api/v1/packages/{rfc}/{packageId}
-    DELETE /api/v1/packages/{rfc}/{packageId}
-
--->
+-   Lista de endPoints
+    ```text
+     - POST /api/v1/send-cer-key
+     - POST /api/v1/make-query
+     - POST /api/v1/verify-query
+     - POST /api/v1/download-packages
+     - GET /api/v1/{rfc}/packages
+     - GET /api/v1/{rfc}/packages/{packageId}
+     - DELETE /api/v1/{rfc}/packages/{packageId}
+    ```

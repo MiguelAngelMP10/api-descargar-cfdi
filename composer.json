@@ -14,7 +14,8 @@
         "laravel/sanctum": "^3.2",
         "laravel/tinker": "^2.8",
         "phpcfdi/rfc": "^1.1",
-        "phpcfdi/sat-ws-descarga-masiva": "^0.5.2"
+        "phpcfdi/sat-ws-descarga-masiva": "^0.5.2",
+        "ext-zip": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
