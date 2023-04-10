@@ -7,6 +7,7 @@
 * [Comandos artisan para crear usuario y generar Bearer token](docs/create_user_and_add_token.md)
 * [Ejemplos de uso vía http](docs/ejemplos_http.md)
 * [Ejemplos de uso vía CLI](docs/ejemplos_cli.md)
+* Ejemplos de uso con UI con  inertiajs en desarrollo
 
 
 ## Validaciones de código
