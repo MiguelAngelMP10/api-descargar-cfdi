@@ -11,9 +11,10 @@ use PhpCfdi\SatWsDescargaMasiva\Services\Verify\VerifyResult;
 
 class VerifyQueryController extends Controller
 {
-    private string $RFC;
+    private string $key;
+    private string $cer;
+    private string|null $endPoint;
     private string $password;
-    private bool $retenciones;
     private string $requestId;
 
     /**
@@ -27,11 +28,7 @@ class VerifyQueryController extends Controller
         $this->getParamsRequest($request);
         $satWsServiceHelper = new SatWsService();
         try {
-            $service = $satWsServiceHelper->createService(
-                $this->RFC,
-                $this->password,
-                $this->retenciones
-            );
+            $service = $satWsServiceHelper->createService($this->cer, $this->key, $this->password, $this->endPoint);
             return $service->verify($this->requestId);
         } catch (Exception $exception) {
             return response()->json(['message' => $exception->getMessage()], 422);
@@ -40,9 +37,10 @@ class VerifyQueryController extends Controller
 
     private function getParamsRequest(VerifyQueryPostRequest $request): void
     {
-        $this->RFC = $request->input('RFC');
+        $this->cer = $request->input('cer');
+        $this->key = $request->input('key');
         $this->password = $request->input('password');
-        $this->retenciones = $request->boolean('retenciones');
+        $this->endPoint = $request->input('endPoint');
         $this->requestId = $request->input('requestId');
     }
 }
