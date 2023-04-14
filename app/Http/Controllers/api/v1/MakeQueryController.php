@@ -28,17 +28,20 @@ class MakeQueryController extends MakeQueryHelper
                 ->withPeriod($this->period)
                 ->withDownloadType($this->downloadType)
                 ->withRequestType($this->requestType);
+
             $this->addDocumentTypeToQueryParameters($request);
             $this->addComplementoCfdi($request);
             $this->addDocumentStatus($request);
             $this->addUuid($request);
             $this->addRfcOnBehalf($request);
+            $this->addRfcMatches();
 
             $satWsServiceHelper = new SatWsService();
             $service = $satWsServiceHelper->createService(
-                $this->RFC,
+                $this->cer,
+                $this->key,
                 $this->password,
-                $this->retenciones
+                $this->endPoint
             );
 
             $query = $service->query($this->queryParameters);
