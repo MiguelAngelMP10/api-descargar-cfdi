@@ -69,6 +69,7 @@ class MakeQueryPostRequest extends FormRequest
             'endPoint.in' => 'The endPoint must be one of the following types: :values',
             'documentStatus.string' => 'The documentStatus must be a string.',
             'documentStatus.in' => 'The documentStatus must be one of the following types: :values',
+            'rfcMatches.array' => 'The rfcMatches must be an array.'
         ];
     }
 

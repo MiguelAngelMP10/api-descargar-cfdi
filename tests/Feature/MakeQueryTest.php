@@ -70,14 +70,14 @@ class MakeQueryTest extends TestCase
                     "start" => "2021-11-01 00:00:01",
                     "end" => "2021-12-31 23:59:59"
                 ],
-                "rfcMatch" => ""
+                "rfcMatches" => ""
             ]
         );
 
         $response->assertStatus(422)->assertJson([
             'message' => 'Invalid data',
             'errors' => [
-                'rfcMatch' => ['The rfc match must be an array.']
+                'rfcMatches' => ['The rfcMatches must be an array.']
             ],
         ]);
     }
@@ -155,7 +155,7 @@ class MakeQueryTest extends TestCase
         $response->assertStatus(422)->assertJson([
             'message' => 'Invalid data',
             'errors' => [
-                'documentStatus' => ["The selected document status is invalid."]
+                'documentStatus' => ["The documentStatus must be one of the following types: active, cancelled"]
             ]
         ]);
     }
