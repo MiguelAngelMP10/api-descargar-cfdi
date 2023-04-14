@@ -34,6 +34,12 @@ trait WithValidFielTrait
         $this->satWsService = $satWsService;
     }
 
+    protected function getFielRfc(): string
+    {
+        $fiel = $this->satWsService->createFiel($this->certificate, $this->key, $this->fielPassword);
+        return $fiel->getRfc();
+    }
+
     protected function getCertificate(): string
     {
         return $this->certificate;
