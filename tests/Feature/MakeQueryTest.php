@@ -11,23 +11,19 @@ class MakeQueryTest extends TestCase
 {
     use WithValidFielTrait, RefreshDatabase;
 
+
     public function test_it_refuse_an_invalid_empty_request(): void
     {
         $this->sanctumAuthenticate();
         $this->setUpValidFiel();
         $response = $this->post('/api/v1/make-query', []);
-
         $response->assertStatus(422)->assertJson([
             'message' => 'Invalid data',
-            'errors' =>
-                [
-                    'RFC' => ['The RFC field is required.'],
-                    'period.start' => ['The period.start field is required.'],
-                    'period.end' => ['The period.end field is required.'],
-                    'retenciones' => ['The retenciones field is required.'],
-                    'downloadType' => ['The download type field is required.'],
-                    'requestType' => ['The request type field is required.']
-                ],
+            'errors' => [
+                'cer' => ['The cer field is required.'],
+                'key' => ['The key field is required.'],
+                'password' => ['The password field is required.'],
+            ],
         ]);
     }
 
@@ -38,13 +34,13 @@ class MakeQueryTest extends TestCase
         $response = $this->post(
             '/api/v1/make-query',
             [
-                'RFC' => 'EKU9003173C9',
-                'password' => "12345678a",
+                'cer' => $this->getCertificate(),
+                'key' => $this->getKey(),
+                'password' => $this->getFielPassword(),
                 "period" => [
                     "start" => "2021-11-01 00:00:01",
                     "end" => "2021-12-31 23:59:59"
                 ],
-                "retenciones" => false,
                 "downloadType" => "lo-que-sea",
                 "requestType" => "lo-que-sea",
                 "rfcMatch" => ""
@@ -67,15 +63,13 @@ class MakeQueryTest extends TestCase
         $response = $this->post(
             '/api/v1/make-query',
             [
-                'RFC' => "lo-que-sea",
-                'password' => "lo-que-sea",
+                'cer' => $this->getCertificate(),
+                'key' => $this->getKey(),
+                'password' => $this->getFielPassword(),
                 "period" => [
                     "start" => "2021-11-01 00:00:01",
                     "end" => "2021-12-31 23:59:59"
                 ],
-                "retenciones" => false,
-                "downloadType" => "issued",
-                "requestType" => "metadata",
                 "rfcMatch" => ""
             ]
         );
@@ -95,8 +89,9 @@ class MakeQueryTest extends TestCase
         $response = $this->post(
             '/api/v1/make-query',
             [
-                'RFC' => 'EKU9003173C9',
-                'password' => "12345678a",
+                'cer' => $this->getCertificate(),
+                'key' => $this->getKey(),
+                'password' => $this->getFielPassword(),
                 "period" => [
                     "start" => "2021-11-01 00:00:01",
                     "end" => "2021-11-01 23:59:59"
@@ -124,21 +119,16 @@ class MakeQueryTest extends TestCase
         $response = $this->post(
             '/api/v1/make-query',
             [
-                'RFC' => 'EKU9003173C9',
-                'password' => "12345678a",
+                'cer' => $this->getCertificate(),
+                'key' => $this->getKey(),
+                'password' => $this->getFielPassword(),
                 "period" => [
                     "start" => "2021-11-01 00:00:01",
                     "end" => "2021-11-01 23:59:59"
                 ],
-                "retenciones" => false,
-                "downloadType" => "received",
-                "requestType" => "metadata",
-                "rfcMatch" => [],
-                "documentType" => "E",
                 "complementoCfdi" => "algo"
             ]
         );
-
         $response->assertStatus(422)->assertJson([
             'message' => "PhpCfdi\\SatWsDescargaMasiva\\Shared\\ComplementoCfdi value algo was not found"
         ]);
@@ -151,18 +141,13 @@ class MakeQueryTest extends TestCase
         $response = $this->post(
             '/api/v1/make-query',
             [
-                'RFC' => 'EKU9003173C9',
-                'password' => "12345678a",
+                'cer' => $this->getCertificate(),
+                'key' => $this->getKey(),
+                'password' => $this->getFielPassword(),
                 "period" => [
                     "start" => "2021-11-01 00:00:01",
                     "end" => "2021-11-01 23:59:59"
                 ],
-                "retenciones" => false,
-                "downloadType" => "received",
-                "requestType" => "metadata",
-                "rfcMatch" => [],
-                "documentType" => "E",
-                "complementoCfdi" => "leyendasfisc",
                 "documentStatus" => "otra cosa"
             ]
         );
@@ -182,19 +167,13 @@ class MakeQueryTest extends TestCase
         $response = $this->post(
             '/api/v1/make-query',
             [
-                'RFC' => 'EKU9003173C9',
-                'password' => "12345678a",
+                'cer' => $this->getCertificate(),
+                'key' => $this->getKey(),
+                'password' => $this->getFielPassword(),
                 "period" => [
                     "start" => "2021-11-01 00:00:01",
                     "end" => "2021-11-01 23:59:59"
                 ],
-                "retenciones" => false,
-                "downloadType" => "received",
-                "requestType" => "metadata",
-                "rfcMatch" => [],
-                "documentType" => "E",
-                "complementoCfdi" => "leyendasfisc",
-                "documentStatus" => "active",
                 "uuid" => ''
             ]
         );
@@ -214,21 +193,14 @@ class MakeQueryTest extends TestCase
         $response = $this->post(
             '/api/v1/make-query',
             [
-                'RFC' => 'EKU9003173C9',
-                'password' => "12345678a",
+                'cer' => $this->getCertificate(),
+                'key' => $this->getKey(),
+                'password' => $this->getFielPassword(),
                 "period" => [
                     "start" => "2021-11-01 00:00:01",
                     "end" => "2021-11-01 23:59:59"
                 ],
-                "retenciones" => false,
-                "downloadType" => "received",
-                "requestType" => "metadata",
-                "rfcMatch" => [],
-                "documentType" => "E",
-                "complementoCfdi" => "leyendasfisc",
-                "documentStatus" => "active",
-                "uuid" =>  Uuid::uuid(),
-                "rfcOnBehalf" => (new RfcFaker)->mexicanRfc().'-',
+                "rfcOnBehalf" => (new RfcFaker)->mexicanRfc() . '-',
             ]
         );
 
@@ -239,4 +211,30 @@ class MakeQueryTest extends TestCase
             ]
         ]);
     }
+
+    public function test_validate_add_endpoint(){
+        $this->sanctumAuthenticate();
+        $this->setUpValidFiel();
+        $response = $this->post(
+            '/api/v1/make-query',
+            [
+                'cer' => $this->getCertificate(),
+                'key' => $this->getKey(),
+                'password' => $this->getFielPassword(),
+                "period" => [
+                    "start" => "2021-11-01 00:00:01",
+                    "end" => "2021-11-01 23:59:59"
+                ],
+               'endPoint' => 'algo'
+            ]
+        );
+
+        $response->assertStatus(422)->assertJson([
+            'message' => 'Invalid data',
+            'errors' => [
+                'endPoint' => ["The endPoint must be one of the following types: cfdi, retenciones"]
+            ]
+        ]);
+    }
+
 }
