@@ -23,7 +23,6 @@ trait WithValidFielTrait
     private function setUpValidFiel(): void
     {
         $satWsService = new SatWsService();
-        $rfc = 'EKU9003173C9';
         $certificatePath = __DIR__ . '/../_files/fake-fiel/EKU9003173C9-pem.cer';
         $privateKeyPath = __DIR__ . '/../_files/fake-fiel/EKU9003173C9-pem.key';
         $passPhrase = trim(file_get_contents(__DIR__ . '/../_files/fake-fiel/EKU9003173C9-password.txt'));
