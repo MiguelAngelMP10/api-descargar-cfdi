@@ -35,9 +35,7 @@ class MakeQueryPostRequest extends FormRequest
             'password' => 'required|string',
             'period.start' => 'date',
             'period.end' => 'date',
-            'endPoint' => [
-                'nullable', Rule::in(['cfdi', 'retenciones']),
-            ],
+            'endPoint' => ['nullable', Rule::in(['cfdi', 'retenciones'])],
             'downloadType' => [
                 'string', Rule::in(['issued', 'received']),
             ],
@@ -46,11 +44,11 @@ class MakeQueryPostRequest extends FormRequest
             ],
             'rfcMatches' => 'array',
             'documentType' => [
-                'string', Rule::in([ 'I', 'E', 'T', 'N', 'P']),
+                'string', Rule::in(['I', 'E', 'T', 'N', 'P']),
             ],
             'complementoCfdi' => 'string',
             'documentStatus' => [
-                'string', Rule::in([ 'active', 'cancelled']),
+                'string', Rule::in(['active', 'cancelled']),
             ],
             'uuid' => 'uuid',
             'rfcOnBehalf' => ['bail', 'string', new RfcValidRule()],
@@ -69,7 +67,7 @@ class MakeQueryPostRequest extends FormRequest
             'endPoint.in' => 'The endPoint must be one of the following types: :values',
             'documentStatus.string' => 'The documentStatus must be a string.',
             'documentStatus.in' => 'The documentStatus must be one of the following types: :values',
-            'rfcMatches.array' => 'The rfcMatches must be an array.'
+            'rfcMatches.array' => 'The rfcMatches must be an array.',
         ];
     }
 

@@ -23,7 +23,6 @@ class MakeQueryController extends MakeQueryHelper
     {
         try {
             $this->getParamsQuery($request);
-
             $this->queryParameters = QueryParameters::create()
                 ->withPeriod($this->period)
                 ->withDownloadType($this->downloadType)
@@ -37,12 +36,7 @@ class MakeQueryController extends MakeQueryHelper
             $this->addRfcMatches();
 
             $satWsServiceHelper = new SatWsService();
-            $service = $satWsServiceHelper->createService(
-                $this->cer,
-                $this->key,
-                $this->password,
-                $this->endPoint
-            );
+            $service = $satWsServiceHelper->createService($this->cer, $this->key, $this->password, $this->endPoint);
 
             $query = $service->query($this->queryParameters);
 

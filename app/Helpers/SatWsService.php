@@ -7,7 +7,6 @@ namespace App\Helpers;
 use Exception;
 use Illuminate\Support\Facades\Storage;
 use PhpCfdi\Rfc\Exceptions\InvalidExpressionToParseException;
-use PhpCfdi\Rfc\Rfc;
 use PhpCfdi\SatWsDescargaMasiva\RequestBuilder\FielRequestBuilder\Fiel;
 use PhpCfdi\SatWsDescargaMasiva\RequestBuilder\FielRequestBuilder\FielRequestBuilder;
 use PhpCfdi\SatWsDescargaMasiva\Service;
@@ -27,7 +26,6 @@ class SatWsService
         string $password,
         string|null $endpoint
     ): Service {
-
         $fiel = $this->createFiel($contentCer, $contentKey, $password);
 
         // creación del web client basado en Guzzle que implementa WebClientInterface
@@ -57,7 +55,7 @@ class SatWsService
         $fiel = Fiel::create($contentCer, $contentKey, $password);
 
         // verificar que la FIEL sea válida (no sea CSD y sea vigente acorde a la fecha del sistema)
-        if (!$fiel->isValid()) {
+        if (! $fiel->isValid()) {
             throw new Exception('La FIEL no es valida');
         }
 
