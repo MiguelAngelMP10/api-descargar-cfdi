@@ -13,15 +13,17 @@ use PhpCfdi\SatWsDescargaMasiva\Shared\DocumentStatus;
 use PhpCfdi\SatWsDescargaMasiva\Shared\DocumentType;
 use PhpCfdi\SatWsDescargaMasiva\Shared\DownloadType;
 use PhpCfdi\SatWsDescargaMasiva\Shared\RequestType;
+use PhpCfdi\SatWsDescargaMasiva\Shared\RfcMatches;
 use PhpCfdi\SatWsDescargaMasiva\Shared\RfcOnBehalf;
 use PhpCfdi\SatWsDescargaMasiva\Shared\Uuid;
 
 class MakeQueryHelper extends Controller
 {
-    protected string $RFC;
+    protected string $cer;
+    protected string $key;
     protected string $password;
-    protected bool $retenciones;
-    protected array $rfcMatch;
+    protected string|null $endPoint;
+    protected array $rfcMatches;
     protected DownloadType $downloadType;
     protected RequestType $requestType;
     protected DateTimePeriod $period;
@@ -34,9 +36,10 @@ class MakeQueryHelper extends Controller
      */
     protected function getParamsQuery(MakeQueryPostRequest $request): void
     {
-        $this->RFC = $request->input('RFC');
+        $this->cer = $request->input('cer');
+        $this->key = $request->input('key');
         $this->password = $request->input('password');
-        $this->retenciones = $request->boolean('retenciones');
+        $this->endPoint = $request->input('endPoint');
 
         $start = $request->input('period.start');
         $end = $request->input('period.end');
@@ -47,12 +50,12 @@ class MakeQueryHelper extends Controller
         $this->requestType = $request->input('requestType') === 'xml'
             ? RequestType::xml() : RequestType::metadata();
 
-        $this->rfcMatch = $request->input('rfcMatch') ?? [];
+        $this->rfcMatches = $request->has('rfcMatches') ? $request->input('rfcMatches') : [];
 
         $this->period = DateTimePeriod::createFromValues($start, $end);
     }
 
-    protected function addDocumentTypeToQueryParameters(MakeQueryPostRequest $request)
+    protected function addDocumentTypeToQueryParameters(MakeQueryPostRequest $request): void
     {
         if ($request->has('documentType')) {
             $documentType = $request->input('documentType');
@@ -85,7 +88,7 @@ class MakeQueryHelper extends Controller
             : DocumentType::undefined();
     }
 
-    protected function addDocumentStatus(MakeQueryPostRequest $request)
+    protected function addDocumentStatus(MakeQueryPostRequest $request): void
     {
         if ($request->has('documentStatus')) {
             if ($request->input('documentStatus') === 'active') {
@@ -99,7 +102,7 @@ class MakeQueryHelper extends Controller
         }
     }
 
-    protected function addComplementoCfdi(MakeQueryPostRequest $request)
+    protected function addComplementoCfdi(MakeQueryPostRequest $request): void
     {
         if ($request->has('complementoCfdi')) {
             $this->queryParameters =
@@ -107,7 +110,7 @@ class MakeQueryHelper extends Controller
         }
     }
 
-    protected function addUuid(MakeQueryPostRequest $request)
+    protected function addUuid(MakeQueryPostRequest $request): void
     {
         if ($request->has('uuid')) {
             $this->queryParameters =
@@ -115,11 +118,18 @@ class MakeQueryHelper extends Controller
         }
     }
 
-    protected function addRfcOnBehalf(MakeQueryPostRequest $request)
+    protected function addRfcOnBehalf(MakeQueryPostRequest $request): void
     {
         if ($request->has('rfcOnBehalf')) {
             $this->queryParameters =
                 $this->queryParameters->withRfcOnBehalf(RfcOnBehalf::create($request->input('rfcOnBehalf')));
         }
+    }
+
+    protected function addRfcMatches(): void
+    {
+        $this->queryParameters = $this->queryParameters->withRfcMatches(
+            RfcMatches::createFromValues(...$this->rfcMatches)
+        );
     }
 }
