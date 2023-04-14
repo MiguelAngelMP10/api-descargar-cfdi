@@ -21,50 +21,136 @@ class VerifyQueryTest extends TestCase
         $this->setUpValidFiel();
         $this->sanctumAuthenticate();
         $response = $this->post('/api/v1/verify-query', []);
-
         $response->assertStatus(422)->assertJson([
             'message' => 'Invalid data',
             'errors' => [
-                'RFC' => ['The RFC field is required.'],
+                'cer' => ['The cer field is required.'],
+                'key' => ['The key field is required.'],
                 'password' => ['The password field is required.'],
-                'retenciones' => ['The retenciones field is required.'],
                 'requestId' => ['The requestId field is required.'],
             ],
         ]);
     }
 
-    public function test_validate_rfc()
+    public function test_validate_cer_required()
     {
         $this->sanctumAuthenticate();
         $this->setUpValidFiel();
         $response = $this->post(
             '/api/v1/verify-query',
             [
-                'RFC' => 'a',
-                'password' => '12345678a',
-                "retenciones" => false,
-                'requestId' => "",
+                'cer' => null,
+                'key' => $this->getKey(),
+                'password' => $this->getFielPassword(),
+                'requestId' => Uuid::uuid(),
             ]
         );
 
         $response->assertStatus(422)->assertJson([
             'message' => 'Invalid data',
             'errors' => [
-                'RFC' => ["The RFC field not appears to be valid."]
+                'cer' => ["The cer field is required."]
             ]
         ]);
     }
 
-    public function test_validate_password()
+    public function test_validate_cer_string()
     {
         $this->sanctumAuthenticate();
         $this->setUpValidFiel();
         $response = $this->post(
             '/api/v1/verify-query',
             [
-                'RFC' => 'esto-no-es-un-rfc',
-                'password' => 1123456789,
-                "retenciones" => false,
+                'cer' => 112,
+                'key' => $this->getKey(),
+                'password' => $this->getFielPassword(),
+                'requestId' => Uuid::uuid(),
+            ]
+        );
+
+        $response->assertStatus(422)->assertJson([
+            'message' => 'Invalid data',
+            'errors' => [
+                'cer' => ["The cer must be a string."]
+            ]
+        ]);
+    }
+
+    public function test_validate_key_required()
+    {
+        $this->sanctumAuthenticate();
+        $this->setUpValidFiel();
+        $response = $this->post(
+            '/api/v1/verify-query',
+            [
+                'cer' => $this->getCertificate(),
+                'key' => null,
+                'password' => $this->getFielPassword(),
+                'requestId' => Uuid::uuid(),
+            ]
+        );
+
+        $response->assertStatus(422)->assertJson([
+            'message' => 'Invalid data',
+            'errors' => [
+                'key' => ["The key field is required."]
+            ]
+        ]);
+    }
+
+    public function test_validate_key_string()
+    {
+        $this->sanctumAuthenticate();
+        $this->setUpValidFiel();
+        $response = $this->post(
+            '/api/v1/verify-query',
+            [
+                'cer' => $this->getCertificate(),
+                'key' => 123,
+                'password' => $this->getFielPassword(),
+                'requestId' => Uuid::uuid(),
+            ]
+        );
+
+        $response->assertStatus(422)->assertJson([
+            'message' => 'Invalid data',
+            'errors' => [
+                'key' => ["The key must be a string."]
+            ]
+        ]);
+    }
+
+    public function test_validate_password_required()
+    {
+        $this->sanctumAuthenticate();
+        $this->setUpValidFiel();
+        $response = $this->post(
+            '/api/v1/verify-query',
+            [
+                'cer' => $this->getCertificate(),
+                'key' => $this->getKey(),
+                'password' => null,
+                'requestId' => Uuid::uuid(),
+            ]
+        );
+        $response->assertStatus(422)->assertJson([
+            'message' => 'Invalid data',
+            'errors' => [
+                'password' => ["The password field is required."]
+            ]
+        ]);
+    }
+
+    public function test_validate_password_string()
+    {
+        $this->sanctumAuthenticate();
+        $this->setUpValidFiel();
+        $response = $this->post(
+            '/api/v1/verify-query',
+            [
+                'cer' => $this->getCertificate(),
+                'key' => $this->getKey(),
+                'password' => 123,
                 'requestId' => "",
             ]
         );
@@ -77,39 +163,39 @@ class VerifyQueryTest extends TestCase
         ]);
     }
 
-    public function test_validate_retenciones()
+    public function test_validate_requestid_required()
     {
         $this->sanctumAuthenticate();
         $this->setUpValidFiel();
         $response = $this->post(
             '/api/v1/verify-query',
             [
-                'RFC' => 'esto-no-es-un-rfc',
-                'password' => 1123456789,
-                "retenciones" => "otra-cosa",
-                'requestId' => "",
+                'cer' => $this->getCertificate(),
+                'key' => $this->getKey(),
+                'password' => $this->getFielPassword(),
+                'requestId' => null,
             ]
         );
 
         $response->assertStatus(422)->assertJson([
             'message' => 'Invalid data',
             'errors' => [
-                'retenciones' => ["The retenciones field must be true or false."]
+                'requestId' => ["The requestId field is required."]
             ]
         ]);
     }
 
-    public function test_validate_requestid()
+    public function test_validate_requestid_uuid()
     {
         $this->sanctumAuthenticate();
         $this->setUpValidFiel();
         $response = $this->post(
             '/api/v1/verify-query',
             [
-                'RFC' => 'esto-no-es-un-rfc',
-                'password' => 1123456789,
-                "retenciones" => "otra-cosa",
-                'requestId' => "otra-cosa",
+                'cer' => $this->getCertificate(),
+                'key' => $this->getKey(),
+                'password' => $this->getFielPassword(),
+                'requestId' => '---------',
             ]
         );
 
@@ -129,9 +215,9 @@ class VerifyQueryTest extends TestCase
         $response = $this->post(
             '/api/v1/verify-query',
             [
-                'RFC' => 'EKU9003173C9',
-                'password' => "12345678a",
-                "retenciones" => false,
+                'cer' => $this->getCertificate(),
+                'key' => $this->getKey(),
+                'password' => $this->getFielPassword(),
                 'requestId' => Uuid::uuid(),
             ]
         );
@@ -151,23 +237,6 @@ class VerifyQueryTest extends TestCase
             ],
             'numberCfdis' => 0,
             'packagesIds' => []
-        ]);
-
-        Http::fake([
-            'https://reqres.in/api/users' =>
-                function (Request $request) {
-                    if ($request->method() == 'GET') {
-                        return Http::response([
-                            'get' => 'ok',
-                        ], 200, ['Headers']);
-                    }
-                    if ($request->method() == 'POST') {
-                        return Http::response([
-                            'post' => 'ok',
-                        ], 200, ['Headers']);
-                    }
-                },
-
         ]);
     }
 }
