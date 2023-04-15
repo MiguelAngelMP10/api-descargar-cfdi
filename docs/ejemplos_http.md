@@ -22,3 +22,4 @@
      - GET /api/v1/{rfc}/packages/{packageId}
      - DELETE /api/v1/{rfc}/packages/{packageId}
     ```
+Los endpoints antes mencionados requieren autenticación (bearer token), por lo que en los requests debera agregar un header `Authorization: Bearer {token}`
