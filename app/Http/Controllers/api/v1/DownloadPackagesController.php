@@ -19,13 +19,12 @@ class DownloadPackagesController extends Controller
     private string|null $endPoint;
     private $packagesIds;
 
-
     /**
      * @param DownloadPackagesRequest $request
      *
      * @return JsonResponse
-     * @throws InvalidExpressionToParseException
-     * @throws Exception
+     *
+     * @throws InvalidExpressionToParseException|Exception
      */
     public function downloadPackages(DownloadPackagesRequest $request): JsonResponse
     {
@@ -39,7 +38,7 @@ class DownloadPackagesController extends Controller
         $fiel = $satWsServiceHelper->createFiel($this->cer, $this->key, $this->password);
         foreach ($this->packagesIds as $packageId) {
             $download = $this->download($service, $packageId);
-            if (!$download->getStatus()->isAccepted()) {
+            if (! $download->getStatus()->isAccepted()) {
                 $errorMessages[] = sprintf(
                     'El paquete %s no se ha podido descargar: %s',
                     $packageId,

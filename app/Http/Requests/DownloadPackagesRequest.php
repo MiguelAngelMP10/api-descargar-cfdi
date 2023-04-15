@@ -52,5 +52,4 @@ class DownloadPackagesRequest extends FormRequest
             response()->json($response, 422)
         );
     }
-
 }
