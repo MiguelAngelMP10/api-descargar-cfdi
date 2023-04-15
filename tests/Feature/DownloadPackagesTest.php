@@ -44,9 +44,9 @@ class DownloadPackagesTest extends TestCase
         $expectedPackagePath = $this->getSatWsService()->obtainPackagePath($this->getFielRfc(), $packageId);
 
         $response = $this->postJson('/api/v1/download-packages', [
-            'RFC' => $this->getFielRfc(),
+            'cer' => $this->getCertificate(),
+            'key' => $this->getKey(),
             'password' => $this->getFielPassword(),
-            'retenciones' => false,
             'packagesIds' => [$packageId],
         ]);
 
@@ -72,9 +72,9 @@ class DownloadPackagesTest extends TestCase
         $this->mockControllerDownload(new StatusCode(400, $errorMessageExpected));
 
         $response = $this->postJson('/api/v1/download-packages', [
-            'RFC' => $this->getFielRfc(),
+            'cer' => $this->getCertificate(),
+            'key' => $this->getKey(),
             'password' => $this->getFielPassword(),
-            'retenciones' => false,
             'packagesIds' => ['foo'],
         ]);
 
@@ -94,14 +94,15 @@ class DownloadPackagesTest extends TestCase
     {
         $this->sanctumAuthenticate();
         $response = $this->postJson('/api/v1/download-packages', []);
+
         $response->assertStatus(422);
         $response->assertJson([
             'message' => 'Petición inválida.',
             'errors' => [
-                'RFC' => ['The rfc field is required.'],
+                'cer' => ['The cer field is required.'],
+                'key' => ['The key field is required.'],
                 'password' => ['The password field is required.'],
-                'retenciones' => ['The retenciones field is required.'],
-                'packagesIds' => ['The packages ids field is required.'],
+                'packagesIds' => ['The packagesIds field is required.']
             ],
         ]);
     }
@@ -113,69 +114,21 @@ class DownloadPackagesTest extends TestCase
     public function it_refuse_an_invalid_type_for_fields(): void
     {
         $this->sanctumAuthenticate();
-        $file = UploadedFile::fake()->create('image.png');
+        $this->setUpValidFiel();
         $response = $this->postJson('/api/v1/download-packages', [
-            'RFC' => $file,
-            'password' => $file,
-            'retenciones' => $file,
-            'packagesIds' => $file,
+            'cer' => $this->getCertificate(),
+            'key' => $this->getKey(),
+            'password' => $this->getFielPassword(),
+            'packagesIds' => ['foo'],
         ]);
 
-        $response->assertStatus(422);
+        $response->assertStatus(200);
         $response->assertJson([
-            'message' => 'Petición inválida.',
-            'errors' => [
-                'RFC' => ['The rfc must be a string.'],
-                'password' => ['The password must be a string.'],
-                'retenciones' => ['The retenciones field must be true or false.'],
-                'packagesIds' => ['The packages ids must be an array.'],
+            'errorMessages' => [
+                "El paquete foo no se ha podido descargar: Certificado Inválido"
             ],
+            'messages' => [],
         ]);
     }
 
-    /**
-     * @see DownloadPackagesController::downloadPackages()
-     * @test
-     */
-    public function it_refuse_an_invalid_rfc(): void
-    {
-        $this->sanctumAuthenticate();
-        $response = $this->post('/api/v1/download-packages', [
-            'RFC' => 'invalid-rfc',
-            'password' => 'password',
-            'retenciones' => false,
-            'packageIds' => ['foo', 'bar'],
-        ]);
-
-        $response->assertStatus(422);
-        $response->assertJson([
-            'message' => 'Petición inválida.',
-            'errors' => [
-                'RFC' => ['The RFC field not appears to be valid.'],
-            ],
-        ]);
-    }
-
-    /**
-     * @see DownloadPackagesController::downloadPackages()
-     * @test
-     */
-    public function it_refuse_with_non_existing_fiel(): void
-    {
-        $this->sanctumAuthenticate();
-        $response = $this->post('/api/v1/download-packages', [
-            'RFC' => 'AAA010101AAA',
-            'password' => 'password',
-            'retenciones' => false,
-            'packagesIds' => ['foo', 'bar'],
-        ]);
-
-        $response->assertStatus(422);
-        $response->assertJson([
-            'message' => 'Petición inválida.',
-            'errors' => [
-                'RFC' => ['Unable to create the SAT web service.'],
-            ],
-        ]);
-    }
 }

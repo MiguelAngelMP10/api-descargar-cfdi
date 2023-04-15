@@ -11,21 +11,23 @@
     None
 
 -   **Data Params**
-
-    **Required:**
-
-    -   `RFC=[string required]`
+    -   `cer=[string required]`
+    -   `key=[string required]`
     -   `password=[string required]`
-    -   `period=[{"start":"2021-01-01 00:00:00", "end":"2021-01-30 23:59:59" }] required`
-    -   `retenciones=[boolean] required`
-    -   `downloadType=[string: issued|received] required`
-    -   `requestType=[string: xml|metadata] required`
-    -   `rfcMatch=[array > string]`
+    -   `period=[{"start":"2021-01-01 00:00:00", "end":"2021-01-30 23:59:59" }] Default: Si no se especifica crea un periodo del segundo exacto de la creación del objeto.`
+    -   `endPoint=[string cfdi|retenciones] Default: cfdi`
+    -   `downloadType=[string: issued|received] Default: issued `
+    -   `requestType=[string: xml|metadata] Default: metadata`
     -   `documentType=[string: I|E|N|T|P]`
+    -   `documentStatus=[string: active|cancelled]`
     -   `complementoCfdi=[string]`
-      - Valores posibles para complementoCfdi
-    
-        |ComplementoCfdi|Etiqueta|
+    -   `rfcMatches=[array > string]`
+    -   `uuid=[uuid]`
+
+
+### Valores posibles para complementoCfdi
+
+|ComplementoCfdi|Etiqueta|
         | ------------- | ------ |
         |''|'Sin complemento definido'|
         |'acreditamientoIeps10'|'Acreditamiento del IEPS 1.0'|
@@ -62,9 +64,6 @@
         |'valesDespensa10'|'Vales de despensa 1.0'|
         |'vehiculoUsado10'|'Vehículo usado 1.0'|
         |'ventaVehiculos11'|'Venta de vehículos 1.1'|
-    
-    -   `documentStatus=[string: active|cancelled]`
-    -   `uuid=[uuid]`
 
 
 -   **Success Response:**
@@ -98,24 +97,26 @@
     }
     ```
 
-  -   **Example**
+-   ## **Example Request curl**
 
-      ```bash
-      curl  -X POST 'http://127.0.0.1:8000/api/v1/make-query' \
+    ```bash
+      curl --location --request POST 'http://127.0.0.1:8000/api/v1/make-query' \
       --header 'Accept: application/json' \
       --header 'Authorization: Bearer 1|iIGxeYBekhJvXD0C2YYqoAz3tTbsS3lXPL18Mjbg' \
-      --header 'Content-Type: application/json' \
-      --data-raw '{
-          "RFC": "EKU9003173C9",
-          "password": "12345678a",
-          "period": { "start": "2021-11-01 00:00:01",
-          "end": "2021-12-31 23:59:59" },
-          "retenciones": false,
-          "downloadType": "received",
-          "requestType": "metadata",
-          "documentType": "",
-          "rfcMatch": [],
-          "complementoCfdi": "leyendasfisc",
-          "documentStatus": "active",
-          "uuid": "ace229af-ea82-4e3f-b2b1-816d11c7b86a" }'
-      ```
+      --form 'cer="-----BEGIN CERTIFICATE-----
+      -----END CERTIFICATE-----"' \
+      --form 'key="-----BEGIN PRIVATE KEY-----
+      -----END PRIVATE KEY-----"' \
+      --form 'password="12345678a"' \
+      --form 'period[start]="2022-01-01 00:00:00"' \
+      --form 'period[end]="2022-12-31 23:59:59"' \
+      --form 'downloadType="received"' \
+      --form 'requestType="metadata"' \
+      --form 'documentType="N"' \
+      --form 'complementoCfdi="acreditamientoieps10"' \
+      --form 'documentStatus="active"' \
+      --form 'uuid="c4ee9b76-5c33-4c63-b63c-498cd956bd48"' \
+      --form 'rfcOnBehalf="CUPU800825569"' \
+      --form 'rfcMatches[]="CUPU800825569"' \
+      --form 'rfcMatches[]="CUPU800825562"'
+    ```

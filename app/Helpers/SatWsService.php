@@ -7,7 +7,6 @@ namespace App\Helpers;
 use Exception;
 use Illuminate\Support\Facades\Storage;
 use PhpCfdi\Rfc\Exceptions\InvalidExpressionToParseException;
-use PhpCfdi\Rfc\Rfc;
 use PhpCfdi\SatWsDescargaMasiva\RequestBuilder\FielRequestBuilder\Fiel;
 use PhpCfdi\SatWsDescargaMasiva\RequestBuilder\FielRequestBuilder\FielRequestBuilder;
 use PhpCfdi\SatWsDescargaMasiva\Service;
@@ -21,14 +20,12 @@ class SatWsService
      * @throws InvalidExpressionToParseException
      * @throws Exception
      */
-    public function createService(string $rfc, string $password, bool $retenciones): Service
-    {
-        // parse will throw an exception if rfc is incorrect
-        $rfc = Rfc::parse($rfc)->getRfc();
-
-        $contentCer = Storage::get($this->obtainCertificatePath($rfc));
-        $contentKey = Storage::get($this->obtainPrivateKeyPath($rfc));
-
+    public function createService(
+        string $contentCer,
+        string $contentKey,
+        string $password,
+        string|null $endpoint
+    ): Service {
         $fiel = $this->createFiel($contentCer, $contentKey, $password);
 
         // creación del web client basado en Guzzle que implementa WebClientInterface
@@ -39,7 +36,14 @@ class SatWsService
         $requestBuilder = new FielRequestBuilder($fiel);
 
         // Creación del servicio
-        $endpoints = ! $retenciones ? ServiceEndpoints::cfdi() : ServiceEndpoints::retenciones();
+        $endpoints = null;
+        if ($endpoint === 'cfdi') {
+            $endpoints = ServiceEndpoints::cfdi();
+        }
+
+        if ($endpoint === 'retenciones') {
+            $endpoints = ServiceEndpoints::retenciones();
+        }
         return new Service($requestBuilder, $webClient, null, $endpoints);
     }
 

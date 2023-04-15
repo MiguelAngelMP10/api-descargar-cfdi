@@ -15,10 +15,11 @@ en la ruta /api-descargar-cfdi/storage/app/datos/{RFC}/packages
 
     **Required:**
 
-    - `RFC=[string] required`
-    - `password=[string] required`
-    - `retenciones=[boolean] required`
-    - `packagesIds=[array -> string]`
+    -  `cer=[string required]`
+    -  `key=[string required]`
+    -  `password=[string required]`
+    -  `endPoint=[string cfdi|retenciones] Default: cfdi`
+    - `packagesIds=[array -> uuid]`
 
   -   **Success Response:**
 
@@ -46,19 +47,20 @@ en la ruta /api-descargar-cfdi/storage/app/datos/{RFC}/packages
           }
        ```
 
-    -   **Example Request**
+-   ## **Example Request curl**
 
-        ```bash
-        curl -X POST 'http://localhost:8000/api/v1/download-packages' \
-        --header 'Accept: application/json' \
-        --header 'Authorization: Bearer 1|iIGxeYBekhJvXD0C2YYqoAz3tTbsS3lXPL18Mjbg' \
-        --header 'Content-Type: application/json' \
-        --data-raw '{
-        "RFC": "EKU9003173C9",
-        "password": "12345678a",
-        "retenciones": false,
-        "packagesIds": [
-                "CE4B88D3-7D44-4345-96A9-10F19D570F71_01"
-            ]
-        }' 
-        ```
+    ```bash
+    curl --location --request POST 'http://localhost:8000/api/v1/download-packages' \
+    --header 'Accept: application/json' \
+    --header 'Authorization: Bearer 1|iIGxeYBekhJvXD0C2YYqoAz3tTbsS3lXPL18Mjbg' \
+    --form 'cer="-----BEGIN CERTIFICATE-----
+    -----END CERTIFICATE-----
+    "' \
+    --form 'key="-----BEGIN PRIVATE KEY-----
+    -----END PRIVATE KEY-----
+    "' \
+    --form 'password="12345678a"' \
+    --form 'endPoint="cfdi"' \
+    --form 'packagesIds[]="E8BC45F4-9DAC-40AF-A116-D8220C373EE5_01"' \
+    --form 'packagesIds[]="E8BC45F4-9DAC-40AF-A116-D8220C373EE5_02"'
+    ```

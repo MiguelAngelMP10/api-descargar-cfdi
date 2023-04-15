@@ -2,10 +2,10 @@
 
 namespace App\Http\Requests;
 
-use App\Rules\RfcValidRule;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Rule;
 
 class VerifyQueryPostRequest extends FormRequest
 {
@@ -29,14 +29,10 @@ class VerifyQueryPostRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'RFC' => [
-                'bail',
-                'string',
-                'required',
-                new RfcValidRule(),
-            ],
+            'cer' => 'required|string',
+            'key' => 'required|string',
             'password' => 'required|string',
-            'retenciones' => 'required|boolean',
+            'endPoint' => ['nullable', Rule::in(['cfdi', 'retenciones'])],
             'requestId' => 'required|uuid',
         ];
     }
@@ -44,10 +40,9 @@ class VerifyQueryPostRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'RFC.required' => 'The RFC field is required.',
-            'RFC.string' => 'The RFC field no is string.',
             'password.required' => 'The password field is required.',
             'password.string' => 'The password field no is string.',
+            'endPoint.in' => 'The endPoint must be one of the following types: :values',
             'requestId.required' => 'The requestId field is required.',
             'requestId.uuid' => 'The requestId must be a valid UUID.',
         ];

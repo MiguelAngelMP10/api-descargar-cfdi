@@ -13,10 +13,11 @@ Este EndPoint
 
     **Required:**
 
-    - `RFC=[string]`
-    - `password=[string]`
-    - `requestId=[string]`
-    - `retenciones=[boolean] required`
+    -  `cer=[string required]`
+    -  `key=[string required]`
+    -  `password=[string required]`
+    -  `endPoint=[string cfdi|retenciones] Default: cfdi` 
+    -  `requestId=[uuid]`
     
 
 -   **Success Response: Aceptada**
@@ -83,17 +84,19 @@ Este EndPoint
         }
      ```
 
-    -   **Example**
+-   ## **Example Request curl**
 
-        ```bash
-        curl -X POST 'http://localhost:8000/api/v1/verify-query' \
-        --header 'Accept: application/json' \
-        --header 'Authorization: Bearer 1|iIGxeYBekhJvXD0C2YYqoAz3tTbsS3lXPL18Mjbg' \
-        --header 'Content-Type: application/json' \
-        --data-raw '{
-           "RFC": "EKU9003173C9",
-           "password": "12345678a",
-            "requestId": "9f25a41a-19d9-409d-927a-87238f006292",
-            "retenciones": false
-        }'
-        ```
+    ```bash
+    curl --location --request POST 'http://127.0.0.1:8000/api/v1/verify-query' \
+    --header 'Accept: application/json' \
+    --header 'Authorization: Bearer 1|iIGxeYBekhJvXD0C2YYqoAz3tTbsS3lXPL18Mjbg' \
+    --form 'cer="-----BEGIN CERTIFICATE-----
+    -----END CERTIFICATE-----
+    "' \
+    --form 'key="-----BEGIN PRIVATE KEY-----
+    -----END PRIVATE KEY-----
+    "' \
+    --form 'password="12345678a"' \
+    --form 'endPoint="cfdi"' \
+    --form 'requestId="e8bc45f4-9dac-40af-a116-d8220c373ee5"'
+    ```
