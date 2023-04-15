@@ -97,26 +97,26 @@
     }
     ```
 
-  -   **Example**
+-   ## **Example Request curl**
 
-      ```bash
-        curl --location --request POST 'http://127.0.0.1:8000/api/v1/make-query' \
-        --header 'Accept: application/json' \
-        --header 'Authorization: Bearer 1|iIGxeYBekhJvXD0C2YYqoAz3tTbsS3lXPL18Mjbg' \
-        --form 'cer="-----BEGIN CERTIFICATE-----
-        -----END CERTIFICATE-----"' \
-        --form 'key="-----BEGIN PRIVATE KEY-----
-        -----END PRIVATE KEY-----"' \
-        --form 'password="12345678a"' \
-        --form 'period[start]="2022-01-01 00:00:00"' \
-        --form 'period[end]="2022-12-31 23:59:59"' \
-        --form 'downloadType="received"' \
-        --form 'requestType="metadata"' \
-        --form 'documentType="N"' \
-        --form 'complementoCfdi="acreditamientoieps10"' \
-        --form 'documentStatus="active"' \
-        --form 'uuid="c4ee9b76-5c33-4c63-b63c-498cd956bd48"' \
-        --form 'rfcOnBehalf="CUPU800825569"' \
-        --form 'rfcMatches[]="CUPU800825569"' \
-        --form 'rfcMatches[]="CUPU800825562"'
-      ```
+    ```bash
+      curl --location --request POST 'http://127.0.0.1:8000/api/v1/make-query' \
+      --header 'Accept: application/json' \
+      --header 'Authorization: Bearer 1|iIGxeYBekhJvXD0C2YYqoAz3tTbsS3lXPL18Mjbg' \
+      --form 'cer="-----BEGIN CERTIFICATE-----
+      -----END CERTIFICATE-----"' \
+      --form 'key="-----BEGIN PRIVATE KEY-----
+      -----END PRIVATE KEY-----"' \
+      --form 'password="12345678a"' \
+      --form 'period[start]="2022-01-01 00:00:00"' \
+      --form 'period[end]="2022-12-31 23:59:59"' \
+      --form 'downloadType="received"' \
+      --form 'requestType="metadata"' \
+      --form 'documentType="N"' \
+      --form 'complementoCfdi="acreditamientoieps10"' \
+      --form 'documentStatus="active"' \
+      --form 'uuid="c4ee9b76-5c33-4c63-b63c-498cd956bd48"' \
+      --form 'rfcOnBehalf="CUPU800825569"' \
+      --form 'rfcMatches[]="CUPU800825569"' \
+      --form 'rfcMatches[]="CUPU800825562"'
+    ```
