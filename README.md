@@ -30,8 +30,6 @@
        ./vendor/bin/phpcs --error-severity=1 --warning-severity=8 --extensions=php
     ```
 
-Los endpoints antes mencionados requieren autenticación (bearer token), por lo que en los requests debera agregar un header `Authorization: Bearer {token}`
-
 ## Ejecución con _Docker_
 
 Usa [`laravel/sail`](https://laravel.com/docs/10.x/sail) si estás familiarizado.
