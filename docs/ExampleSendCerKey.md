@@ -70,5 +70,5 @@ Reporta los path de los archivos .cer y .key
     ```
     
 
-![example-send-cer-key](../docs/img/example-send-cer-key.png)
+![example-send-cer-key](../public/images-docs/example-send-cer-key.png)
 
