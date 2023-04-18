@@ -8,6 +8,12 @@ Este EndPoint verifica el estatus de una consulta dada un requestId
     POST /api/v1/verify-query
 ```
 
+### Headers
+`Authorization: Bearer {token}` <a href="create_user_and_add_token" target="_blank">pasos para obtener un token</a>
+
+`Accept: application/json`
+
+
 ### **URL Params**
 
 ```text
