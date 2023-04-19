@@ -51,6 +51,13 @@ jobs:
       - name: Set Laravel application key
         run: php artisan key:generate
 
+      - name: Install NPM dependencies
+        run: npm i
+
+      - name: Compile assets
+        run: npm run build
+
+
       - name: Tests (phpunit)
         run: php artisan test
 
