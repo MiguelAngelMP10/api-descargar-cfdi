@@ -23,7 +23,7 @@ class QueryController extends Controller
         })->paginate(10)->withQueryString();
         return Inertia('Queries/Index', [
             'queries' => $queries,
-            'search' => $request->search
+            'search' => $request->search,
         ]);
     }
 
@@ -32,7 +32,6 @@ class QueryController extends Controller
      */
     public function create()
     {
-        //
     }
 
     /**
@@ -40,7 +39,6 @@ class QueryController extends Controller
      */
     public function store(StoreQueryRequest $request)
     {
-        //
     }
 
     /**
@@ -48,7 +46,5 @@ class QueryController extends Controller
      */
     public function show(Query $query)
     {
-        //
     }
-
 }
