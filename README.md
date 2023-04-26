@@ -1,12 +1,13 @@
 # api-descargar-cfdi
 
 
-## Tabla de contenido
 
-* [Instalación y configuración en local](resources/docs/1.0/installation_steps.md)
-* [Comandos artisan para crear usuario y generar Bearer token](resources/docs/1.0/create_user_and_add_token.md)
-* [Ejemplos de uso vía http](resources/docs/1.0/ejemplos_http.md)
-* [Ejemplos de uso vía CLI](resources/docs/1.0/ejemplos_cli.md)
+
+[Documentación completa](http://gentle-anchorage-55410.herokuapp.com/docs/)
+
+
+
+
 * Ejemplos de uso con UI con  inertiajs en desarrollo
 
 
