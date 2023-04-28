@@ -51,6 +51,9 @@ const logout = () => {
                                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard
                                 </NavLink>
+                                <NavLink :href="route('queries.index')" :active="route().current('queries.*')">
+                                    Queries
+                                </NavLink>
                             </div>
                         </div>
 
@@ -148,6 +151,10 @@ const logout = () => {
                                             API Tokens
                                         </DropdownLink>
 
+                                        <DropdownLink :href="route('api-tokens.index')">
+                                            Config Fiel
+                                        </DropdownLink>
+
                                         <div class="border-t border-gray-200" />
 
                                         <!-- Authentication -->
@@ -195,6 +202,9 @@ const logout = () => {
                     <div class="pt-2 pb-3 space-y-1">
                         <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
                             Dashboard
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('queries.index')" :active="route().current('queries.*')">
+                            Queries
                         </ResponsiveNavLink>
                     </div>
 
