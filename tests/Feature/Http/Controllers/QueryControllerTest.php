@@ -38,7 +38,18 @@ class QueryControllerTest extends TestCase
 
     public function test_show_the_form_for_creating_a_new_resource()
     {
-
+        $this->actingAs($this->user)
+            ->get(route('queries.create'))
+            ->assertOk()
+            ->assertInertia(fn(Assert $page) => $page
+                ->component('Queries/Create')
+                ->has('endpoint', 2)
+                ->has('downloadType', 2)
+                ->has('requestType', 2)
+                ->has('documentType', 5)
+                ->has('complementoCfdi', 35)
+                ->has('documentStatus', 2)
+            );
     }
 
     public function test_store_a_newly_created_resource_in_storage()
