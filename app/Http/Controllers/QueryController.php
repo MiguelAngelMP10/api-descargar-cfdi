@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreQueryRequest;
 use App\Models\Query;
+use App\Utils\ComplementoCfdiList;
 use Illuminate\Http\Request;
 use Inertia\Response;
 use Inertia\ResponseFactory;
@@ -30,8 +31,25 @@ class QueryController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): Response|ResponseFactory
     {
+        return Inertia(
+            'Queries/Create',
+            [
+                'endpoint' => ['cfdi' => 'Cfdi', 'retenciones' => 'Retenciones'],
+                'downloadType' => ['issued' => 'Issued (Emitidos)', 'received' => 'Received (Recibidos)'],
+                'requestType' => ['xml' => 'Xml', 'metadata' => 'Metadata'],
+                'documentType' => [
+                    '' => 'Undefined',
+                    'I' => 'Ingreso',
+                    'E' => 'Egreso',
+                    'T' => 'Traslado',
+                    'N' => 'Nómina',
+                    'P' => 'Pago'],
+                'complementoCfdi' => ComplementoCfdiList::COMPLEMENTOS_CFDI_LIST,
+                'documentStatus' => ['active' => 'Active', 'cancelled' => 'Cancelled'],
+            ]
+        );
     }
 
     /**
@@ -39,6 +57,7 @@ class QueryController extends Controller
      */
     public function store(StoreQueryRequest $request)
     {
+        dd($request->all());
     }
 
     /**
