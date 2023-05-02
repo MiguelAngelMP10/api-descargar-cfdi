@@ -39,10 +39,8 @@ class StoreQueryRequest extends FormRequest
             'documentType' => [
                 'nullable', 'string', Rule::in(['I', 'E', 'T', 'N', 'P']),
             ],
-            'complementoCfdi' => [
-                'string',
-                'nullable',
-                Rule::in(array_keys(ComplementoCfdiList::COMPLEMENTOS_CFDI_LIST))
+            'complementoCfdi' => ['string', 'nullable',
+                Rule::in(array_keys(ComplementoCfdiList::COMPLEMENTOS_CFDI_LIST)),
             ],
             'documentStatus' => [
                 'nullable', Rule::in(['active', 'cancelled']),

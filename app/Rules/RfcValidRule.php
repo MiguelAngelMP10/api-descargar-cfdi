@@ -22,7 +22,7 @@ class RfcValidRule implements ValidationRule
         try {
             Rfc::parse($value);
         } catch (InvalidExpressionToParseException $exception) {
-            $fail("The :attribute field not appears to be valid.");
+            $fail("The {$attribute} field not appears to be valid.");
         }
     }
 }

@@ -45,7 +45,8 @@ class QueryController extends Controller
                     'E' => 'Egreso',
                     'T' => 'Traslado',
                     'N' => 'Nómina',
-                    'P' => 'Pago'],
+                    'P' => 'Pago',
+                ],
                 'complementoCfdi' => ComplementoCfdiList::COMPLEMENTOS_CFDI_LIST,
                 'documentStatus' => ['active' => 'Active', 'cancelled' => 'Cancelled'],
             ]
@@ -57,7 +58,6 @@ class QueryController extends Controller
      */
     public function store(StoreQueryRequest $request)
     {
-        dd($request->all());
     }
 
     /**

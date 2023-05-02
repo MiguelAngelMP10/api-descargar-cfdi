@@ -46,7 +46,7 @@ class QueryControllerTest extends TestCase
                 ->has('endpoint', 2)
                 ->has('downloadType', 2)
                 ->has('requestType', 2)
-                ->has('documentType', 5)
+                ->has('documentType', 6)
                 ->has('complementoCfdi', 35)
                 ->has('documentStatus', 2)
             );
