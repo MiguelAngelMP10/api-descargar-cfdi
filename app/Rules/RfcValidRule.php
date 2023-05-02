@@ -2,43 +2,27 @@
 
 namespace App\Rules;
 
-use Illuminate\Contracts\Validation\Rule;
+use Closure;
+use Illuminate\Contracts\Validation\ValidationRule;
+use Illuminate\Translation\PotentiallyTranslatedString;
 use PhpCfdi\Rfc\Exceptions\InvalidExpressionToParseException;
 use PhpCfdi\Rfc\Rfc;
 
-class RfcValidRule implements Rule
+class RfcValidRule implements ValidationRule
 {
     /**
-     * @var string
-     */
-    private string $message;
-
-    /**
-     * Determine if the validation rule passes.
+     * Run the validation rule.
      *
-     * @param  string  $attribute
-     * @param  mixed  $value
-     *
-     * @return bool
+     * @param string $attribute
+     * @param mixed $value
+     * @param Closure(string): PotentiallyTranslatedString $fail
      */
-    public function passes($attribute, $value): bool
+    public function validate(string $attribute, mixed $value, Closure $fail): void
     {
         try {
             Rfc::parse($value);
         } catch (InvalidExpressionToParseException $exception) {
-            $this->message = "The ${attribute} field not appears to be valid.";
-            return false;
+            $fail("The :attribute field not appears to be valid.");
         }
-        return true;
-    }
-
-    /**
-     * Get the validation error message.
-     *
-     * @return string
-     */
-    public function message(): string
-    {
-        return $this->message;
     }
 }
