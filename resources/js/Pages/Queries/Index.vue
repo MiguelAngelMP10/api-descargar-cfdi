@@ -6,7 +6,6 @@ import {router, Link, usePage} from '@inertiajs/vue3'
 import moment from "moment";
 
 
-
 let props = defineProps({
     queries: {
         type: Object,
@@ -133,10 +132,10 @@ watch(search, (value) => {
                             </td>
 
                             <td class="py-4 px-6">
-                                {{ moment( query.dateTimePeriodStart).format('DD/MM/YYYY h:mm:ss A') }}
+                                {{ moment(query.dateTimePeriodStart).format('DD/MM/YYYY h:mm:ss A') }}
                             </td>
                             <td class="py-4 px-6">
-                                {{ moment( query.dateTimePeriodEnd).format('DD/MM/YYYY h:mm:ss A') }}
+                                {{ moment(query.dateTimePeriodEnd).format('DD/MM/YYYY h:mm:ss A') }}
                             </td>
                             <td class="py-4 px-6">
                                 {{ query.requestId }}
@@ -145,8 +144,9 @@ watch(search, (value) => {
                                 {{ query.numeroCFDIs }}
                             </td>
                             <td class="py-4 px-6 text-right">
-                                <a href=""
-                                   class="font-semibold text-blue-600 dark:text-blue-500 hover:underline">Detalles</a>
+                                <Link :href="route('queries.show',  query)"
+                                      class="font-semibold text-blue-600 dark:text-blue-500 hover:underline"> Detalles
+                                </Link>
                             </td>
                             <td class="py-4 px-6 text-right">
                                 <a href=""

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreQueryRequest;
 use App\Models\Query;
 use App\Utils\ComplementoCfdiList;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Response;
 use Inertia\ResponseFactory;
@@ -56,14 +57,18 @@ class QueryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreQueryRequest $request)
+    public function store(StoreQueryRequest $request): RedirectResponse
     {
+        return redirect()->route("queries.create")->with('success', 'Query created Successfully');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Query $query)
+    public function show(Query $query): Response|ResponseFactory
     {
+        return Inertia("Queries/Show", [
+            'query' => $query
+        ]);
     }
 }
