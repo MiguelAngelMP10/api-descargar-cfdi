@@ -32,8 +32,7 @@ class QueryControllerTest extends TestCase
                 ->has('queries')
                 ->has('search')
                 ->has('queries.links')
-                ->has('queries.data', 10)
-            );
+                ->has('queries.data', 10));
     }
 
     public function test_show_the_form_for_creating_a_new_resource()
@@ -43,18 +42,13 @@ class QueryControllerTest extends TestCase
             ->assertOk()
             ->assertInertia(fn(Assert $page) => $page
                 ->component('Queries/Create')
+                ->where('errors', [])
                 ->has('endpoint', 2)
                 ->has('downloadType', 2)
                 ->has('requestType', 2)
                 ->has('documentType', 6)
                 ->has('complementoCfdi', 35)
-                ->has('documentStatus', 2)
-            );
-    }
-
-    public function test_store_a_newly_created_resource_in_storage()
-    {
-
+                ->has('documentStatus', 2));
     }
 
     public function test_show_query_display_the_specified_resource()
