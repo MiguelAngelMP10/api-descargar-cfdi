@@ -34,6 +34,7 @@ class QueryFactory extends Factory
             'complementoCfdi' => 'cfdiRegistroFiscal10',
             'rfcMatches' => new Expression("(JSON_ARRAY('" .
                 (new RfcFaker)->mexicanRfcFisica() . "','" . (new RfcFaker)->mexicanRfcFisica() . "'))"),
+            'rfcOnBehalf' => (new RfcFaker)->mexicanRfcFisica(),
             'uuid' => $this->faker->uuid,
         ];
     }
