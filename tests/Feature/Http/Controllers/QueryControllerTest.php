@@ -53,6 +53,14 @@ class QueryControllerTest extends TestCase
 
     public function test_show_query_display_the_specified_resource()
     {
-
+        $this->actingAs($this->user)
+            ->get(route('queries.show', 1))
+            ->assertOk()
+            ->assertInertia(fn(Assert $page) => $page
+                ->component('Queries/Show')
+                ->has('auth.user', 10)
+                ->has('query', 18)
+                ->where('query.user_id', $this->user->id)
+            );
     }
 }
