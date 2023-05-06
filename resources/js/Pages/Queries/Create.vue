@@ -2,7 +2,6 @@
 import AppLayout from '@/Layouts/AppLayout.vue';
 import {Link, router, usePage, useForm} from '@inertiajs/vue3'
 import {useToast} from 'vue-toast-notification';
-import Multiselect from '@vueform/multiselect'
 import {reactive} from "vue";
 
 const props = defineProps(
