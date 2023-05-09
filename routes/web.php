@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Config\FielController;
 use App\Http\Controllers\QueryController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -34,4 +35,6 @@ Route::middleware([
         return Inertia::render('Dashboard');
     })->name('dashboard');
     Route::resource('queries', QueryController::class)->except(['edit', 'update', 'destroy']);
+    Route::get("config/fiel", [FielController::class, 'index'])->name("config-fiel.index");
+    Route::post("config/fiel", [FielController::class, 'store'])->name("config-fiel.store");
 });
