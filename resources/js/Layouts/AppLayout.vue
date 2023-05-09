@@ -213,7 +213,7 @@ const logout = () => {
                                             API Tokens
                                         </DropdownLink>
 
-                                        <DropdownLink :href="route('api-tokens.index')">
+                                        <DropdownLink :href="route('config-fiel.index')">
                                             Config Fiel
                                         </DropdownLink>
 
@@ -339,6 +339,12 @@ const logout = () => {
                                                :active="route().current('api-tokens.index')">
                                 API Tokens
                             </ResponsiveNavLink>
+
+                            <ResponsiveNavLink :href="route('config-fiel.index')"
+                                               :active="route().current('config-fiel.index')">
+                                Config Fiel
+                            </ResponsiveNavLink>
+
 
                             <!-- Authentication -->
                             <form method="POST" @submit.prevent="logout">
