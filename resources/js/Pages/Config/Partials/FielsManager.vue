@@ -133,10 +133,13 @@ const deleteApiToken = () => {
                                 <div class="break-all">
                                     {{ fiel.rfc }}
                                 </div>
+                                <div class="break-all">
+                                    {{ fiel.legalName }}
+                                </div>
 
                                 <div class="flex items-center ml-2">
-                                    <div v-if="fiel.last_used_ago" class="text-sm text-gray-400">
-                                        Last used {{ fiel.last_used_ago }}
+                                    <div v-if="fiel.created_at" class="text-sm text-gray-400">
+                                        Created at {{ fiel.created_at }}
                                     </div>
 
                                     <button class="cursor-pointer ml-6 text-sm text-red-500"
