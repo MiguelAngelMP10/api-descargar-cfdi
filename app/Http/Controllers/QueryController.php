@@ -59,7 +59,7 @@ class QueryController extends Controller
      */
     public function store(StoreQueryRequest $request): RedirectResponse
     {
-        return redirect()->route("queries.create")->with('success', 'Query created Successfully');
+        return redirect()->route('queries.create')->with('success', 'Query created Successfully');
     }
 
     /**
@@ -67,8 +67,8 @@ class QueryController extends Controller
      */
     public function show(Query $query): Response|ResponseFactory
     {
-        return Inertia("Queries/Show", [
-            'query' => $query
+        return Inertia('Queries/Show', [
+            'query' => $query,
         ]);
     }
 }

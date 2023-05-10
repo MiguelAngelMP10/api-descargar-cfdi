@@ -21,7 +21,7 @@ class Fiel extends Model
         'legalName',
         'cer',
         'key',
-        'password'
+        'password',
     ];
 
     /**
@@ -33,9 +33,8 @@ class Fiel extends Model
         'password',
         'cer',
         'key',
-        'updated_at'
+        'updated_at',
     ];
-
 
     public function user(): HasOne
     {

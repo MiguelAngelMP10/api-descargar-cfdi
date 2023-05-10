@@ -35,6 +35,7 @@ Route::middleware([
         return Inertia::render('Dashboard');
     })->name('dashboard');
     Route::resource('queries', QueryController::class)->except(['edit', 'update', 'destroy']);
-    Route::get("config/fiel", [FielController::class, 'index'])->name("config-fiel.index");
-    Route::post("config/fiel", [FielController::class, 'store'])->name("config-fiel.store");
+    Route::get('config/fiel', [FielController::class, 'create'])->name('config-fiel.create');
+    Route::post('config/fiel', [FielController::class, 'store'])->name('config-fiel.store');
+    Route::delete('config/fiel/{fiel}', [FielController::class, 'destroy'])->name('config-fiel.destroy');
 });

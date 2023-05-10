@@ -27,7 +27,7 @@ class FielControllerTest extends TestCase
     public function test_index_display_a_listing_of_the_resource()
     {
         $this->actingAs($this->user)
-            ->get(route('config-fiel.index'))
+            ->get(route('config-fiel.create'))
             ->assertOk()
             ->assertInertia(fn(Assert $page) => $page
                 ->component('Config/Fiel')
@@ -40,7 +40,7 @@ class FielControllerTest extends TestCase
     public function test_store_validate_inputs_required()
     {
         $this->actingAs($this->user);
-        $this->postJson('config/fiel', [])
+        $this->postJson(route('config-fiel.create'))
             ->assertStatus(422)->assertJson([
                 "message" => "The cer field is required. (and 2 more errors)",
                 "errors" => [
@@ -60,7 +60,7 @@ class FielControllerTest extends TestCase
     public function test_store_validate_input_cer_key_password_is_string()
     {
         $this->actingAs($this->user);
-        $this->postJson('config/fiel', ['cer' => 123, 'key' => 123, 'password' => 123])->assertExactJson([
+        $this->postJson(route('config-fiel.create'), ['cer' => 123, 'key' => 123, 'password' => 123])->assertExactJson([
             "message" => "The cer must be a string. (and 2 more errors)",
             "errors" => [
                 "cer" => [
@@ -85,9 +85,19 @@ class FielControllerTest extends TestCase
         $cer = file_get_contents($certificatePath);
         $key = file_get_contents($privateKeyPath);
         $this->actingAs($this->user);
-        $this->postJson('config/fiel', ['cer' => $cer, 'key' => $key, 'password' => $passPhrase])
+        $this->postJson(route('config-fiel.create'), ['cer' => $cer, 'key' => $key, 'password' => $passPhrase])
             ->assertSessionHas('success', 'The Fiel was added correctly');
 
         $this->assertDatabaseCount(Fiel::class, '2');
+    }
+
+    public function test_remove_the_specified_resource_from_storage()
+    {
+        $this->actingAs($this->user)
+            ->delete(route('config-fiel.destroy', $this->fiel->id))
+            ->assertSessionHas('success', 'The Fiel was delete correctly');
+
+        $this->assertDatabaseCount(Fiel::class, 0);
+
     }
 }

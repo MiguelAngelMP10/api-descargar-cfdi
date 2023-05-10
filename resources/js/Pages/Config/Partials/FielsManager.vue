@@ -23,13 +23,13 @@ const props = defineProps({
 });
 
 const addFielForm = useForm({
-        key: '',
-        cer: '',
-        password: '',
-    });
+    key: '',
+    cer: '',
+    password: '',
+});
 
-const deleteApiTokenForm = useForm({});
-const apiTokenBeingDeleted = ref(null);
+const deleteFielForm = useForm({});
+const fielBeingDeleted = ref(null);
 
 const addFielToUser = () => {
     addFielForm.post(route('config-fiel.store'), {
@@ -46,15 +46,20 @@ const addFielToUser = () => {
         },
     });
 };
-const confirmApiTokenDeletion = (token) => {
-    apiTokenBeingDeleted.value = token;
+const confirmFielDeletion = (fiel) => {
+    fielBeingDeleted.value = fiel;
 };
 
-const deleteApiToken = () => {
-    deleteApiTokenForm.delete(route('api-tokens.destroy', apiTokenBeingDeleted.value), {
+const deleteFiel = () => {
+    deleteFielForm.delete(route('config-fiel.destroy', fielBeingDeleted.value), {
         preserveScroll: true,
         preserveState: true,
-        onSuccess: () => (apiTokenBeingDeleted.value = null),
+        onSuccess: () => {
+            fielBeingDeleted.value = null;
+            if (usePage().props.flash.success != null) {
+                toast.success(usePage().props.flash.success);
+            }
+        },
     });
 };
 
@@ -143,7 +148,7 @@ const deleteApiToken = () => {
                                     </div>
 
                                     <button class="cursor-pointer ml-6 text-sm text-red-500"
-                                            @click="confirmApiTokenDeletion('aaa')">
+                                            @click="confirmFielDeletion(fiel)">
                                         Delete
                                     </button>
                                 </div>
@@ -154,25 +159,29 @@ const deleteApiToken = () => {
             </div>
         </div>
 
-        <ConfirmationModal :show="apiTokenBeingDeleted != null" @close="apiTokenBeingDeleted = null">
+        <ConfirmationModal :show="fielBeingDeleted != null" @close="fielBeingDeleted = null">
             <template #title>
-                Delete API Token
+                Eliminar FIEL
             </template>
 
             <template #content>
-                Are you sure you would like to delete this API token?
+                ¿Está seguro de que desea eliminar esta Fiel?
+
+                <p class="font-bold">Detalles:</p>
+                <p class="font-bold">Rfc: {{ fielBeingDeleted.rfc }}</p>
+                <p class="font-bold">Nombre legal: {{ fielBeingDeleted.legalName }}</p>
             </template>
 
             <template #footer>
-                <SecondaryButton @click="apiTokenBeingDeleted = null">
+                <SecondaryButton @click="fielBeingDeleted = null">
                     Cancel
                 </SecondaryButton>
 
                 <DangerButton
                     class="ml-3"
-                    :class="{ 'opacity-25': deleteApiTokenForm.processing }"
-                    :disabled="deleteApiTokenForm.processing"
-                    @click="deleteApiToken"
+                    :class="{ 'opacity-25': deleteFielForm.processing }"
+                    :disabled="deleteFielForm.processing"
+                    @click="deleteFiel"
                 >
                     Delete
                 </DangerButton>

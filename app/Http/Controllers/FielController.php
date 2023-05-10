@@ -13,7 +13,6 @@ class FielController extends Controller
      */
     public function index()
     {
-        //
     }
 
     /**
@@ -21,7 +20,6 @@ class FielController extends Controller
      */
     public function create()
     {
-        //
     }
 
     /**
@@ -29,7 +27,6 @@ class FielController extends Controller
      */
     public function store(StoreFielRequest $request)
     {
-        //
     }
 
     /**
@@ -37,7 +34,6 @@ class FielController extends Controller
      */
     public function show(Fiel $fiel)
     {
-        //
     }
 
     /**
@@ -45,7 +41,6 @@ class FielController extends Controller
      */
     public function edit(Fiel $fiel)
     {
-        //
     }
 
     /**
@@ -53,7 +48,6 @@ class FielController extends Controller
      */
     public function update(UpdateFielRequest $request, Fiel $fiel)
     {
-        //
     }
 
     /**
@@ -61,6 +55,5 @@ class FielController extends Controller
      */
     public function destroy(Fiel $fiel)
     {
-        //
     }
 }

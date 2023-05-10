@@ -213,7 +213,7 @@ const logout = () => {
                                             API Tokens
                                         </DropdownLink>
 
-                                        <DropdownLink :href="route('config-fiel.index')">
+                                        <DropdownLink :href="route('config-fiel.create')">
                                             Config Fiel
                                         </DropdownLink>
 
@@ -340,8 +340,8 @@ const logout = () => {
                                 API Tokens
                             </ResponsiveNavLink>
 
-                            <ResponsiveNavLink :href="route('config-fiel.index')"
-                                               :active="route().current('config-fiel.index')">
+                            <ResponsiveNavLink :href="route('config-fiel.create')"
+                                               :active="route().current('config-fiel.create')">
                                 Config Fiel
                             </ResponsiveNavLink>
 
