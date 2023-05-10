@@ -32,7 +32,7 @@ class QueryController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(): Response|ResponseFactory
+    public function create(Request $request): Response|ResponseFactory
     {
         return Inertia(
             'Queries/Create',
@@ -49,7 +49,8 @@ class QueryController extends Controller
                     'P' => 'Pago',
                 ],
                 'complementoCfdi' => ComplementoCfdiList::COMPLEMENTOS_CFDI_LIST,
-                'documentStatus' => ['active' => 'Active', 'cancelled' => 'Cancelled'],
+                'documentStatus' => ['undefined' => 'Undefined','active' => 'Active', 'cancelled' => 'Cancelled'],
+                'fiels' => $request->user()->fiels()->get(),
             ]
         );
     }
@@ -59,6 +60,8 @@ class QueryController extends Controller
      */
     public function store(StoreQueryRequest $request): RedirectResponse
     {
+
+        dd( $request->all());
         return redirect()->route('queries.create')->with('success', 'Query created Successfully');
     }
 

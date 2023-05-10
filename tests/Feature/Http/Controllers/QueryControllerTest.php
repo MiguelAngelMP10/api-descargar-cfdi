@@ -48,7 +48,7 @@ class QueryControllerTest extends TestCase
                 ->has('requestType', 2)
                 ->has('documentType', 6)
                 ->has('complementoCfdi', 35)
-                ->has('documentStatus', 2));
+                ->has('documentStatus', 3));
     }
 
     public function test_show_query_display_the_specified_resource()

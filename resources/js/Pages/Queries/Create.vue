@@ -13,9 +13,11 @@ const props = defineProps(
         documentType: Object,
         complementoCfdi: Object,
         documentStatus: Object,
+        fiels: Object,
     }
 )
 const form = reactive({
+    rfc: String,
     endPoint: ['cfdi'],
     period_start: String,
     period_end: String,
@@ -23,19 +25,29 @@ const form = reactive({
     requestType: ['metadata'],
     documentType: '',
     complementoCfdi: '',
-    documentStatus: null,
+    documentStatus: 'undefined',
     uuid: '',
     rfcMatches: [],
     rfcOnBehalf: ''
 });
 let toast = useToast();
 let submit = () => {
-    router.post("/queries", form, {
-        replace: true, preserveState: true,
-        onSuccess: () => toast.success(usePage().props.flash.success),
-        onError: () => toast.success(usePage().props.flash.error)
-    })
-};
+        router.post("/queries", form, {
+                replace: true, preserveState: true,
+                onSuccess: () => {
+                    if (usePage().props.flash.success !== null) {
+                        toast.success(usePage().props.flash.success)
+                    }
+                },
+                onError: () => {
+                    if (usePage().props.flash.error !== null) {
+                        toast.error(usePage().props.flash.error)
+                    }
+                }
+            }
+        )
+    }
+;
 
 let addRfcMatches = () => {
     if (form.rfcMatches.length < 5) {
@@ -66,7 +78,28 @@ let deleteRfcMatches = () => {
                         <div class="border-b border-gray-900/10 pb-12">
                             <form @submit.prevent="submit">
 
+
                                 <div class="max-w-full mx-auto sm:px-6 lg:px-8 m-11">
+
+                                    <div class="mb-4">
+                                        <label for="rfc"
+                                               class="block my-4 font-semibold text-gray-900 dark:text-white">RFC</label>
+                                        <select id="rfc"
+                                                v-model="form.rfc"
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                :class="(errors.rfc)? 'bg-red-50 border border-red-500 text-red-700 dark:text-red-500 dark:bg-red-100 dark:border-red-400':''">
+                                            <option v-for="(item, key) in fiels" :value="item.rfc">
+                                                {{ item.rfc }} -
+                                                {{ item.legalName }}
+                                            </option>
+                                        </select>
+                                        <p class="mt-2 text-sm text-red-600 dark:text-red-500">
+                                            {{
+                                                errors.rfc
+                                            }}</p>
+                                    </div>
+
+
                                     <div class="mb-4">
                                         <h3 class="mb-4 font-semibold text-gray-900 dark:text-white">
                                             Tipos de Comprobantes Fiscales Digitales
@@ -91,8 +124,6 @@ let deleteRfcMatches = () => {
                                         </p>
 
                                     </div>
-
-
                                     <h1 class="mb-4 font-semibold text-gray-900 dark:text-white">Periodo</h1>
                                     <div class="grid gap-6 mb-6 md:grid-cols-2">
                                         <div>
@@ -265,7 +296,7 @@ let deleteRfcMatches = () => {
                                         <label for="RFC_contraparte"
                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                                                :class="(errors.rfcOnBehalf)? 'text-red-700 dark:text-red-500':''"
-                                        >RFC contraparte</label>
+                                        >RFC cuenta de terceros</label>
                                         <input type="text" id="RFC_contraparte"
                                                v-model="form.rfcOnBehalf"
                                                aria-describedby="helper-text-explanation"
@@ -280,7 +311,7 @@ let deleteRfcMatches = () => {
                                     <h3
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                                         :class="(errors.rfcMatches)? 'text-red-700 dark:text-red-500':''"
-                                    >Filtrado por RFC contraparte</h3>
+                                    >RFC contraparte</h3>
                                     <button type="button" @click="addRfcMatches"
                                             v-if="form.rfcMatches.length < 5"
                                             class="text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">
