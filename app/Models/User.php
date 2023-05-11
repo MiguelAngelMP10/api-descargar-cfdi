@@ -63,4 +63,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Fiel::class);
     }
+
+    public function queries(): HasMany
+    {
+        return $this->hasMany(Query::class);
+    }
 }
