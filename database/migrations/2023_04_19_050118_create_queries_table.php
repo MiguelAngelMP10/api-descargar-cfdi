@@ -24,8 +24,8 @@ return new class extends Migration {
             $table->uuid("requestId")->nullable();
             $table->integer("numeroCFDIs")->nullable();
 
-            $table->enum('documentType', ['I', 'E', 'N', 'T', 'P'])->nullable();
-            $table->enum('documentStatus', ['active', 'cancelled'])->nullable();
+            $table->enum('documentType', ['', 'I', 'E', 'N', 'T', 'P'])->nullable();
+            $table->enum('documentStatus', ['', 'active', 'cancelled'])->nullable();
             $table->string('complementoCfdi')->nullable();
             $table->json('rfcMatches')->default(new Expression('(JSON_ARRAY())'));
             $table->uuid('uuid')->nullable();
