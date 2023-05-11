@@ -18,15 +18,13 @@ use PhpCfdi\SatWsDescargaMasiva\RequestBuilder\FielRequestBuilder\FielRequestBui
 use PhpCfdi\SatWsDescargaMasiva\Service;
 use PhpCfdi\SatWsDescargaMasiva\Services\Query\QueryParameters;
 use PhpCfdi\SatWsDescargaMasiva\Shared\DateTimePeriod;
-use PhpCfdi\SatWsDescargaMasiva\Shared\DownloadType;
-use PhpCfdi\SatWsDescargaMasiva\Shared\RequestType;
-use PhpCfdi\SatWsDescargaMasiva\Shared\ServiceEndpoints;
 use PhpCfdi\SatWsDescargaMasiva\WebClient\GuzzleWebClient;
 
 class QueryController extends Controller
 {
     use AddParametersToQuery;
 
+    public const FORMAT_DATE = 'Y-m-d H:i:s';
     protected QueryParameters $queryParameters;
 
     /**
@@ -83,64 +81,18 @@ class QueryController extends Controller
     public function store(StoreQueryRequest $request): RedirectResponse
     {
         try {
-            $start = null;
-            $end = null;
-
-            if ($request->input('period_start') !== null && $request->input('period_end') !== null) {
-                $start = Carbon::createFromFormat('Y-m-d', $request->input('period_start'));
-                $end = Carbon::createFromFormat('Y-m-d', $request->input('period_end'));
-                $start->setHour(0)->setMinutes(0)->setSecond(0)->toDate();
-                $end->setHour(23)->setMinutes(59)->setSecond(59)->toDate();
-                $start = $start->format('Y-m-d H:i:s');
-                $end = $end->format('Y-m-d H:i:s');
-            }
-
-            $fielDB = $request->user()->fiels()->where('rfc', $request->input('rfc'))->first();
-
-            $webClient = new GuzzleWebClient();
-            $fiel = Fiel::create(
-                Crypt::decryptString($fielDB->cer),
-                Crypt::decryptString($fielDB->key),
-                Crypt::decryptString($fielDB->password)
-            );
-
-            $requestBuilder = new FielRequestBuilder($fiel);
-
+            $requestBuilder = new FielRequestBuilder($this->decryptFiel($request));
+            $webclient = new GuzzleWebClient();
             foreach ($request->input('endPoint') as $endPoint) {
                 foreach ($request->input('downloadType') as $downloadType) {
                     foreach ($request->input('requestType') as $requestType) {
-                        $service = new Service($requestBuilder, $webClient, null, $this->getEndpoints($endPoint));
+                        $service = new Service($requestBuilder, $webclient, null, $this->getEndpoints($endPoint));
                         $this->queryParameters = QueryParameters::create()
-                            ->withPeriod(DateTimePeriod::createFromValues($start, $end))
                             ->withDownloadType($this->getDownloadType($downloadType))
                             ->withRequestType($this->getRequestType($requestType));
-
-                        $this->addDocumentTypeToQueryParameters($request);
-                        $this->addComplementoCfdi($request);
-                        $this->addDocumentStatus($request);
-                        $this->addUuid($request);
-                        $this->addRfcOnBehalf($request);
-                        $this->rfcMatches = $request->has('rfcMatches') ? $request->input('rfcMatches') : [];
-                        $this->addRfcMatches();
-
+                        $this->processParams($request);
                         $query = $service->query($this->queryParameters);
-                        $request->user()->queries()->create([
-                            'rfc' => $request->input('rfc'),
-                            'endPoint' => $endPoint,
-                            'downloadType' => $downloadType,
-                            'requestType' => $requestType,
-                            'dateTimePeriodStart' => $this->queryParameters->getPeriod()->getStart()->format('Y-m-d H:i:s'),
-                            'dateTimePeriodEnd' => $this->queryParameters->getPeriod()->getEnd()->format('Y-m-d H:i:s'),
-                            'requestId' => $query->getRequestId(),
-                            'documentType' => $this->queryParameters->getDocumentType()->value(),
-                            'documentStatus' => $this->queryParameters->getDocumentStatus()->value(),
-                            'complementoCfdi' => $this->queryParameters->getComplement()->value(),
-                            'rfcMatches' => json_encode($this->queryParameters->getRfcMatches()),
-                            'rfcOnBehalf' => $this->queryParameters->getRfcOnBehalf()->getValue(),
-                            'uuid' => $this->queryParameters->getUuid()->getValue(),
-                            'statusCode' => $query->getStatus()->getCode(),
-                            'statusMessage' => $query->getStatus()->getMessage(),
-                        ]);
+                        $this->insertQuery($request, $endPoint, $downloadType, $requestType, $query);
                     }
                 }
             }
@@ -160,33 +112,61 @@ class QueryController extends Controller
         ]);
     }
 
-    private function getEndpoints($endPoint)
+    private function calculateStartAndEndPeriod($request): void
     {
-        if ($endPoint === 'cfdi') {
-            return ServiceEndpoints::cfdi();
-        }
-        if ($endPoint === 'retenciones') {
-            return ServiceEndpoints::retenciones();
+        if ($request->input('period_start') !== null && $request->input('period_end') !== null) {
+            $start = Carbon::createFromFormat('Y-m-d', $request->input('period_start'));
+            $end = Carbon::createFromFormat('Y-m-d', $request->input('period_end'));
+            $start->setHour(0)->setMinutes(0)->setSecond(0)->toDate();
+            $end->setHour(23)->setMinutes(59)->setSecond(59)->toDate();
+            $start = $start->format('Y-m-d H:i:s');
+            $end = $end->format('Y-m-d H:i:s');
+            $this->queryParameters = $this->queryParameters->withPeriod(DateTimePeriod::createFromValues($start, $end));
         }
     }
 
-    private function getDownloadType($downloadType)
+    private function decryptFiel($request): Fiel
     {
-        if ($downloadType === 'issued') {
-            return DownloadType::issued();
-        }
-        if ($downloadType === 'received') {
-            return DownloadType::received();
-        }
+        $fielDB = $request->user()->fiels()->where('rfc', $request->input('rfc'))->first();
+        return Fiel::create(
+            Crypt::decryptString($fielDB->cer),
+            Crypt::decryptString($fielDB->key),
+            Crypt::decryptString($fielDB->password)
+        );
     }
 
-    private function getRequestType($requestType)
+    private function processParams($request): void
     {
-        if ($requestType === 'xml') {
-            return RequestType::xml();
-        }
-        if ($requestType === 'metadata') {
-            return RequestType::metadata();
-        }
+        $this->calculateStartAndEndPeriod($request);
+        $this->addDocumentTypeToQueryParameters($request);
+        $this->addComplementoCfdi($request);
+        $this->addDocumentStatus($request);
+        $this->addUuid($request);
+        $this->addRfcOnBehalf($request);
+        $this->rfcMatches = $request->has('rfcMatches') ? $request->input('rfcMatches') : [];
+        $this->addRfcMatches();
+    }
+
+    private function insertQuery($request, $endPoint, $downloadType, $requestType, $query): void
+    {
+        $request->user()->queries()->create([
+            'rfc' => $request->input('rfc'),
+            'endPoint' => $endPoint,
+            'downloadType' => $downloadType,
+            'requestType' => $requestType,
+            'dateTimePeriodStart' => $this->queryParameters->getPeriod()
+                ->getStart()->format(self::FORMAT_DATE),
+            'dateTimePeriodEnd' => $this->queryParameters->getPeriod()
+                ->getEnd()->format(self::FORMAT_DATE),
+            'requestId' => $query->getRequestId(),
+            'documentType' => $this->queryParameters->getDocumentType()->value(),
+            'documentStatus' => $this->queryParameters->getDocumentStatus()->value(),
+            'complementoCfdi' => $this->queryParameters->getComplement()->value(),
+            'rfcMatches' => json_encode($this->queryParameters->getRfcMatches()),
+            'rfcOnBehalf' => $this->queryParameters->getRfcOnBehalf()->getValue(),
+            'uuid' => $this->queryParameters->getUuid()->getValue(),
+            'statusCode' => $query->getStatus()->getCode(),
+            'statusMessage' => $query->getStatus()->getMessage(),
+        ]);
     }
 }
