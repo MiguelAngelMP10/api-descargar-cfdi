@@ -23,6 +23,8 @@ watch(search, (value) => {
     router.get(`/queries?search=${value}`, {}, {replace: true, preserveState: true,});
 });
 
+router.reload({only: ['queries']})
+
 </script>
 
 <template>

@@ -19,8 +19,8 @@ const props = defineProps(
 const form = reactive({
     rfc: String,
     endPoint: ['cfdi'],
-    period_start: String,
-    period_end: String,
+    period_start: '',
+    period_end: '',
     downloadType: ['issued'],
     requestType: ['metadata'],
     documentType: '',
@@ -33,13 +33,13 @@ const form = reactive({
 let toast = useToast();
 let submit = () => {
         router.post("/queries", form, {
+                preserveScroll: true,
                 replace: true, preserveState: true,
                 onSuccess: () => {
                     if (usePage().props.flash.success !== null) {
                         toast.success(usePage().props.flash.success)
                     }
-                },
-                onError: () => {
+
                     if (usePage().props.flash.error !== null) {
                         toast.error(usePage().props.flash.error)
                     }
