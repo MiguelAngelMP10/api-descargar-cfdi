@@ -33,7 +33,7 @@ jobs:
 
       - name: Get composer cache directory
         id: composer-cache
-        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
 
       - name: Composer cache dependencies
         uses: actions/cache@v3
@@ -56,7 +56,6 @@ jobs:
 
       - name: Compile assets
         run: npm run build
-
 
       - name: Tests (phpunit)
         run: php artisan test
