@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('fiels', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->after('id')->constrained();
+            $table->foreignId('user_id')->constrained();
             $table->string('rfc')->nullable(false);
             $table->string('legalName')->nullable(false);
             $table->text('cer')->nullable(false);
