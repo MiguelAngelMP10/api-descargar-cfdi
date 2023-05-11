@@ -26,8 +26,9 @@ class StoreQueryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'period_start' => 'date',
-            'period_end' => 'date',
+            'rfc' => ['required', 'string', new RfcValidRule()],
+            'period_start' => ['date', 'nullable'],
+            'period_end' => ['date', 'nullable'],
             'endPoint' => ['array', 'nullable', Rule::in(['cfdi', 'retenciones'])],
             'downloadType' => [
                 'array', Rule::in(['issued', 'received']),
@@ -43,7 +44,7 @@ class StoreQueryRequest extends FormRequest
                 Rule::in(array_keys(ComplementoCfdiList::COMPLEMENTOS_CFDI_LIST)),
             ],
             'documentStatus' => [
-                'nullable', Rule::in(['active', 'cancelled']),
+                'nullable', Rule::in(['undefined', 'active', 'cancelled']),
             ],
             'uuid' => ['nullable', 'uuid'],
             'rfcOnBehalf' => ['nullable', 'string', new RfcValidRule()],
