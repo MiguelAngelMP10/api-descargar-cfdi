@@ -10,10 +10,8 @@ use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Crypt;
 use Inertia\Response;
 use Inertia\ResponseFactory;
-use PhpCfdi\SatWsDescargaMasiva\RequestBuilder\FielRequestBuilder\Fiel;
 use PhpCfdi\SatWsDescargaMasiva\RequestBuilder\FielRequestBuilder\FielRequestBuilder;
 use PhpCfdi\SatWsDescargaMasiva\Service;
 use PhpCfdi\SatWsDescargaMasiva\Services\Query\QueryParameters;
@@ -37,12 +35,13 @@ class QueryController extends Controller
      */
     public function index(Request $request): Response|ResponseFactory
     {
-        $queries = Query::query()->when($request->search, function ($query, $search) {
-            $query->where('rfc', 'like', '%' . $search . '%')
-                ->orWhere('endPoint', 'like', '%' . $search . '%')
-                ->orWhere('downloadType', 'like', '%' . $search . '%')
-                ->orWhere('requestType', 'like', '%' . $search . '%');
-        })->paginate(10)->withQueryString();
+        $queries = $request->user()->queries()->with(['packeges'])
+            ->when($request->search, function ($query, $search) {
+                $query->where('rfc', 'like', '%' . $search . '%')
+                    ->orWhere('endPoint', 'like', '%' . $search . '%')
+                    ->orWhere('downloadType', 'like', '%' . $search . '%')
+                    ->orWhere('requestType', 'like', '%' . $search . '%');
+            })->paginate(10)->withQueryString();
         return Inertia('Queries/Index', [
             'queries' => $queries,
             'search' => $request->search,
@@ -81,7 +80,8 @@ class QueryController extends Controller
     public function store(StoreQueryRequest $request): RedirectResponse
     {
         try {
-            $requestBuilder = new FielRequestBuilder($this->decryptFiel($request));
+            $fielDB = $request->user()->fiels()->where('rfc', $request->input('rfc'))->first();
+            $requestBuilder = new FielRequestBuilder($this->decryptFiel($fielDB));
             $webclient = new GuzzleWebClient();
             foreach ($request->input('endPoint') as $endPoint) {
                 foreach ($request->input('downloadType') as $downloadType) {
@@ -123,16 +123,6 @@ class QueryController extends Controller
             $end = $end->format('Y-m-d H:i:s');
             $this->queryParameters = $this->queryParameters->withPeriod(DateTimePeriod::createFromValues($start, $end));
         }
-    }
-
-    private function decryptFiel($request): Fiel
-    {
-        $fielDB = $request->user()->fiels()->where('rfc', $request->input('rfc'))->first();
-        return Fiel::create(
-            Crypt::decryptString($fielDB->cer),
-            Crypt::decryptString($fielDB->key),
-            Crypt::decryptString($fielDB->password)
-        );
     }
 
     private function processParams($request): void
