@@ -191,10 +191,115 @@ let dateTimePeriodStartFormat = moment(query.dateTimePeriodStart).format('DD/MM/
                                     </div>
                                 </div>
 
-
                             </div>
-                            <div class="mt-10 ">
-                                <h1 class="text-lg font-bold text-center">History Response</h1>
+                            <div class="my-10">
+                                <p class="text-lg font-bold text-center">Packages</p>
+                                <div class="relative overflow-x-auto mt5" v-if="query.packeges.length>0">
+                                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                                        <thead
+                                            class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                        <tr class="text-center">
+                                            <th scope="col" class="px-6 py-3">
+                                                Package Id
+                                            </th>
+                                            <th scope="col" class="px-6 py-3">
+                                                Path
+                                            </th>
+                                            <th scope="col" class="px-6 py-3">
+                                                Status Code
+                                            </th>
+                                            <th scope="col" class="px-6 py-3">
+                                                statusMessage
+                                            </th>
+                                            <th scope="col" class="px-6 py-3">
+                                                package Size
+                                            </th>
+
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 text-center"
+                                            v-for="response in  query.packeges">
+                                            <th scope="row"
+                                                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                                {{ response.packageId }}
+                                            </th>
+                                            <td class="px-6 py-4">
+                                                {{ response.path }}
+                                            </td>
+                                            <td class="px-6 py-4">
+                                                {{ response.statusCode }}
+                                            </td>
+                                            <td class="px-6 py-4">
+                                                {{ response.statusMessage }}
+                                            </td>
+                                            <td class="px-6 py-4">
+                                                {{ response.packageSize }}
+                                            </td>
+
+                                        </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+
+                            <div class="my-10">
+                                <p class="text-lg font-bold text-center">History Response</p>
+                                <div class="relative overflow-x-auto mt5" v-if="query.resposes_query.length>0">
+                                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                                        <thead
+                                            class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                        <tr class="text-center">
+                                            <th scope="col" class="px-6 py-3">
+                                                Status Code
+                                            </th>
+                                            <th scope="col" class="px-6 py-3">
+                                                Status Message
+                                            </th>
+                                            <th scope="col" class="px-6 py-3">
+                                                Status Request Message
+                                            </th>
+                                            <th scope="col" class="px-6 py-3">
+                                                Status Request Name
+                                            </th>
+                                            <th scope="col" class="px-6 py-3">
+                                                Code Request Value
+                                            </th>
+                                            <th scope="col" class="px-6 py-3">
+                                                Code Request Message
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 text-center"
+                                            v-for="response in  query.resposes_query">
+                                            <th scope="row"
+                                                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                                {{ response.statusCode }}
+                                            </th>
+                                            <td class="px-6 py-4">
+                                                {{ response.statusMessage }}
+                                            </td>
+                                            <td class="px-6 py-4">
+                                                {{ response.statusRequestName }}
+                                            </td>
+                                            <td class="px-6 py-4">
+                                                {{ response.statusRequestMessage }}
+                                            </td>
+                                            <td class="px-6 py-4">
+                                                {{ response.codeRequestName }}
+                                            </td>
+                                            <td class="px-6 py-4">
+                                                {{ response.codeRequestMessage }}
+                                            </td>
+                                        </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+
                             </div>
 
 

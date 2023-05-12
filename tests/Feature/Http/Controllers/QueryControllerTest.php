@@ -62,7 +62,7 @@ class QueryControllerTest extends TestCase
             ->assertInertia(fn(Assert $page) => $page
                 ->component('Queries/Show')
                 ->has('auth.user', 10)
-                ->has('query', 20)
+                ->has('query', 22)
                 ->where('query.user_id', $this->user->id));
     }
 

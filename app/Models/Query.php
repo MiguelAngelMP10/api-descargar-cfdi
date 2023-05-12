@@ -45,4 +45,9 @@ class Query extends Model
     {
         return $this->hasMany(Package::class);
     }
+
+    public function resposesQuery(): HasMany
+    {
+        return $this->hasMany(ResponseQueryVerification::class);
+    }
 }

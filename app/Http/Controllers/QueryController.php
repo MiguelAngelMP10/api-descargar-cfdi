@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreQueryRequest;
 use App\Models\Query;
 use App\Traits\AddParametersToQuery;
+use App\Traits\DecryptFiel;
+use App\Traits\ParameterEvaluations;
 use App\Utils\ComplementoCfdiList;
 use Carbon\Carbon;
 use Exception;
@@ -21,6 +23,8 @@ use PhpCfdi\SatWsDescargaMasiva\WebClient\GuzzleWebClient;
 class QueryController extends Controller
 {
     use AddParametersToQuery;
+    use DecryptFiel;
+    use ParameterEvaluations;
 
     public const FORMAT_DATE = 'Y-m-d H:i:s';
     protected QueryParameters $queryParameters;
@@ -107,8 +111,9 @@ class QueryController extends Controller
      */
     public function show(Query $query): Response|ResponseFactory
     {
+        $queryR = Query::where('id', '=', $query->id)->with(['resposesQuery', 'packeges'])->first();
         return Inertia('Queries/Show', [
-            'query' => $query,
+            'query' => $queryR,
         ]);
     }
 

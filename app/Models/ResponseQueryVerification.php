@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class ResponseQueryVerification extends Model
 {
@@ -25,4 +26,9 @@ class ResponseQueryVerification extends Model
         'codeRequestName',
         'codeRequestMessage',
     ];
+
+    public function queryRelation(): HasOne
+    {
+        return $this->hasOne(Query::class);
+    }
 }

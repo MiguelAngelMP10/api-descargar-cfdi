@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Package;
 use App\Models\Query;
 use App\Models\ResponseQueryVerification;
-use App\Traits\AddParametersToQuery;
+use App\Traits\DecryptFiel;
+use App\Traits\ParameterEvaluations;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use PhpCfdi\SatWsDescargaMasiva\RequestBuilder\FielRequestBuilder\FielRequestBuilder;
@@ -14,7 +15,8 @@ use PhpCfdi\SatWsDescargaMasiva\WebClient\GuzzleWebClient;
 
 class ResponseQueryVerificationController extends Controller
 {
-    use AddParametersToQuery;
+    use DecryptFiel;
+    use ParameterEvaluations;
 
     public function verifyQuery(Request $request, Query $query): RedirectResponse
     {
@@ -42,14 +44,13 @@ class ResponseQueryVerificationController extends Controller
 
         return redirect()
             ->route('queries.index')
-            ->with('success', 'Consulta verificada ' . implode(", <br>", $very->getPackagesIds()));
+            ->with('success', 'Consulta verificada ' . implode(', <br>', $very->getPackagesIds()));
     }
-
 
     private function insertPackeges(array $packagesIds, Query $query): void
     {
         foreach ($packagesIds as $packagesId) {
-            $package = new  Package;
+            $package = new Package();
             $package->query_id = $query->id;
             $package->packageId = $packagesId;
             $package->save();
