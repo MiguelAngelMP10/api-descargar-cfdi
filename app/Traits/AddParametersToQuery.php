@@ -4,6 +4,8 @@ namespace App\Traits;
 
 use App\Http\Requests\MakeQueryPostRequest;
 use App\Http\Requests\StoreQueryRequest;
+use Illuminate\Support\Facades\Crypt;
+use PhpCfdi\SatWsDescargaMasiva\RequestBuilder\FielRequestBuilder\Fiel;
 use PhpCfdi\SatWsDescargaMasiva\Shared\ComplementoCfdi;
 use PhpCfdi\SatWsDescargaMasiva\Shared\DocumentStatus;
 use PhpCfdi\SatWsDescargaMasiva\Shared\DocumentType;
@@ -116,5 +118,14 @@ trait AddParametersToQuery
             'xml' => RequestType::xml(),
             default => RequestType::metadata(),
         };
+    }
+
+    private function decryptFiel($fielDB): Fiel
+    {
+        return Fiel::create(
+            Crypt::decryptString($fielDB->cer),
+            Crypt::decryptString($fielDB->key),
+            Crypt::decryptString($fielDB->password)
+        );
     }
 }
