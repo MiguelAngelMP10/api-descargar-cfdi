@@ -86,7 +86,10 @@ router.reload({only: ['queries']})
                                 Request Id
                             </th>
                             <th scope="col" class="py-3 text-center border" rowspan="2">
-                                numeroCFDIs
+                                Número CFDIs
+                            </th>
+                            <th scope="col" class="py-3 text-center border" rowspan="2">
+                                Número de paquetes
                             </th>
 
                             <th scope="col" class="py-3 text-center border" rowspan="2" colspan="3">
@@ -142,8 +145,11 @@ router.reload({only: ['queries']})
                             <td class="py-4 px-6">
                                 {{ query.requestId }}
                             </td>
-                            <td class="py-4 px-6">
+                            <td class="py-4 px-6 text-center">
                                 {{ query.numeroCFDIs }}
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                {{ query.packeges.length }}
                             </td>
                             <td class="py-4 px-6 text-right">
                                 <Link :href="route('queries.show',  query)"
@@ -151,8 +157,9 @@ router.reload({only: ['queries']})
                                 </Link>
                             </td>
                             <td class="py-4 px-6 text-right">
-                                <a href=""
-                                   class="font-semibold text-blue-600 dark:text-blue-500 hover:underline">Verificar</a>
+                                <Link :href="route('verify.query',  query)" v-if="query.packeges.length===0 && query.requestId"
+                                      class="font-semibold text-blue-600 dark:text-blue-500 hover:underline"> Verificar
+                                </Link>
                             </td>
 
                             <td class="py-4 px-6 text-right">
