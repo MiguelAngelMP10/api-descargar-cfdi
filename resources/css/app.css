@@ -5,3 +5,8 @@
 [x-cloak] {
     display: none;
 }
+
+#nprogress .bar {
+    height: 10px !important;
+    top: 1px !important;
+}
