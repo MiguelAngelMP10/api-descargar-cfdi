@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Config\FielController;
 use App\Http\Controllers\QueryController;
+use App\Http\Controllers\ResponseQueryVerificationController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -38,4 +39,6 @@ Route::middleware([
     Route::get('config/fiel', [FielController::class, 'create'])->name('config-fiel.create');
     Route::post('config/fiel', [FielController::class, 'store'])->name('config-fiel.store');
     Route::delete('config/fiel/{fiel}', [FielController::class, 'destroy'])->name('config-fiel.destroy');
+    Route::get('verify-query/{query}', [ResponseQueryVerificationController::class, 'verifyQuery'])
+        ->name('verify.query');
 });
