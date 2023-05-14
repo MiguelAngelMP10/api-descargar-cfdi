@@ -2,7 +2,6 @@
 
 namespace Tests\Feature;
 
-use Faker\Provider\Uuid;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use PhpCfdi\Rfc\RfcFaker;
 use Tests\TestCase;
@@ -10,7 +9,6 @@ use Tests\TestCase;
 class MakeQueryTest extends TestCase
 {
     use WithValidFielTrait, RefreshDatabase;
-
 
     public function test_it_refuse_an_invalid_empty_request(): void
     {
@@ -37,13 +35,13 @@ class MakeQueryTest extends TestCase
                 'cer' => $this->getCertificate(),
                 'key' => $this->getKey(),
                 'password' => $this->getFielPassword(),
-                "period" => [
-                    "start" => "2021-11-01 00:00:01",
-                    "end" => "2021-12-31 23:59:59"
+                'period' => [
+                    'start' => '2021-11-01 00:00:01',
+                    'end' => '2021-12-31 23:59:59',
                 ],
-                "downloadType" => "lo-que-sea",
-                "requestType" => "lo-que-sea",
-                "rfcMatch" => ""
+                'downloadType' => 'lo-que-sea',
+                'requestType' => 'lo-que-sea',
+                'rfcMatch' => '',
             ]
         );
 
@@ -51,7 +49,7 @@ class MakeQueryTest extends TestCase
             'message' => 'Invalid data',
             'errors' => [
                 'downloadType' => ['The downloadType must be one of the following types: issued, received'],
-                'requestType' => ['The requestType must be one of the following types: xml, metadata']
+                'requestType' => ['The requestType must be one of the following types: xml, metadata'],
             ],
         ]);
     }
@@ -66,18 +64,18 @@ class MakeQueryTest extends TestCase
                 'cer' => $this->getCertificate(),
                 'key' => $this->getKey(),
                 'password' => $this->getFielPassword(),
-                "period" => [
-                    "start" => "2021-11-01 00:00:01",
-                    "end" => "2021-12-31 23:59:59"
+                'period' => [
+                    'start' => '2021-11-01 00:00:01',
+                    'end' => '2021-12-31 23:59:59',
                 ],
-                "rfcMatches" => ""
+                'rfcMatches' => '',
             ]
         );
 
         $response->assertStatus(422)->assertJson([
             'message' => 'Invalid data',
             'errors' => [
-                'rfcMatches' => ['The rfcMatches must be an array.']
+                'rfcMatches' => ['The rfcMatches must be an array.'],
             ],
         ]);
     }
@@ -92,23 +90,23 @@ class MakeQueryTest extends TestCase
                 'cer' => $this->getCertificate(),
                 'key' => $this->getKey(),
                 'password' => $this->getFielPassword(),
-                "period" => [
-                    "start" => "2021-11-01 00:00:01",
-                    "end" => "2021-11-01 23:59:59"
+                'period' => [
+                    'start' => '2021-11-01 00:00:01',
+                    'end' => '2021-11-01 23:59:59',
                 ],
-                "retenciones" => false,
-                "downloadType" => "received",
-                "requestType" => "metadata",
-                "rfcMatch" => [],
-                "documentType" => "ALGO-QUE-NO"
+                'retenciones' => false,
+                'downloadType' => 'received',
+                'requestType' => 'metadata',
+                'rfcMatch' => [],
+                'documentType' => 'ALGO-QUE-NO',
             ]
         );
 
         $response->assertStatus(422)->assertJson([
             'message' => 'Invalid data',
             'errors' => [
-                'documentType' => ["The documentType must be one of the following types: I, E, T, N, P"]
-            ]
+                'documentType' => ['The documentType must be one of the following types: I, E, T, N, P'],
+            ],
         ]);
     }
 
@@ -122,15 +120,15 @@ class MakeQueryTest extends TestCase
                 'cer' => $this->getCertificate(),
                 'key' => $this->getKey(),
                 'password' => $this->getFielPassword(),
-                "period" => [
-                    "start" => "2021-11-01 00:00:01",
-                    "end" => "2021-11-01 23:59:59"
+                'period' => [
+                    'start' => '2021-11-01 00:00:01',
+                    'end' => '2021-11-01 23:59:59',
                 ],
-                "complementoCfdi" => "algo"
+                'complementoCfdi' => 'algo',
             ]
         );
         $response->assertStatus(422)->assertJson([
-            'message' => "PhpCfdi\\SatWsDescargaMasiva\\Shared\\ComplementoCfdi value algo was not found"
+            'message' => 'PhpCfdi\\SatWsDescargaMasiva\\Shared\\ComplementoCfdi value algo was not found',
         ]);
     }
 
@@ -144,19 +142,19 @@ class MakeQueryTest extends TestCase
                 'cer' => $this->getCertificate(),
                 'key' => $this->getKey(),
                 'password' => $this->getFielPassword(),
-                "period" => [
-                    "start" => "2021-11-01 00:00:01",
-                    "end" => "2021-11-01 23:59:59"
+                'period' => [
+                    'start' => '2021-11-01 00:00:01',
+                    'end' => '2021-11-01 23:59:59',
                 ],
-                "documentStatus" => "otra cosa"
+                'documentStatus' => 'otra cosa',
             ]
         );
 
         $response->assertStatus(422)->assertJson([
             'message' => 'Invalid data',
             'errors' => [
-                'documentStatus' => ["The documentStatus must be one of the following types: active, cancelled"]
-            ]
+                'documentStatus' => ['The documentStatus must be one of the following types: active, cancelled'],
+            ],
         ]);
     }
 
@@ -170,19 +168,19 @@ class MakeQueryTest extends TestCase
                 'cer' => $this->getCertificate(),
                 'key' => $this->getKey(),
                 'password' => $this->getFielPassword(),
-                "period" => [
-                    "start" => "2021-11-01 00:00:01",
-                    "end" => "2021-11-01 23:59:59"
+                'period' => [
+                    'start' => '2021-11-01 00:00:01',
+                    'end' => '2021-11-01 23:59:59',
                 ],
-                "uuid" => ''
+                'uuid' => '',
             ]
         );
 
         $response->assertStatus(422)->assertJson([
             'message' => 'Invalid data',
             'errors' => [
-                'uuid' => ["The uuid must be a valid UUID."]
-            ]
+                'uuid' => ['The uuid must be a valid UUID.'],
+            ],
         ]);
     }
 
@@ -196,23 +194,24 @@ class MakeQueryTest extends TestCase
                 'cer' => $this->getCertificate(),
                 'key' => $this->getKey(),
                 'password' => $this->getFielPassword(),
-                "period" => [
-                    "start" => "2021-11-01 00:00:01",
-                    "end" => "2021-11-01 23:59:59"
+                'period' => [
+                    'start' => '2021-11-01 00:00:01',
+                    'end' => '2021-11-01 23:59:59',
                 ],
-                "rfcOnBehalf" => (new RfcFaker)->mexicanRfc() . '-',
+                'rfcOnBehalf' => (new RfcFaker)->mexicanRfc().'-',
             ]
         );
 
         $response->assertStatus(422)->assertJson([
             'message' => 'Invalid data',
             'errors' => [
-                'rfcOnBehalf' => ["The rfcOnBehalf field not appears to be valid."]
-            ]
+                'rfcOnBehalf' => ['The rfcOnBehalf field not appears to be valid.'],
+            ],
         ]);
     }
 
-    public function test_validate_add_endpoint(){
+    public function test_validate_add_endpoint()
+    {
         $this->sanctumAuthenticate();
         $this->setUpValidFiel();
         $response = $this->post(
@@ -221,20 +220,19 @@ class MakeQueryTest extends TestCase
                 'cer' => $this->getCertificate(),
                 'key' => $this->getKey(),
                 'password' => $this->getFielPassword(),
-                "period" => [
-                    "start" => "2021-11-01 00:00:01",
-                    "end" => "2021-11-01 23:59:59"
+                'period' => [
+                    'start' => '2021-11-01 00:00:01',
+                    'end' => '2021-11-01 23:59:59',
                 ],
-               'endPoint' => 'algo'
+                'endPoint' => 'algo',
             ]
         );
 
         $response->assertStatus(422)->assertJson([
             'message' => 'Invalid data',
             'errors' => [
-                'endPoint' => ["The endPoint must be one of the following types: cfdi, retenciones"]
-            ]
+                'endPoint' => ['The endPoint must be one of the following types: cfdi, retenciones'],
+            ],
         ]);
     }
-
 }

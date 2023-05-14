@@ -39,18 +39,19 @@ final class SendCertificatePrivateKeyPairsTest extends TestCase
 
     /**
      * @see SendCerKeyController::sendCerKey()
+     *
      * @test
      */
     public function it_receive_valid_certificate_and_private_key(): void
     {
-        $certificatePath = __DIR__ . '/../_files/fake-fiel/EKU9003173C9.cer';
-        $privateKeyPath = __DIR__ . '/../_files/fake-fiel/EKU9003173C9.key';
-        $passPhrasePath = __DIR__ . '/../_files/fake-fiel/EKU9003173C9-password.txt';
+        $certificatePath = __DIR__.'/../_files/fake-fiel/EKU9003173C9.cer';
+        $privateKeyPath = __DIR__.'/../_files/fake-fiel/EKU9003173C9.key';
+        $passPhrasePath = __DIR__.'/../_files/fake-fiel/EKU9003173C9-password.txt';
 
         $this->sanctumAuthenticate();
         $response = $this->post('/api/v1/send-cer-key', [
             'cer' => $this->makeUploadFile($certificatePath),
-            'key' =>  $this->makeUploadFile($privateKeyPath),
+            'key' => $this->makeUploadFile($privateKeyPath),
             'password' => trim(file_get_contents($passPhrasePath)),
         ]);
         $response->assertStatus(200);
@@ -63,6 +64,7 @@ final class SendCertificatePrivateKeyPairsTest extends TestCase
 
     /**
      * @see SendCerKeyController::sendCerKey()
+     *
      * @test
      */
     public function it_refuse_an_invalid_empty_request(): void
@@ -74,13 +76,14 @@ final class SendCertificatePrivateKeyPairsTest extends TestCase
             'errors' => [
                 'password' => ['The password field is required.'],
                 'key' => ['The key field is required.'],
-                'cer' => ['The cer field is required.']
-            ]
+                'cer' => ['The cer field is required.'],
+            ],
         ]);
     }
 
     /**
      * @see SendCerKeyController::sendCerKey()
+     *
      * @test
      */
     public function it_refuse_sending_string_instead_of_file(): void
@@ -92,16 +95,16 @@ final class SendCertificatePrivateKeyPairsTest extends TestCase
             'password' => 'pwd',
         ]);
         $response->assertStatus(422)->assertJson([
-            'errors' =>
-            [
+            'errors' => [
                 'cer' => ['The certificate is not a file.'],
-                'key' => ['The private key is not a file.']
+                'key' => ['The private key is not a file.'],
             ],
         ]);
     }
 
     /**
      * @see SendCerKeyController::sendCerKey()
+     *
      * @test
      */
     public function it_refuse_an_invalid_file_mimetype(): void
@@ -109,37 +112,37 @@ final class SendCertificatePrivateKeyPairsTest extends TestCase
         $this->sanctumAuthenticate();
         $response = $this->post('/api/v1/send-cer-key', [
             'cer' => UploadedFile::fake()->create('image.png'),
-            'key' =>  UploadedFile::fake()->create('image.jpg'),
+            'key' => UploadedFile::fake()->create('image.jpg'),
             'password' => 'pwd',
         ]);
         $response->assertStatus(422)->assertJson([
             'message' => 'Los datos enviados de certificado, llave privada o contraseña son inválidos.',
-            'errors' =>
-            [
+            'errors' => [
                 'cer' => ['The certificate file has invalid type.'],
-                'key' => ['The private key file has invalid type.']
+                'key' => ['The private key file has invalid type.'],
             ],
         ]);
     }
 
     /**
      * @see SendCerKeyController::sendCerKey()
+     *
      * @test
      */
     public function it_refuse_an_invalid_certificate(): void
     {
-        $certificatePath = __DIR__ . '/../_files/plain-text.txt';
-        $privateKeyPath = __DIR__ . '/../_files/fake-fiel/EKU9003173C9.key';
-        $passPhrasePath = __DIR__ . '/../_files/fake-fiel/EKU9003173C9-password.txt';
+        $certificatePath = __DIR__.'/../_files/plain-text.txt';
+        $privateKeyPath = __DIR__.'/../_files/fake-fiel/EKU9003173C9.key';
+        $passPhrasePath = __DIR__.'/../_files/fake-fiel/EKU9003173C9-password.txt';
 
         $this->sanctumAuthenticate();
         $response = $this->post('/api/v1/send-cer-key', [
             'cer' => $this->makeUploadFile($certificatePath),
-            'key' =>  $this->makeUploadFile($privateKeyPath),
+            'key' => $this->makeUploadFile($privateKeyPath),
             'password' => trim(file_get_contents($passPhrasePath)),
         ]);
         $response->assertStatus(422);
-        $response->assertJson(["message" => "Certificado, llave privada o contraseña inválida"]);
+        $response->assertJson(['message' => 'Certificado, llave privada o contraseña inválida']);
 
         $this->disk->assertMissing($this->expectedCertificatePath);
         $this->disk->assertMissing($this->expectedPrivateKeyPath);
@@ -147,22 +150,23 @@ final class SendCertificatePrivateKeyPairsTest extends TestCase
 
     /**
      * @see SendCerKeyController::sendCerKey()
+     *
      * @test
      */
     public function it_refuse_an_invalid_privatekey(): void
     {
-        $certificatePath = __DIR__ . '/../_files/fake-fiel/EKU9003173C9.cer';
-        $privateKeyPath = __DIR__ . '/../_files/plain-text.txt';
-        $passPhrasePath = __DIR__ . '/../_files/fake-fiel/EKU9003173C9-password.txt';
+        $certificatePath = __DIR__.'/../_files/fake-fiel/EKU9003173C9.cer';
+        $privateKeyPath = __DIR__.'/../_files/plain-text.txt';
+        $passPhrasePath = __DIR__.'/../_files/fake-fiel/EKU9003173C9-password.txt';
 
         $this->sanctumAuthenticate();
         $response = $this->post('/api/v1/send-cer-key', [
             'cer' => $this->makeUploadFile($certificatePath),
-            'key' =>  $this->makeUploadFile($privateKeyPath),
+            'key' => $this->makeUploadFile($privateKeyPath),
             'password' => trim(file_get_contents($passPhrasePath)),
         ]);
         $response->assertStatus(422);
-        $response->assertJson(["message" => "Certificado, llave privada o contraseña inválida"]);
+        $response->assertJson(['message' => 'Certificado, llave privada o contraseña inválida']);
 
         $this->disk->assertMissing($this->expectedCertificatePath);
         $this->disk->assertMissing($this->expectedPrivateKeyPath);
@@ -170,22 +174,23 @@ final class SendCertificatePrivateKeyPairsTest extends TestCase
 
     /**
      * @see SendCerKeyController::sendCerKey()
+     *
      * @test
      */
     public function it_refuse_an_invalid_password(): void
     {
-        $certificatePath = __DIR__ . '/../_files/fake-fiel/EKU9003173C9.cer';
-        $privateKeyPath = __DIR__ . '/../_files/fake-fiel/EKU9003173C9.key';
-        $passPhrasePath = __DIR__ . '/../_files/fake-fiel/EKU9003173C9-password.txt';
+        $certificatePath = __DIR__.'/../_files/fake-fiel/EKU9003173C9.cer';
+        $privateKeyPath = __DIR__.'/../_files/fake-fiel/EKU9003173C9.key';
+        $passPhrasePath = __DIR__.'/../_files/fake-fiel/EKU9003173C9-password.txt';
 
         $this->sanctumAuthenticate();
         $response = $this->post('/api/v1/send-cer-key', [
             'cer' => $this->makeUploadFile($certificatePath),
-            'key' =>  $this->makeUploadFile($privateKeyPath),
-            'password' => trim(file_get_contents($passPhrasePath)) . '-invalid-password',
+            'key' => $this->makeUploadFile($privateKeyPath),
+            'password' => trim(file_get_contents($passPhrasePath)).'-invalid-password',
         ]);
         $response->assertStatus(422);
-        $response->assertJson(["message" => "Certificado, llave privada o contraseña inválida"]);
+        $response->assertJson(['message' => 'Certificado, llave privada o contraseña inválida']);
 
         $this->disk->assertMissing($this->expectedCertificatePath);
         $this->disk->assertMissing($this->expectedPrivateKeyPath);
@@ -193,22 +198,23 @@ final class SendCertificatePrivateKeyPairsTest extends TestCase
 
     /**
      * @see SendCerKeyController::sendCerKey()
+     *
      * @test
      */
     public function it_refuses_valid_csd(): void
     {
-        $certificatePath = __DIR__ . '/../_files/fake-csd/EKU9003173C9.cer';
-        $privateKeyPath = __DIR__ . '/../_files/fake-csd/EKU9003173C9.key';
-        $passPhrasePath = __DIR__ . '/../_files/fake-csd/EKU9003173C9-password.txt';
+        $certificatePath = __DIR__.'/../_files/fake-csd/EKU9003173C9.cer';
+        $privateKeyPath = __DIR__.'/../_files/fake-csd/EKU9003173C9.key';
+        $passPhrasePath = __DIR__.'/../_files/fake-csd/EKU9003173C9-password.txt';
 
         $this->sanctumAuthenticate();
         $response = $this->post('/api/v1/send-cer-key', [
             'cer' => $this->makeUploadFile($certificatePath),
-            'key' =>  $this->makeUploadFile($privateKeyPath),
+            'key' => $this->makeUploadFile($privateKeyPath),
             'password' => trim(file_get_contents($passPhrasePath)),
         ]);
         $response->assertStatus(422);
-        $response->assertJson(["message" => "Certificado, llave privada o contraseña inválida"]);
+        $response->assertJson(['message' => 'Certificado, llave privada o contraseña inválida']);
 
         $this->disk->assertMissing($this->expectedCertificatePath);
         $this->disk->assertMissing($this->expectedPrivateKeyPath);

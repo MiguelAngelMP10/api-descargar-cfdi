@@ -15,6 +15,7 @@ class QueryControllerTest extends TestCase
     use RefreshDatabase;
 
     protected User|Model $user;
+
     protected Fiel|Model $fiel;
 
     protected function setUp(): void
@@ -30,7 +31,7 @@ class QueryControllerTest extends TestCase
         $this->actingAs($this->user)
             ->get(route('queries.index'))
             ->assertOk()
-            ->assertInertia(fn(Assert $page) => $page
+            ->assertInertia(fn (Assert $page) => $page
                 ->component('Queries/Index')
                 ->has('queries')
                 ->has('search')
@@ -43,7 +44,7 @@ class QueryControllerTest extends TestCase
         $this->actingAs($this->user)
             ->get(route('queries.create'))
             ->assertOk()
-            ->assertInertia(fn(Assert $page) => $page
+            ->assertInertia(fn (Assert $page) => $page
                 ->component('Queries/Create')
                 ->where('errors', [])
                 ->has('endpoint', 2)
@@ -59,7 +60,7 @@ class QueryControllerTest extends TestCase
         $this->actingAs($this->user)
             ->get(route('queries.show', 1))
             ->assertOk()
-            ->assertInertia(fn(Assert $page) => $page
+            ->assertInertia(fn (Assert $page) => $page
                 ->component('Queries/Show')
                 ->has('auth.user', 10)
                 ->has('query', 22)
@@ -71,12 +72,12 @@ class QueryControllerTest extends TestCase
         $this->actingAs($this->user);
         $this->postJson(route('queries.store'))
             ->assertStatus(422)->assertJson([
-                "message" => "The rfc field is required.",
-                "errors" => [
-                    "rfc" => [
-                        "The rfc field is required."
+                'message' => 'The rfc field is required.',
+                'errors' => [
+                    'rfc' => [
+                        'The rfc field is required.',
                     ],
-                ]
+                ],
             ]);
     }
 
@@ -87,8 +88,8 @@ class QueryControllerTest extends TestCase
             'rfc' => $this->fiel->rfc,
             'endPoint' => ['cfdi'],
             'downloadType' => ['issued', 'received'],
-            'requestType' => ['metadata']
-        ])->assertSessionHas('success', 'Queries created successfully');
+            'requestType' => ['metadata'],
+        ])->assertSessionHas('success', 'Queries created successfully <br>RequestId: <br>Queries created successfully <br>RequestId: <br>');
         $this->assertDatabaseCount(Query::class, 12);
     }
 }

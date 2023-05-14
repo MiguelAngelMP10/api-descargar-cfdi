@@ -38,6 +38,7 @@ class FielController extends Controller
                 'key' => Crypt::encryptString($request->input('key')),
                 'password' => Crypt::encryptString($request->input('password')),
             ]);
+
             return redirect()->route('config-fiel.create')->with('success', 'The Fiel was added correctly');
         } catch (Throwable $exception) {
             return redirect()->route('config-fiel.create')->with('error', $exception->getMessage());
@@ -50,6 +51,7 @@ class FielController extends Controller
     public function destroy(Request $request, Fiel $fiel): RedirectResponse
     {
         $request->user()->fiels()->find($fiel->id)->delete();
+
         return redirect()->route('config-fiel.create')->with('success', 'The Fiel was delete correctly');
     }
 }

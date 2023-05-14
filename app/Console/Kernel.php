@@ -14,7 +14,7 @@ class Kernel extends ConsoleKernel
     /** @var string[] */
     protected $commands = [
         CreateUser::class,
-        CreateToken::class
+        CreateToken::class,
     ];
 
     /**
@@ -29,8 +29,6 @@ class Kernel extends ConsoleKernel
 
     /**
      * Register the commands for the application.
-     *
-     * @return void
      */
     protected function commands(): void
     {

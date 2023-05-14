@@ -22,7 +22,8 @@ class ${nameClass} extends Model
     protected \$table = '${nameTable}';
 }
 ";
+
         return Storage::disk('catalogs')
-            ->put($nameClass . '.php', $stringModel);
+            ->put($nameClass.'.php', $stringModel);
     }
 }

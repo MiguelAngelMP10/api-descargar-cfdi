@@ -40,11 +40,13 @@ final class RetrievePackagesTest extends TestCase
             Storage::put($packagePath, $this->faker->text);
             $packages[$packageId] = $packagePath;
         }
+
         return $packages;
     }
 
     /**
      * @see PackagesController::index()
+     *
      * @test
      */
     public function list_of_empty_packages(): void
@@ -59,6 +61,7 @@ final class RetrievePackagesTest extends TestCase
 
     /**
      * @see PackagesController::index()
+     *
      * @test
      */
     public function list_of_packages(): void
@@ -79,6 +82,7 @@ final class RetrievePackagesTest extends TestCase
 
     /**
      * @see PackagesController::index()
+     *
      * @test
      */
     public function list_not_found_on_invalid_rfc(): void
@@ -94,6 +98,7 @@ final class RetrievePackagesTest extends TestCase
 
     /**
      * @see PackagesController::download()
+     *
      * @test
      */
     public function download_a_package(): void
@@ -114,6 +119,7 @@ final class RetrievePackagesTest extends TestCase
 
     /**
      * @see PackagesController::download()
+     *
      * @test
      */
     public function download_not_found_using_invalid_rfc(): void
@@ -130,6 +136,7 @@ final class RetrievePackagesTest extends TestCase
 
     /**
      * @see PackagesController::download()
+     *
      * @test
      */
     public function download_not_found_on_non_existent_package(): void
@@ -148,6 +155,7 @@ final class RetrievePackagesTest extends TestCase
 
     /**
      * @see PackagesController::delete()
+     *
      * @test
      */
     public function delete_ok_when_package_exists(): void
@@ -168,6 +176,7 @@ final class RetrievePackagesTest extends TestCase
 
     /**
      * @see PackagesController::delete()
+     *
      * @test
      */
     public function delete_ok_when_package_does_not_exists(): void
@@ -183,6 +192,7 @@ final class RetrievePackagesTest extends TestCase
 
     /**
      * @see PackagesController::delete()
+     *
      * @test
      */
     public function delete_not_found_on_invalid_rfc(): void

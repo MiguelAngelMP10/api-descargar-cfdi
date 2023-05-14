@@ -3,7 +3,6 @@
 namespace Tests\Feature\Http\Controllers\Config;
 
 use App\Models\Fiel;
-use App\Models\Query;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -15,6 +14,7 @@ class FielControllerTest extends TestCase
     use RefreshDatabase;
 
     protected User|Model $user;
+
     protected Fiel|Model $fiel;
 
     protected function setUp(): void
@@ -29,7 +29,7 @@ class FielControllerTest extends TestCase
         $this->actingAs($this->user)
             ->get(route('config-fiel.create'))
             ->assertOk()
-            ->assertInertia(fn(Assert $page) => $page
+            ->assertInertia(fn (Assert $page) => $page
                 ->component('Config/Fiel')
                 ->has('fiels', 1)
                 ->has('fiels.0', 5)
@@ -42,18 +42,18 @@ class FielControllerTest extends TestCase
         $this->actingAs($this->user);
         $this->postJson(route('config-fiel.create'))
             ->assertStatus(422)->assertJson([
-                "message" => "The cer field is required. (and 2 more errors)",
-                "errors" => [
-                    "cer" => [
-                        "The cer field is required."
+                'message' => 'The cer field is required. (and 2 more errors)',
+                'errors' => [
+                    'cer' => [
+                        'The cer field is required.',
                     ],
-                    "key" => [
-                        "The key field is required."
+                    'key' => [
+                        'The key field is required.',
                     ],
-                    "password" => [
-                        "The password field is required."
-                    ]
-                ]
+                    'password' => [
+                        'The password field is required.',
+                    ],
+                ],
             ]);
     }
 
@@ -61,27 +61,27 @@ class FielControllerTest extends TestCase
     {
         $this->actingAs($this->user);
         $this->postJson(route('config-fiel.create'), ['cer' => 123, 'key' => 123, 'password' => 123])->assertExactJson([
-            "message" => "The cer must be a string. (and 2 more errors)",
-            "errors" => [
-                "cer" => [
-                    "The cer must be a string."
+            'message' => 'The cer must be a string. (and 2 more errors)',
+            'errors' => [
+                'cer' => [
+                    'The cer must be a string.',
                 ],
-                "key" => [
-                    "The key must be a string."
+                'key' => [
+                    'The key must be a string.',
                 ],
-                "password" => [
-                    "The password must be a string."
-                ]
-            ]
+                'password' => [
+                    'The password must be a string.',
+                ],
+            ],
         ])->assertStatus(422);
     }
 
     public function test_store_full()
     {
         $pathFakeFiel = base_path('tests/_files/fake-fiel/');
-        $certificatePath = $pathFakeFiel . 'EKU9003173C9-pem.cer';
-        $privateKeyPath = $pathFakeFiel . 'EKU9003173C9-pem.key';
-        $passPhrase = trim(file_get_contents($pathFakeFiel . 'EKU9003173C9-password.txt'));
+        $certificatePath = $pathFakeFiel.'EKU9003173C9-pem.cer';
+        $privateKeyPath = $pathFakeFiel.'EKU9003173C9-pem.key';
+        $passPhrase = trim(file_get_contents($pathFakeFiel.'EKU9003173C9-password.txt'));
         $cer = file_get_contents($certificatePath);
         $key = file_get_contents($privateKeyPath);
         $this->actingAs($this->user);

@@ -20,13 +20,12 @@ class FielFactory extends Factory
     public function definition(): array
     {
 
-
         $pathFakeFiel = base_path('tests/_files/fake-fiel/');
 
-        $certificatePath = $pathFakeFiel . 'EKU9003173C9-pem.cer';
-        $privateKeyPath = $pathFakeFiel . 'EKU9003173C9-pem.key';
+        $certificatePath = $pathFakeFiel.'EKU9003173C9-pem.cer';
+        $privateKeyPath = $pathFakeFiel.'EKU9003173C9-pem.key';
 
-        $passPhrase = trim(file_get_contents($pathFakeFiel . 'EKU9003173C9-password.txt'));
+        $passPhrase = trim(file_get_contents($pathFakeFiel.'EKU9003173C9-password.txt'));
 
         $cer = file_get_contents($certificatePath);
         $key = file_get_contents($privateKeyPath);

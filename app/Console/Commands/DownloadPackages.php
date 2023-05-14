@@ -35,13 +35,13 @@ class DownloadPackages extends Command
      * @var string
      */
     protected $description = 'Download web service packages';
+
     protected $validator;
+
     private Fiel $fiel;
 
     /**
      * Execute the console command.
-     *
-     * @return int
      */
     public function handle(): int
     {
@@ -52,15 +52,19 @@ class DownloadPackages extends Command
                 if ($this->fiel->isValid()) {
                     $packagesIds = $this->option('packageId');
                     $this->downloadPackages($packagesIds);
+
                     return 0;
                 }
+
                 return 1;
             } catch (Exception $exception) {
                 $this->error($exception->getMessage());
+
                 return 1;
             }
         } else {
             $this->printErrors();
+
             return 1;
         }
     }
@@ -93,8 +97,9 @@ class DownloadPackages extends Command
             $service = new Service($requestBuilder, $webClient, null, $endpoints);
             $download = $service->download($packageId);
             if (! $download->getStatus()->isAccepted()) {
-                $this->warn('The package ' . $packageId . ' unable to download: ' .
+                $this->warn('The package '.$packageId.' unable to download: '.
                     $download->getStatus()->getMessage());
+
                 continue;
             }
             if (is_null($this->option('pathSave'))) {
@@ -103,7 +108,7 @@ class DownloadPackages extends Command
                 $this->info("El paquete {$path} se ha almacenado ");
             } else {
                 $pathSave = $this->option('pathSave');
-                file_put_contents($pathSave . $packageId . '.zip', $download->getPackageContent());
+                file_put_contents($pathSave.$packageId.'.zip', $download->getPackageContent());
                 $this->info("El paquete {$pathSave}{$packageId} se ha almacenado ");
             }
         }
@@ -114,7 +119,8 @@ class DownloadPackages extends Command
         if ($packageId !== '') {
             $packageId .= '.zip';
         }
-        return 'datos/' . $rfc . '/packages/' . $packageId;
+
+        return 'datos/'.$rfc.'/packages/'.$packageId;
     }
 
     private function printErrors()

@@ -4,7 +4,6 @@ namespace Tests\Feature;
 
 use App\Http\Controllers\api\v1\DownloadPackagesController;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Mockery\MockInterface;
 use PhpCfdi\SatWsDescargaMasiva\Services\Download\DownloadResult;
@@ -33,6 +32,7 @@ class DownloadPackagesTest extends TestCase
 
     /**
      * @see DownloadPackagesController::downloadPackages()
+     *
      * @test
      */
     public function it_download_package(): void
@@ -40,7 +40,7 @@ class DownloadPackagesTest extends TestCase
         $this->sanctumAuthenticate();
         $this->setUpValidFiel();
         $packageId = 'foo';
-        $this->mockControllerDownload(new StatusCode(5000, ''), __DIR__ . '/../_files/fake-download.zip');
+        $this->mockControllerDownload(new StatusCode(5000, ''), __DIR__.'/../_files/fake-download.zip');
         $expectedPackagePath = $this->getSatWsService()->obtainPackagePath($this->getFielRfc(), $packageId);
 
         $response = $this->postJson('/api/v1/download-packages', [
@@ -61,6 +61,7 @@ class DownloadPackagesTest extends TestCase
 
     /**
      * @see DownloadPackagesController::downloadPackages()
+     *
      * @test
      */
     public function it_capture_error_when_download_fail(): void
@@ -81,13 +82,14 @@ class DownloadPackagesTest extends TestCase
         $response->assertStatus(200);
         $response->assertJson([
             'errorMessages' => [
-                "El paquete foo no se ha podido descargar: $errorMessageExpected"
+                "El paquete foo no se ha podido descargar: $errorMessageExpected",
             ],
         ]);
     }
 
     /**
      * @see DownloadPackagesController::downloadPackages()
+     *
      * @test
      */
     public function it_refuse_an_invalid_empty_request(): void
@@ -102,13 +104,14 @@ class DownloadPackagesTest extends TestCase
                 'cer' => ['The cer field is required.'],
                 'key' => ['The key field is required.'],
                 'password' => ['The password field is required.'],
-                'packagesIds' => ['The packagesIds field is required.']
+                'packagesIds' => ['The packagesIds field is required.'],
             ],
         ]);
     }
 
     /**
      * @see DownloadPackagesController::downloadPackages()
+     *
      * @test
      */
     public function it_refuse_an_invalid_type_for_fields(): void
@@ -125,10 +128,9 @@ class DownloadPackagesTest extends TestCase
         $response->assertStatus(200);
         $response->assertJson([
             'errorMessages' => [
-                "El paquete foo no se ha podido descargar: Certificado Inválido"
+                'El paquete foo no se ha podido descargar: Certificado Inválido',
             ],
             'messages' => [],
         ]);
     }
-
 }

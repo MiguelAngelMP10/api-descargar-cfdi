@@ -2,8 +2,6 @@
 
 namespace Tests\Feature\Commands;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Symfony\Component\Console\Helper\TableCell;
 use Symfony\Component\Console\Helper\TableCellStyle;
 use Symfony\Component\Console\Helper\TableSeparator;
@@ -11,8 +9,10 @@ use Tests\TestCase;
 
 class MetadataPackageReaderTest extends TestCase
 {
-    private string $plainText = "tests/_files/plain-text.txt";
-    private string $fakeMetadataNormal = "tests/_files/metadata_normal.zip";
+    private string $plainText = 'tests/_files/plain-text.txt';
+
+    private string $fakeMetadataNormal = 'tests/_files/metadata_normal.zip';
+
     private string $fakeMetadataRetencionNormal = 'tests/_files/metadata_retencion_pagos.zip';
 
     public function test_path_empty_command()
@@ -24,7 +24,7 @@ class MetadataPackageReaderTest extends TestCase
 
     public function test_file_invalid()
     {
-        $this->artisan('sw:metadata:package:reader ' . $this->plainText)
+        $this->artisan('sw:metadata:package:reader '.$this->plainText)
             ->expectsOutput('Unable to open Zip file tests/_files/plain-text.txt')
             ->assertFailed();
     }
@@ -33,7 +33,7 @@ class MetadataPackageReaderTest extends TestCase
     {
         $cellStyle = new TableCellStyle(['align' => 'center', 'fg' => 'green']);
         $separator = new TableSeparator();
-        $command = 'sw:metadata:package:reader ' . $this->fakeMetadataNormal;
+        $command = 'sw:metadata:package:reader '.$this->fakeMetadataNormal;
         $test = $this->artisan($command);
         $test->expectsTable(
             [
@@ -70,8 +70,8 @@ class MetadataPackageReaderTest extends TestCase
                     '1',
                     '',
                     '',
-                    ''
-                ]
+                    '',
+                ],
             ]
         );
     }
@@ -80,7 +80,7 @@ class MetadataPackageReaderTest extends TestCase
     {
         $cellStyle = new TableCellStyle(['align' => 'center', 'fg' => 'green']);
         $separator = new TableSeparator();
-        $command = 'sw:metadata:package:reader ' . $this->fakeMetadataRetencionNormal;
+        $command = 'sw:metadata:package:reader '.$this->fakeMetadataRetencionNormal;
         $test = $this->artisan($command);
         $test->expectsTable(
             [
@@ -117,45 +117,45 @@ class MetadataPackageReaderTest extends TestCase
                     '1',
                     '',
                     '',
-                    ''
-                ]
+                    '',
+                ],
             ]
         );
     }
 
     public function test_metadata_cfdi_normal_count_all()
     {
-        $this->artisan('sw:metadata:package:reader ' . $this->fakeMetadataNormal . ' -C')
+        $this->artisan('sw:metadata:package:reader '.$this->fakeMetadataNormal.' -C')
             ->expectsOutput('The number of records is: 1');
     }
 
     public function test_metadata_cfdi_normal_count_canceled()
     {
-        $this->artisan('sw:metadata:package:reader ' . $this->fakeMetadataNormal . ' -C -S 0')
+        $this->artisan('sw:metadata:package:reader '.$this->fakeMetadataNormal.' -C -S 0')
             ->expectsOutput('The number of records CANCELED is: 0');
     }
 
     public function test_metadata_cfdi_normal_count_current()
     {
-        $this->artisan('sw:metadata:package:reader ' . $this->fakeMetadataNormal . ' -C -S 1')
+        $this->artisan('sw:metadata:package:reader '.$this->fakeMetadataNormal.' -C -S 1')
             ->expectsOutput('The number of records CURRENT is: 1');
     }
 
     public function test_metadata_retencion_pagos_count_all()
     {
-        $this->artisan('sw:metadata:package:reader ' . $this->fakeMetadataRetencionNormal)
+        $this->artisan('sw:metadata:package:reader '.$this->fakeMetadataRetencionNormal)
             ->expectsOutput('The number of records is: 1');
     }
 
     public function test_metadata_retencion_pagos_count_canceled()
     {
-        $this->artisan('sw:metadata:package:reader ' . $this->fakeMetadataRetencionNormal . ' -C -S 0')
+        $this->artisan('sw:metadata:package:reader '.$this->fakeMetadataRetencionNormal.' -C -S 0')
             ->expectsOutput('The number of records CANCELED is: 0');
     }
 
     public function test_metadata_retencion_pagos_count_current()
     {
-        $this->artisan('sw:metadata:package:reader ' . $this->fakeMetadataRetencionNormal . ' -C -S 1')
+        $this->artisan('sw:metadata:package:reader '.$this->fakeMetadataRetencionNormal.' -C -S 1')
             ->expectsOutput('The number of records CURRENT is: 1');
     }
 }

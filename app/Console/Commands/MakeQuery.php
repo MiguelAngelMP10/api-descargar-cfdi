@@ -33,17 +33,17 @@ EOF;
 
                             {--e|periodEnd= : End date and time in format YYYY-MM-dd hh:mm:ss}
 
-                            {--requestType=metadata : Specifies whether the request is for Metadata or XML files.' .
+                            {--requestType=metadata : Specifies whether the request is for Metadata or XML files.'.
     ' [metadata, xml]}
 
-                            {--downloadType=issued : Specifies whether the request is for issued or ' .
+                            {--downloadType=issued : Specifies whether the request is for issued or '.
     'received documents. [issued, received]}
 
                             {--documentType=U : Filter the request by type [E, I, N, P, T, U]}
 
                             {--complementCfdi= : Filters the request by the existence of a complementCfdi}
 
-                            {--documentStatus=undefined : Filter the request by the document status: ' .
+                            {--documentStatus=undefined : Filter the request by the document status: '.
     '[undefined, active, cancelled]}
 
                             {--u|uuid= : Filter the request by UUID.}
@@ -62,8 +62,6 @@ EOF;
 
     /**
      * Execute the console command.
-     *
-     * @return int
      */
     public function handle(): int
     {
@@ -97,6 +95,7 @@ EOF;
                         $this->exitCode = 0;
                     }
                 }
+
                 return;
             } catch (\Exception $exception) {
                 $this->error($exception->getMessage());

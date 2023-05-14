@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Config\FielController;
+use App\Http\Controllers\DownloadPackagesController;
 use App\Http\Controllers\QueryController;
 use App\Http\Controllers\ResponseQueryVerificationController;
 use Illuminate\Foundation\Application;
@@ -41,4 +42,6 @@ Route::middleware([
     Route::delete('config/fiel/{fiel}', [FielController::class, 'destroy'])->name('config-fiel.destroy');
     Route::get('verify-query/{query}', [ResponseQueryVerificationController::class, 'verifyQuery'])
         ->name('verify.query');
+    Route::get('download-packages/{query}', [DownloadPackagesController::class, 'downloadPackages'])
+        ->name('download.packages');
 });

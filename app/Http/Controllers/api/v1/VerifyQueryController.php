@@ -12,16 +12,14 @@ use PhpCfdi\SatWsDescargaMasiva\Services\Verify\VerifyResult;
 class VerifyQueryController extends Controller
 {
     private string $key;
-    private string $cer;
-    private string|null $endPoint;
-    private string $password;
-    private string $requestId;
 
-    /**
-     * @param VerifyQueryPostRequest $request
-     *
-     * @return JsonResponse|VerifyResult
-     */
+    private string $cer;
+
+    private string|null $endPoint;
+
+    private string $password;
+
+    private string $requestId;
 
     public function verifyQuery(VerifyQueryPostRequest $request): VerifyResult|JsonResponse
     {
@@ -29,6 +27,7 @@ class VerifyQueryController extends Controller
         $satWsServiceHelper = new SatWsService();
         try {
             $service = $satWsServiceHelper->createService($this->cer, $this->key, $this->password, $this->endPoint);
+
             return $service->verify($this->requestId);
         } catch (Exception $exception) {
             return response()->json(['message' => $exception->getMessage()], 422);

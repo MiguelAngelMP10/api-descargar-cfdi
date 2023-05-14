@@ -10,11 +10,6 @@ use Throwable;
 
 class SendCerKeyController extends Controller
 {
-    /**
-     * @param SendCerKeyRequest $request
-     *
-     * @return JsonResponse
-     */
     public function sendCerKey(SendCerKeyRequest $request): JsonResponse
     {
         $satWsService = new SatWsService();

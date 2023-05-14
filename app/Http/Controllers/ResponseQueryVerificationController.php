@@ -42,9 +42,7 @@ class ResponseQueryVerificationController extends Controller
         $query->save();
         $this->insertPackeges($very->getPackagesIds(), $query);
 
-        return redirect()
-            ->route('queries.index')
-            ->with('success', 'Consulta verificada ' . implode(', <br>', $very->getPackagesIds()));
+        return back()->with('success', 'Consulta verificada '.implode(', <br>', $very->getPackagesIds()));
     }
 
     private function insertPackeges(array $packagesIds, Query $query): void

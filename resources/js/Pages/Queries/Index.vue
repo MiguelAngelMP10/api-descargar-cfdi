@@ -4,7 +4,7 @@ import Pagination from '@/Shared/Pagination.vue';
 import {ref, watch} from "vue";
 import {router, Link, usePage} from '@inertiajs/vue3'
 import moment from "moment";
-
+import {useToast} from "vue-toast-notification";
 
 let props = defineProps({
     queries: {
@@ -16,6 +16,11 @@ let props = defineProps({
         default: "",
     },
 });
+
+let toast = useToast();
+if (usePage().props.flash.success !== null) {
+    toast.success(usePage().props.flash.success)
+}
 
 let search = ref(props.search);
 
@@ -91,8 +96,7 @@ router.reload({only: ['queries']})
                             <th scope="col" class="py-3 text-center border" rowspan="2">
                                 Número de paquetes
                             </th>
-
-                            <th scope="col" class="py-3 text-center border" rowspan="2" colspan="3">
+                            <th scope="col" class="py-3 text-center border" rowspan="2" colspan="2">
                                 Acciones
                             </th>
                         </tr>
@@ -157,16 +161,11 @@ router.reload({only: ['queries']})
                                 </Link>
                             </td>
                             <td class="py-4 px-6 text-right">
-                                <Link :href="route('verify.query',  query)" v-if="query.packeges.length===0 && query.requestId"
+                                <Link :href="route('verify.query',  query)"
+                                      v-if="query.packeges.length===0 && query.requestId"
                                       class="font-semibold text-blue-600 dark:text-blue-500 hover:underline"> Verificar
                                 </Link>
                             </td>
-
-                            <td class="py-4 px-6 text-right">
-                                <a href=""
-                                   class="font-semibold text-blue-600 dark:text-blue-500 hover:underline">Paquetes</a>
-                            </td>
-
                         </tr>
 
                         <tr>

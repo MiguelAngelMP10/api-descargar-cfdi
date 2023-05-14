@@ -10,13 +10,13 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     // get parameters
     $parameters = $containerConfigurator->parameters();
     $parameters->set(Option::PATHS, [
-        __DIR__ . '/app/',
-        __DIR__ . '/bootstrap/',
-        __DIR__ . '/config/',
-        __DIR__ . '/database/',
-        __DIR__ . '/public/',
-        __DIR__ . '/routes/',
-        __DIR__ . '/tests/',
+        __DIR__.'/app/',
+        __DIR__.'/bootstrap/',
+        __DIR__.'/config/',
+        __DIR__.'/database/',
+        __DIR__.'/public/',
+        __DIR__.'/routes/',
+        __DIR__.'/tests/',
     ]);
     $parameters->set(Option::SKIP, [
         'config/insights.php',

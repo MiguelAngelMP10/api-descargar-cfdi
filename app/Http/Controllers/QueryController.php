@@ -27,11 +27,9 @@ class QueryController extends Controller
     use ParameterEvaluations;
 
     public const FORMAT_DATE = 'Y-m-d H:i:s';
+
     protected QueryParameters $queryParameters;
 
-    /**
-     * @var array
-     */
     private array $rfcMatches;
 
     /**
@@ -41,11 +39,12 @@ class QueryController extends Controller
     {
         $queries = $request->user()->queries()->with(['packeges'])
             ->when($request->search, function ($query, $search) {
-                $query->where('rfc', 'like', '%' . $search . '%')
-                    ->orWhere('endPoint', 'like', '%' . $search . '%')
-                    ->orWhere('downloadType', 'like', '%' . $search . '%')
-                    ->orWhere('requestType', 'like', '%' . $search . '%');
+                $query->where('rfc', 'like', '%'.$search.'%')
+                    ->orWhere('endPoint', 'like', '%'.$search.'%')
+                    ->orWhere('downloadType', 'like', '%'.$search.'%')
+                    ->orWhere('requestType', 'like', '%'.$search.'%');
             })->paginate(10)->withQueryString();
+
         return Inertia('Queries/Index', [
             'queries' => $queries,
             'search' => $request->search,
@@ -87,6 +86,7 @@ class QueryController extends Controller
             $fielDB = $request->user()->fiels()->where('rfc', $request->input('rfc'))->first();
             $requestBuilder = new FielRequestBuilder($this->decryptFiel($fielDB));
             $webclient = new GuzzleWebClient();
+            $message = '';
             foreach ($request->input('endPoint') as $endPoint) {
                 foreach ($request->input('downloadType') as $downloadType) {
                     foreach ($request->input('requestType') as $requestType) {
@@ -97,10 +97,12 @@ class QueryController extends Controller
                         $this->processParams($request);
                         $query = $service->query($this->queryParameters);
                         $this->insertQuery($request, $endPoint, $downloadType, $requestType, $query);
+                        $message .= 'Queries created successfully <br>RequestId: '.$query->getRequestId().'<br>';
                     }
                 }
             }
-            return redirect()->route('queries.create')->with('success', 'Queries created successfully');
+
+            return redirect()->route('queries.create')->with('success', $message);
         } catch (Exception $exception) {
             return redirect()->route('queries.create')->with('error', $exception->getMessage());
         }
@@ -112,6 +114,7 @@ class QueryController extends Controller
     public function show(Query $query): Response|ResponseFactory
     {
         $queryR = Query::where('id', '=', $query->id)->with(['resposesQuery', 'packeges'])->first();
+
         return Inertia('Queries/Show', [
             'query' => $queryR,
         ]);

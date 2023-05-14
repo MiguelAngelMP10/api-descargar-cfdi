@@ -11,6 +11,7 @@ use Symfony\Component\Console\Helper\TableSeparator;
 class MetadataPackageReadCommand extends Command
 {
     protected array $data;
+
     protected MetadataPackageReader $metadataReader;
 
     protected function processDataTable(MetadataPackageReader $metadataReader)
@@ -38,20 +39,22 @@ class MetadataPackageReadCommand extends Command
         $this->newLine(2);
         $this->info("CFDIs Current: ${numEnabled}");
         $this->warn("CFDIs Canceled: ${numDisabled}");
-        $this->info('The number of records is: ' . $metadataReader->count());
+        $this->info('The number of records is: '.$metadataReader->count());
     }
 
     protected function formatRow($rowMetadata, $headers): array
     {
         if ((int) ($rowMetadata->estatus) === 0) {
             foreach ($headers as $key => $value) {
-                $headers[$key] = '<fg=yellow>' . $rowMetadata->$value . '</>';
+                $headers[$key] = '<fg=yellow>'.$rowMetadata->$value.'</>';
             }
+
             return $headers;
         }
         foreach ($headers as $key => $value) {
             $headers[$key] = $rowMetadata->$value;
         }
+
         return $headers;
     }
 
@@ -66,6 +69,7 @@ class MetadataPackageReadCommand extends Command
         foreach ($headers as $key => $value) {
             $headers[$key] = new TableCell($value, ['style' => $cellStyle]);
         }
+
         return $headers;
     }
 
@@ -76,7 +80,7 @@ class MetadataPackageReadCommand extends Command
         $this->table(
             [
                 new TableCell(
-                    'Metadata Package Read ' . $this->metadataReader->getFilename(),
+                    'Metadata Package Read '.$this->metadataReader->getFilename(),
                     ['colspan' => 10, 'style' => $cellStyle]
                 ),
             ],
@@ -92,6 +96,7 @@ class MetadataPackageReadCommand extends Command
                 $count++;
             }
         }
+
         return $count;
     }
 }

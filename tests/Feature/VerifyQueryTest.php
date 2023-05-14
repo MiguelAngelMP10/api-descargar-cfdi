@@ -2,15 +2,9 @@
 
 namespace Tests\Feature;
 
-use Faker\Factory;
 use Faker\Provider\Uuid;
-use GuzzleHttp\Psr7\Response;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Symfony\Component\HttpClient\HttpClient;
 use Tests\TestCase;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Http\Client\Request;
 
 class VerifyQueryTest extends TestCase
 {
@@ -49,8 +43,8 @@ class VerifyQueryTest extends TestCase
         $response->assertStatus(422)->assertJson([
             'message' => 'Invalid data',
             'errors' => [
-                'cer' => ["The cer field is required."]
-            ]
+                'cer' => ['The cer field is required.'],
+            ],
         ]);
     }
 
@@ -71,8 +65,8 @@ class VerifyQueryTest extends TestCase
         $response->assertStatus(422)->assertJson([
             'message' => 'Invalid data',
             'errors' => [
-                'cer' => ["The cer must be a string."]
-            ]
+                'cer' => ['The cer must be a string.'],
+            ],
         ]);
     }
 
@@ -93,8 +87,8 @@ class VerifyQueryTest extends TestCase
         $response->assertStatus(422)->assertJson([
             'message' => 'Invalid data',
             'errors' => [
-                'key' => ["The key field is required."]
-            ]
+                'key' => ['The key field is required.'],
+            ],
         ]);
     }
 
@@ -115,8 +109,8 @@ class VerifyQueryTest extends TestCase
         $response->assertStatus(422)->assertJson([
             'message' => 'Invalid data',
             'errors' => [
-                'key' => ["The key must be a string."]
-            ]
+                'key' => ['The key must be a string.'],
+            ],
         ]);
     }
 
@@ -136,8 +130,8 @@ class VerifyQueryTest extends TestCase
         $response->assertStatus(422)->assertJson([
             'message' => 'Invalid data',
             'errors' => [
-                'password' => ["The password field is required."]
-            ]
+                'password' => ['The password field is required.'],
+            ],
         ]);
     }
 
@@ -151,15 +145,15 @@ class VerifyQueryTest extends TestCase
                 'cer' => $this->getCertificate(),
                 'key' => $this->getKey(),
                 'password' => 123,
-                'requestId' => "",
+                'requestId' => '',
             ]
         );
 
         $response->assertStatus(422)->assertJson([
             'message' => 'Invalid data',
             'errors' => [
-                'password' => ["The password field no is string."]
-            ]
+                'password' => ['The password field no is string.'],
+            ],
         ]);
     }
 
@@ -180,8 +174,8 @@ class VerifyQueryTest extends TestCase
         $response->assertStatus(422)->assertJson([
             'message' => 'Invalid data',
             'errors' => [
-                'requestId' => ["The requestId field is required."]
-            ]
+                'requestId' => ['The requestId field is required.'],
+            ],
         ]);
     }
 
@@ -202,8 +196,8 @@ class VerifyQueryTest extends TestCase
         $response->assertStatus(422)->assertJson([
             'message' => 'Invalid data',
             'errors' => [
-                'requestId' => ["The requestId must be a valid UUID."]
-            ]
+                'requestId' => ['The requestId must be a valid UUID.'],
+            ],
         ]);
     }
 
@@ -225,18 +219,18 @@ class VerifyQueryTest extends TestCase
         $response->assertStatus(200)->assertJson([
             'status' => [
                 'code' => 305,
-                'message' => 'Certificado Inválido'
+                'message' => 'Certificado Inválido',
             ],
             'codeRequest' => [
                 'value' => 0,
-                'message' => 'Desconocida'
+                'message' => 'Desconocida',
             ],
             'statusRequest' => [
                 'value' => 0,
-                'message' => 'Desconocida'
+                'message' => 'Desconocida',
             ],
             'numberCfdis' => 0,
-            'packagesIds' => []
+            'packagesIds' => [],
         ]);
     }
 }

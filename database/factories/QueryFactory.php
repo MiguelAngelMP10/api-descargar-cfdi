@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Query\Expression;
 use PhpCfdi\Rfc\RfcFaker;
@@ -32,8 +31,8 @@ class QueryFactory extends Factory
             'documentType' => $this->faker->randomElement(['I', 'E', 'N', 'T', 'P']),
             'documentStatus' => $this->faker->randomElement(['active', 'cancelled']),
             'complementoCfdi' => 'cfdiRegistroFiscal10',
-            'rfcMatches' => new Expression("(JSON_ARRAY('" .
-                (new RfcFaker)->mexicanRfcFisica() . "','" . (new RfcFaker)->mexicanRfcFisica() . "'))"),
+            'rfcMatches' => new Expression("(JSON_ARRAY('".
+                (new RfcFaker)->mexicanRfcFisica()."','".(new RfcFaker)->mexicanRfcFisica()."'))"),
             'rfcOnBehalf' => (new RfcFaker)->mexicanRfcFisica(),
             'uuid' => $this->faker->uuid,
         ];

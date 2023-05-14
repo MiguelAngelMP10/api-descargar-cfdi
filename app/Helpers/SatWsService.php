@@ -44,6 +44,7 @@ class SatWsService
         if ($endpoint === 'retenciones') {
             $endpoints = ServiceEndpoints::retenciones();
         }
+
         return new Service($requestBuilder, $webClient, null, $endpoints);
     }
 
@@ -64,12 +65,12 @@ class SatWsService
 
     public function obtainCertificatePath(string $rfc): string
     {
-        return 'datos/' . $rfc . '/' . $rfc . '.cer';
+        return 'datos/'.$rfc.'/'.$rfc.'.cer';
     }
 
     public function obtainPrivateKeyPath(string $rfc): string
     {
-        return 'datos/' . $rfc . '/' . $rfc . '.key';
+        return 'datos/'.$rfc.'/'.$rfc.'.key';
     }
 
     public function obtainPackagePath(string $rfc, string $packageId): string
@@ -77,7 +78,8 @@ class SatWsService
         if ($packageId !== '') {
             $packageId .= '.zip';
         }
-        return 'datos/' . $rfc . '/packages/' . $packageId;
+
+        return 'datos/'.$rfc.'/packages/'.$packageId;
     }
 
     public function storePackage(string $rfc, string $packageId, DownloadResult $package): void

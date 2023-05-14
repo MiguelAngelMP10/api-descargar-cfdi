@@ -74,7 +74,7 @@ return [
         'app/Providers/RouteServiceProvider.php',
         'app/Console/Kernel.php',
         'app/Exceptions/Handler.php',
-        'app/Models/Catalogs/'
+        'app/Models/Catalogs/',
     ],
 
     'add' => [
@@ -106,7 +106,7 @@ return [
         ],
         LineLengthSniff::class => [
             'lineLimit' => 120,
-            'absoluteLineLimit' => 160
+            'absoluteLineLimit' => 160,
         ],
         // MethodPerClassLimitSniff::class => [
         //     'maxCount' => 20,

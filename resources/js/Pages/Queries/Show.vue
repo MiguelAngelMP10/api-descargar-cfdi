@@ -3,6 +3,7 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 import {router, Link, usePage} from '@inertiajs/vue3'
 import moment from "moment";
 import {ref} from "vue";
+import {useToast} from "vue-toast-notification";
 
 let props = defineProps({
     query: {
@@ -14,6 +15,23 @@ let query = ref(props.query);
 
 let dateTimePeriodEndFormat = moment(query.dateTimePeriodEnd).format('DD/MM/YYYY h:mm:ss A');
 let dateTimePeriodStartFormat = moment(query.dateTimePeriodStart).format('DD/MM/YYYY h:mm:ss A');
+let toast = useToast();
+let downloadPackages = (query_id) => {
+    router.get(route('download.packages', query_id), {}, {
+        preserveScroll: true,
+        replace: true,
+        preserveState: true,
+        onSuccess: () => {
+            if (usePage().props.flash.success !== null) {
+                toast.success(usePage().props.flash.success)
+            }
+
+            if (usePage().props.flash.error !== null) {
+                toast.error(usePage().props.flash.error)
+            }
+        }
+    });
+};
 
 </script>
 
@@ -193,7 +211,22 @@ let dateTimePeriodStartFormat = moment(query.dateTimePeriodStart).format('DD/MM/
 
                             </div>
                             <div class="my-10">
-                                <p class="text-lg font-bold text-center">Packages</p>
+                                <div class="flex justify-center gap-x-16 mb-3">
+                                    <div><p class="text-lg font-bold text-center">Packages</p></div>
+                                    <div>
+                                        <button v-if="query.packeges.length>0"
+                                                class="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-800"
+                                                @click="downloadPackages(query.id)"
+                                        >
+                                          <span
+                                              class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+                                              Download packages
+                                          </span>
+                                        </button>
+                                    </div>
+                                </div>
+
+
                                 <div class="relative overflow-x-auto mt5" v-if="query.packeges.length>0">
                                     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                                         <thead
