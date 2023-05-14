@@ -5,7 +5,8 @@ use Illuminate\Database\Query\Expression;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     /**
      * Run the migrations.
      */
@@ -21,8 +22,8 @@ return new class extends Migration {
 
             $table->dateTime('dateTimePeriodStart');
             $table->dateTime('dateTimePeriodEnd');
-            $table->uuid("requestId")->nullable();
-            $table->integer("numeroCFDIs")->nullable();
+            $table->uuid('requestId')->nullable();
+            $table->integer('numeroCFDIs')->nullable();
 
             $table->enum('documentType', ['', 'I', 'E', 'N', 'T', 'P'])->nullable();
             $table->enum('documentStatus', ['', 'active', 'cancelled'])->nullable();
