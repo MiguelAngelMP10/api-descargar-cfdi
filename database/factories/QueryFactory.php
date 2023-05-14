@@ -28,11 +28,11 @@ class QueryFactory extends Factory
             'dateTimePeriodEnd' => $this->faker->dateTime(),
             'requestId' => $this->faker->uuid,
             'numeroCFDIs' => $this->faker->numberBetween(1, 2000),
-            'documentType' => $this->faker->randomElement(['I', 'E', 'N', 'T', 'P']),
-            'documentStatus' => $this->faker->randomElement(['active', 'cancelled']),
+            'documentType' => $this->faker->randomElement(['', 'I', 'E', 'N', 'T', 'P']),
+            'documentStatus' => $this->faker->randomElement(['', 'active', 'cancelled']),
             'complementoCfdi' => 'cfdiRegistroFiscal10',
-            'rfcMatches' => new Expression("(JSON_ARRAY('".
-                (new RfcFaker)->mexicanRfcFisica()."','".(new RfcFaker)->mexicanRfcFisica()."'))"),
+            'rfcMatches' => new Expression("(JSON_ARRAY('" .
+                (new RfcFaker)->mexicanRfcFisica() . "','" . (new RfcFaker)->mexicanRfcFisica() . "'))"),
             'rfcOnBehalf' => (new RfcFaker)->mexicanRfcFisica(),
             'uuid' => $this->faker->uuid,
         ];
