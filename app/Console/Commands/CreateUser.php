@@ -16,9 +16,6 @@ class CreateUser extends Command
     /** @var string */
     protected $description = 'This command is used to create users';
 
-    /**
-     * @return int
-     */
     public function handle(): int
     {
         $name = $this->untilFull('What is your name?');
@@ -29,6 +26,7 @@ class CreateUser extends Command
 
         if ($user !== null) {
             $this->output->error("The user with email {$email} already exists");
+
             return 1;
         }
 
@@ -40,6 +38,7 @@ class CreateUser extends Command
         ]);
 
         $this->line("The user has been created with id: {$user->id}");
+
         return 0;
     }
 

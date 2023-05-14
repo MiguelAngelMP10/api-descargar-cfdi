@@ -78,7 +78,6 @@ let deleteRfcMatches = () => {
                         <div class="border-b border-gray-900/10 pb-12">
                             <form @submit.prevent="submit">
 
-
                                 <div class="max-w-full mx-auto sm:px-6 lg:px-8 m-11">
 
                                     <div class="mb-4">
