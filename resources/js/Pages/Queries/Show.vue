@@ -33,6 +33,12 @@ let downloadPackages = (query_id) => {
     });
 };
 
+let checkDownloadPackages = (packages) => {
+    let newArray = packages.filter(pac => pac.path === '')
+    return newArray.length > 0;
+};
+
+
 </script>
 
 <template>
@@ -214,7 +220,7 @@ let downloadPackages = (query_id) => {
                                 <div class="flex justify-center gap-x-16 mb-3">
                                     <div><p class="text-lg font-bold text-center">Packages</p></div>
                                     <div>
-                                        <button v-if="query.packeges.length>0"
+                                        <button v-if="query.packeges.length>0 && checkDownloadPackages(query.packeges)"
                                                 class="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-800"
                                                 @click="downloadPackages(query.id)"
                                         >
