@@ -25,8 +25,8 @@ class CfdiToJsonRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'cfdis' => ['required', 'array',],
-            'cfdis.*' => ['required', 'file', 'mimetypes:application/xml,text/xml',],
+            'cfdis' => ['required', 'array'],
+            'cfdis.*' => ['required', 'file', 'mimetypes:application/xml,text/xml'],
         ];
     }
 
