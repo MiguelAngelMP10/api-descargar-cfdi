@@ -31,10 +31,11 @@ let downloadPackages = (query_id) => {
             }
         }
     });
+    router.reload({only: ['query']})
 };
 
 let checkDownloadPackages = (packages) => {
-    let newArray = packages.filter(pac => pac.path === '')
+    let newArray = packages.filter(pac => pac.path === null)
     return newArray.length > 0;
 };
 

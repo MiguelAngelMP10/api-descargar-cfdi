@@ -34,6 +34,7 @@ class SyncSatCatalogs extends Command
      */
     public function handle(): int
     {
+        $this->info('Start sync sat catalogs.');
         $lasTagInfo = $this->getLastTagResourcesSatCatalogs();
         $config = Config::firstWhere('name', 'resources-sat-catalogs-version');
         if ($config->value !== $lasTagInfo->version) {
