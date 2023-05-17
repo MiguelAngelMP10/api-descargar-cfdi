@@ -31,11 +31,10 @@ class SyncSatCatalogs extends Command
 
     /**
      * Execute the console command.
-     *
-     * @return int
      */
     public function handle(): int
     {
+        $this->info('Start sync sat catalogs.');
         $lasTagInfo = $this->getLastTagResourcesSatCatalogs();
         $config = Config::firstWhere('name', 'resources-sat-catalogs-version');
         if ($config->value !== $lasTagInfo->version) {
@@ -50,6 +49,7 @@ class SyncSatCatalogs extends Command
                 'name' => 'resources-sat-catalogs-version',
                 'value' => $lasTagInfo->version,
             ]);
+
             return 0;
         }
         $this->question('Sat catalogs resources are synchronized');
@@ -59,7 +59,7 @@ class SyncSatCatalogs extends Command
 
     private function downloadLastTagResourcesSatCatalogs($nameZip, $urlZip): void
     {
-        $this->info('starting download of ' . $nameZip);
+        $this->info('starting download of '.$nameZip);
         Storage::disk('local')->put($nameZip, Http::get($urlZip)->body());
         $this->info('Download completed');
     }
@@ -69,8 +69,9 @@ class SyncSatCatalogs extends Command
         $this->comment('Getting last tag from phpcfdi/resources-sat-catalogs...');
         $response = Http::get('https://api.github.com/repos/phpcfdi/resources-sat-catalogs/tags');
         $versionZip = $response->collect()->get(0);
+
         return (object) [
-            'nameZip' => $versionZip['name'] . '.zip',
+            'nameZip' => $versionZip['name'].'.zip',
             'urlZip' => $versionZip['zipball_url'],
             'version' => $versionZip['name'],
         ];
@@ -96,7 +97,7 @@ class SyncSatCatalogs extends Command
     private function deleteFileZipAndSatCatalogs($nameFileZip): void
     {
         Storage::delete($nameFileZip);
-        $this->comment('Delete ' . $nameFileZip);
+        $this->comment('Delete '.$nameFileZip);
         Storage::deleteDirectory('phpcfdi-resources-sat-catalogs');
         $this->comment('Delete phpcfdi-resources-sat-catalogs');
     }
@@ -110,7 +111,7 @@ class SyncSatCatalogs extends Command
             $zip = new ZipArchive();
             $res = $zip->open($path);
             if ($res === true) {
-                $zip->extractTo($storagePath . 'phpcfdi-resources-sat-catalogs');
+                $zip->extractTo($storagePath.'phpcfdi-resources-sat-catalogs');
                 $zip->close();
             }
         }
@@ -121,7 +122,7 @@ class SyncSatCatalogs extends Command
     {
         $pathDataBase = 'db/catalogs.sqlite';
         Storage::disk('local')->put($pathDataBase, '');
-        $this->info('Database created in path ' . $pathDataBase);
+        $this->info('Database created in path '.$pathDataBase);
     }
 
     private function createModelTableCatalog(): void
@@ -131,13 +132,14 @@ class SyncSatCatalogs extends Command
         foreach ($tables as $table) {
             $nameTable = $table->name;
             WriteCatalogModelSat::writeModel(Str::studly($nameTable), $nameTable);
-            $this->info('Created Model ' . Str::studly($nameTable) . ' of the table ' . $nameTable);
+            $this->info('Created Model '.Str::studly($nameTable).' of the table '.$nameTable);
         }
     }
 
     private function getStoragePath(): string
     {
         $storagePath = Storage::disk('local')->path('');
+
         return explode('/api-descargar-cfdi/', $storagePath)[1];
     }
 }

@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Commands;
 
-use App\Models\Config;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
@@ -12,17 +11,15 @@ class SyncSatCatalogsTest extends TestCase
 {
     use RefreshDatabase;
 
-    private string $response_tags = "tests/_files/resources-sat-catalogs/tags.json";
+    private string $response_tags = 'tests/_files/resources-sat-catalogs/tags.json';
 
     private function addResponseFake()
     {
         Http::fake([
-            'api.github.com/repos/phpcfdi/resources-sat-catalogs/tags' =>
-                Http::response(file_get_contents($this->response_tags)),
-            'api.github.com/repos/phpcfdi/resources-sat-catalogs/zipball/refs/tags/v5.5.20220419' =>
-                Http::response(
-                    file_get_contents('tests/_files/resources-sat-catalogs/phpcfdi-resources-sat-catalogs-fake.zip')
-                ),
+            'api.github.com/repos/phpcfdi/resources-sat-catalogs/tags' => Http::response(file_get_contents($this->response_tags)),
+            'api.github.com/repos/phpcfdi/resources-sat-catalogs/zipball/refs/tags/v5.5.20220419' => Http::response(
+                file_get_contents('tests/_files/resources-sat-catalogs/phpcfdi-resources-sat-catalogs-fake.zip')
+            ),
         ]);
     }
 

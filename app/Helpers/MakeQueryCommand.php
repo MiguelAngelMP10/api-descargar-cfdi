@@ -29,8 +29,11 @@ class MakeQueryCommand extends Command
     use ValidateOptionsMakeQuery;
 
     protected QueryParameters $queryParameters;
+
     protected ServiceEndpoints $endpoints;
+
     protected Fiel $fiel;
+
     protected QueryResult $query;
 
     protected function presentQuery()
@@ -154,21 +157,21 @@ class MakeQueryCommand extends Command
     {
         $nameFile =
             $this->fiel->getRfc()
-            . '_' . $this->queryParameters->getPeriod()->getStart()->formatSat()
-            . '_' . $this->queryParameters->getPeriod()->getEnd()->formatSat()
-            . '_' . $this->queryParameters->getRequestType()->value()
-            . '_' . $this->queryParameters->getDownloadType()->value()
-            . '-' . $this->queryParameters->getDocumentStatus()->value();
+            .'_'.$this->queryParameters->getPeriod()->getStart()->formatSat()
+            .'_'.$this->queryParameters->getPeriod()->getEnd()->formatSat()
+            .'_'.$this->queryParameters->getRequestType()->value()
+            .'_'.$this->queryParameters->getDownloadType()->value()
+            .'-'.$this->queryParameters->getDocumentStatus()->value();
 
         $content = 'Status'
-            . "\n -Code: " . $this->query->getStatus()->getCode()
-            . "\n -message: " . $this->query->getStatus()->getMessage()
-            . "\n -requestId: " . $this->query->getRequestId();
+            ."\n -Code: ".$this->query->getStatus()->getCode()
+            ."\n -message: ".$this->query->getStatus()->getMessage()
+            ."\n -requestId: ".$this->query->getRequestId();
 
         Storage::disk('local')
-            ->put('datos/' . $this->fiel->getRfc()
-                . '/' . $nameFile . '.txt', $content);
-        $path = Storage::path('datos/' . $this->fiel->getRfc() . '/' . $nameFile . '.txt');
+            ->put('datos/'.$this->fiel->getRfc()
+                .'/'.$nameFile.'.txt', $content);
+        $path = Storage::path('datos/'.$this->fiel->getRfc().'/'.$nameFile.'.txt');
         $this->info('The query result is stored in the following path');
         $this->info($path);
     }

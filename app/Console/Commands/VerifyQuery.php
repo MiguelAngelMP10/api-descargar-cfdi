@@ -48,13 +48,13 @@ EOF;
      * @var string
      */
     protected $description = 'Check request status';
+
     private Fiel $fiel;
+
     private VerifyResult $verify;
 
     /**
      * Execute the console command.
-     *
-     * @return int
      */
     public function handle(): int
     {
@@ -67,15 +67,19 @@ EOF;
                     $this->processVerifyQuery();
                     $this->tableVerifyQuery();
                     $this->writeQueryResultFile();
+
                     return 0;
                 }
+
                 return 1;
             } catch (Exception $exception) {
                 $this->error($exception->getMessage());
+
                 return 1;
             }
         } else {
             $this->printErrors();
+
             return 1;
         }
     }
@@ -158,7 +162,7 @@ EOF;
     private function getFooterTable($cellStyle): array
     {
         return [
-            new TableCell($this->verify->getNumberCfdis() . '', ['colspan' => 3, 'style' => $cellStyle]),
+            new TableCell($this->verify->getNumberCfdis().'', ['colspan' => 3, 'style' => $cellStyle]),
             new TableCell(
                 implode(', ', $this->verify->getPackagesIds()),
                 ['colspan' => 3, 'style' => $cellStyle]
@@ -169,15 +173,15 @@ EOF;
     private function writeQueryResultFile()
     {
         $nameFile =
-            $this->fiel->getRfc() . '_' . $this->option('requestId');
+            $this->fiel->getRfc().'_'.$this->option('requestId');
 
-        $content = 'Request Id: ' . $this->option('requestId') .
-            "\nPackages Ids: " . implode(', ', $this->verify->getPackagesIds());
+        $content = 'Request Id: '.$this->option('requestId').
+            "\nPackages Ids: ".implode(', ', $this->verify->getPackagesIds());
 
         Storage::disk('local')
-            ->put('datos/' . $this->fiel->getRfc()
-                . '/verify_query/' . $nameFile . '.txt', $content);
-        $path = Storage::path('datos/verify_query/' . $this->fiel->getRfc() . '/' . $nameFile . '.txt');
+            ->put('datos/'.$this->fiel->getRfc()
+                .'/verify_query/'.$nameFile.'.txt', $content);
+        $path = Storage::path('datos/verify_query/'.$this->fiel->getRfc().'/'.$nameFile.'.txt');
         $this->info('The query result is stored in the following path');
         $this->info($path);
     }

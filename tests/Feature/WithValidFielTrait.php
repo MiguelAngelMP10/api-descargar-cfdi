@@ -2,10 +2,6 @@
 
 declare(strict_types=1);
 
-/**
- *
- */
-
 namespace Tests\Feature;
 
 use App\Helpers\SatWsService;
@@ -13,19 +9,19 @@ use App\Helpers\SatWsService;
 trait WithValidFielTrait
 {
     private string $certificate;
+
     private string $key;
 
     private string $fielPassword;
 
     private SatWsService $satWsService;
 
-
     private function setUpValidFiel(): void
     {
         $satWsService = new SatWsService();
-        $certificatePath = __DIR__ . '/../_files/fake-fiel/EKU9003173C9-pem.cer';
-        $privateKeyPath = __DIR__ . '/../_files/fake-fiel/EKU9003173C9-pem.key';
-        $passPhrase = trim(file_get_contents(__DIR__ . '/../_files/fake-fiel/EKU9003173C9-password.txt'));
+        $certificatePath = __DIR__.'/../_files/fake-fiel/EKU9003173C9-pem.cer';
+        $privateKeyPath = __DIR__.'/../_files/fake-fiel/EKU9003173C9-pem.key';
+        $passPhrase = trim(file_get_contents(__DIR__.'/../_files/fake-fiel/EKU9003173C9-password.txt'));
 
         $this->certificate = file_get_contents($certificatePath);
         $this->key = file_get_contents($privateKeyPath);
@@ -37,6 +33,7 @@ trait WithValidFielTrait
     protected function getFielRfc(): string
     {
         $fiel = $this->satWsService->createFiel($this->certificate, $this->key, $this->fielPassword);
+
         return $fiel->getRfc();
     }
 

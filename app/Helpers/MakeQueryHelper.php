@@ -17,20 +17,23 @@ class MakeQueryHelper extends Controller
     use AddParametersToQuery;
 
     protected string $cer;
+
     protected string $key;
+
     protected string $password;
+
     protected string|null $endPoint;
+
     protected array $rfcMatches;
+
     protected DownloadType $downloadType;
+
     protected RequestType $requestType;
+
     protected DateTimePeriod $period;
+
     protected QueryParameters $queryParameters;
 
-    /**
-     * @param MakeQueryPostRequest $request
-     *
-     * @return void
-     */
     protected function getParamsQuery(MakeQueryPostRequest $request): void
     {
         $this->cer = $request->input('cer');

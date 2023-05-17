@@ -17,6 +17,7 @@ class MetadataPackageRead extends MetadataPackageReadCommand
                             {path : Zip file path the metadata}
                             {--C|count : Number of records}
                             {--S|status= : Status CFDI}';
+
     /**
      * The console command description.
      *
@@ -26,16 +27,16 @@ class MetadataPackageRead extends MetadataPackageReadCommand
 
     /**
      * Execute the console command.
-     *
-     * @return int
      */
     public function handle(): int
     {
         try {
             $this->processCommand();
+
             return 0;
         } catch (OpenZipFileException $exception) {
             $this->error($exception->getMessage());
+
             return 1;
         }
     }
@@ -45,17 +46,19 @@ class MetadataPackageRead extends MetadataPackageReadCommand
         $this->metadataReader = MetadataPackageReader::createFromFile($this->argument('path'));
 
         if (! is_null($this->option('status')) && (int) $this->option('status') === 1) {
-            $this->info('The number of records CURRENT is: ' . $this->countStatusCFDIs(1));
+            $this->info('The number of records CURRENT is: '.$this->countStatusCFDIs(1));
+
             return;
         }
 
         if (! is_null($this->option('status')) && (int) $this->option('status') === 0) {
-            $this->warn('The number of records CANCELED is: ' . $this->countStatusCFDIs(0));
+            $this->warn('The number of records CANCELED is: '.$this->countStatusCFDIs(0));
+
             return;
         }
 
         if ($this->option('count')) {
-            $this->info('The number of records is: ' . $this->metadataReader->count());
+            $this->info('The number of records is: '.$this->metadataReader->count());
         } else {
             $this->printTableSummary();
         }

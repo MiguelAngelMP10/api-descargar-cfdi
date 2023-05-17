@@ -14,16 +14,16 @@ use PhpCfdi\SatWsDescargaMasiva\Services\Download\DownloadResult;
 class DownloadPackagesController extends Controller
 {
     private string $cer;
+
     private string $key;
+
     private string $password;
+
     private string|null $endPoint;
+
     private $packagesIds;
 
     /**
-     * @param DownloadPackagesRequest $request
-     *
-     * @return JsonResponse
-     *
      * @throws InvalidExpressionToParseException|Exception
      */
     public function downloadPackages(DownloadPackagesRequest $request): JsonResponse
@@ -44,20 +44,16 @@ class DownloadPackagesController extends Controller
                     $packageId,
                     $download->getStatus()->getMessage()
                 );
+
                 continue;
             }
             $satWsServiceHelper->storePackage($fiel->getRfc(), $packageId, $download);
             $messages[] = "El paquete {$packageId} se ha almacenado";
         }
+
         return response()->json(['errorMessages' => $errorMessages, 'messages' => $messages]);
     }
 
-    /**
-     * @param Service $service
-     * @param string $packageId
-     *
-     * @return DownloadResult
-     */
     protected function download(Service $service, string $packageId): DownloadResult
     {
         return $service->download($packageId);

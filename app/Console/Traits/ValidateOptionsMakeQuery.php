@@ -10,6 +10,7 @@ use Illuminate\Validation\Rule;
 trait ValidateOptionsMakeQuery
 {
     protected array $data;
+
     protected int $exitCode = 0;
 
     protected function validateOptions()

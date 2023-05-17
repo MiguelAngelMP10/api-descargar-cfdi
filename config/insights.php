@@ -9,6 +9,7 @@ use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenNormalClasses;
 use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenPrivateMethods;
 use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenTraits;
 use NunoMaduro\PhpInsights\Domain\Metrics\Architecture\Classes;
+use PHP_CodeSniffer\Standards\Generic\Sniffs\CodeAnalysis\UselessOverridingMethodSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Files\LineLengthSniff;
 use SlevomatCodingStandard\Sniffs\Commenting\UselessFunctionDocCommentSniff;
 use SlevomatCodingStandard\Sniffs\Functions\FunctionLengthSniff;
@@ -54,7 +55,7 @@ return [
     |
     */
 
-    'ide' => null,
+    'ide' => 'phpstorm',
 
     /*
     |--------------------------------------------------------------------------
@@ -73,7 +74,7 @@ return [
         'app/Providers/RouteServiceProvider.php',
         'app/Console/Kernel.php',
         'app/Exceptions/Handler.php',
-        'app/Models/Catalogs/'
+        'app/Models/Catalogs/',
     ],
 
     'add' => [
@@ -93,6 +94,7 @@ return [
         PropertyTypeHintSniff::class,
         ReturnTypeHintSniff::class,
         UselessFunctionDocCommentSniff::class,
+        UselessOverridingMethodSniff::class,
     ],
 
     'config' => array_filter([
@@ -104,7 +106,7 @@ return [
         ],
         LineLengthSniff::class => [
             'lineLimit' => 120,
-            'absoluteLineLimit' => 160
+            'absoluteLineLimit' => 160,
         ],
         // MethodPerClassLimitSniff::class => [
         //     'maxCount' => 20,

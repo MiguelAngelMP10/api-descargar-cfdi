@@ -13,12 +13,6 @@ use PhpCfdi\SatWsDescargaMasiva\Services\Query\QueryParameters;
 
 class MakeQueryController extends MakeQueryHelper
 {
-    /**
-     * @param MakeQueryPostRequest $request
-     *
-     * @return JsonResponse
-     */
-
     public function makeQuery(MakeQueryPostRequest $request): JsonResponse
     {
         try {

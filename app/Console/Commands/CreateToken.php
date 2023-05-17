@@ -15,9 +15,6 @@ class CreateToken extends Command
     /** @var string */
     protected $description = 'This command is used to create tokens';
 
-    /**
-     * @return int
-     */
     public function handle(): int
     {
         $userId = $this->argument('user');
@@ -27,12 +24,14 @@ class CreateToken extends Command
 
         if ($user === null) {
             $this->output->error("The user with id {$userId} not exists");
+
             return 1;
         }
 
         $token = $user->createToken($this->option('name') ?? '');
 
         $this->output->success("The token was created, value: {$token->plainTextToken}");
+
         return 0;
     }
 }

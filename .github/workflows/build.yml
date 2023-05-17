@@ -13,12 +13,12 @@ jobs:
 
     strategy:
       matrix:
-        php-versions: ['8.1', '8.2' ]
+        php-versions: ['8.1', '8.2']
 
     steps:
 
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       # see https://github.com/marketplace/actions/setup-php-action
       - name: Setup PHP
@@ -33,10 +33,10 @@ jobs:
 
       - name: Get composer cache directory
         id: composer-cache
-        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
 
       - name: Composer cache dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
@@ -50,6 +50,12 @@ jobs:
 
       - name: Set Laravel application key
         run: php artisan key:generate
+
+      - name: Install NPM dependencies
+        run: npm i
+
+      - name: Compile assets
+        run: npm run build
 
       - name: Tests (phpunit)
         run: php artisan test

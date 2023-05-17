@@ -20,6 +20,7 @@ class PackagesController extends Controller
         foreach (Storage::files($path) as $packageFile) {
             $packageIds[] = substr(basename($packageFile), 0, -4);
         }
+
         return response()->json([
             'rfc' => $rfc,
             'packages' => $packageIds,
@@ -33,6 +34,7 @@ class PackagesController extends Controller
         if (! Storage::exists($path)) {
             return response()->json(['message' => "Package ${rfc}/${packageId} not found."], 404);
         }
+
         return Storage::response($path);
     }
 
@@ -43,6 +45,7 @@ class PackagesController extends Controller
         if (Storage::exists($path)) {
             Storage::delete($path);
         }
+
         return response(null, 204);
     }
 }

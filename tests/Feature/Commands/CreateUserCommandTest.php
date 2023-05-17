@@ -16,6 +16,7 @@ class CreateUserCommandTest extends TestCase
 
     /**
      * @see CreateUser::handle()
+     *
      * @test
      */
     public function create_user_successfully_when_user_not_exists(): void
@@ -36,7 +37,7 @@ class CreateUserCommandTest extends TestCase
         $this->assertEquals(
             [
                 'name' => $user->name,
-                'email' => $user->email
+                'email' => $user->email,
             ],
             [
                 'name' => $userCreated->name,
@@ -48,6 +49,7 @@ class CreateUserCommandTest extends TestCase
 
     /**
      * @see CreateUser::handle()
+     *
      * @test
      */
     public function output_error_when_user_already_exists(): void
@@ -57,7 +59,7 @@ class CreateUserCommandTest extends TestCase
         User::create([
             'name' => 'Test',
             'email' => $email,
-            'password' => Hash::make('password')
+            'password' => Hash::make('password'),
         ]);
 
         $faker = Factory::create();

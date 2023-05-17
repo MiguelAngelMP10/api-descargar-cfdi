@@ -24,7 +24,8 @@ final class DownloadPackagesControllerTest extends TestCase
             ->with($packageId)
             ->willReturn($downloadResult);
 
-        $controller = new class extends DownloadPackagesController {
+        $controller = new class extends DownloadPackagesController
+        {
             public function download(Service $service, string $packageId): DownloadResult
             {
                 return parent::download($service, $packageId);

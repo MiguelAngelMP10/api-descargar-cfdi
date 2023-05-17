@@ -35,7 +35,6 @@ return [
             'root' => storage_path('../app/Models/Catalogs'),
         ],
 
-
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app'),

@@ -40,14 +40,15 @@ EOF;
     protected $description = 'Send the files of a faithful to the server .cer and .key';
 
     protected string $contentCer;
+
     protected string $contentKey;
+
     protected Fiel $fiel;
+
     protected string $localStore = 'No';
 
     /**
      * Execute the console command.
-     *
-     * @return int
      */
     public function handle(): int
     {
@@ -70,19 +71,19 @@ EOF;
 
             if ($this->fiel->isValid()) {
                 $this->processIsValidFiel();
+
                 return 0;
             }
+
             return 1;
         } catch (\Throwable $exception) {
             $this->newLine();
             $this->error($exception->getMessage());
+
             return 1;
         }
     }
 
-    /**
-     * @return void
-     */
     private function processIsValidFiel(): void
     {
         $rfc = $this->fiel->getRfc();
@@ -90,37 +91,23 @@ EOF;
         $this->detailsFIEL($rfc, $this->fiel->isValid() ? 'Valid' : 'Invalid');
     }
 
-    /**
-     * @param string $rfc
-     *
-     * @return void
-     */
     private function copyFiles(string $rfc): void
     {
         if ($this->localStore === 'Yes') {
-            Storage::put('datos/' . $rfc . '/' . $rfc . '.cer', $this->contentCer);
-            Storage::put('datos/' . $rfc . '/' . $rfc . '.key', $this->contentKey);
+            Storage::put('datos/'.$rfc.'/'.$rfc.'.cer', $this->contentCer);
+            Storage::put('datos/'.$rfc.'/'.$rfc.'.key', $this->contentKey);
         }
     }
 
-    /**
-     * @param string $rfc
-     * @param string $status
-     *
-     * @return void
-     */
     private function detailsFIEL(string $rfc, string $status): void
     {
         $this->newLine(1);
         $this->info('Details of your electronic signature');
-        $this->comment('RFC: ' . $rfc);
-        $this->comment('FIEL status: ' . $status);
+        $this->comment('RFC: '.$rfc);
+        $this->comment('FIEL status: '.$status);
         $this->newLine(1);
     }
 
-    /**
-     * @return void
-     */
     private function choiceLocalStore(): void
     {
         if (is_null($this->option('copyFiel'))) {

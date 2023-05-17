@@ -7,9 +7,12 @@ use Tests\TestCase;
 
 class DownloadPackagesTest extends TestCase
 {
-    private string $pathCer = "tests/_files/fake-fiel/EKU9003173C9.cer";
-    private string $pathKey = "tests/_files/fake-fiel/EKU9003173C9.key";
-    private string $plainText = "tests/_files/plain-text.txt";
+    private string $pathCer = 'tests/_files/fake-fiel/EKU9003173C9.cer';
+
+    private string $pathKey = 'tests/_files/fake-fiel/EKU9003173C9.key';
+
+    private string $plainText = 'tests/_files/plain-text.txt';
+
     private string $password = '12345678a';
 
     public function test_cer_and_key_empty_command()
@@ -21,37 +24,37 @@ class DownloadPackagesTest extends TestCase
 
     public function test_password_required()
     {
-        $this->artisan('sw:download:packages ' . $this->pathCer . ' ' . $this->pathKey)
+        $this->artisan('sw:download:packages '.$this->pathCer.' '.$this->pathKey)
             ->expectsOutput('The password field is required.')
             ->assertFailed();
     }
 
     public function test_password_min_5_characters()
     {
-        $this->artisan('sw:download:packages  ' . $this->pathCer . ' ' . $this->pathKey . ' -p 123')
+        $this->artisan('sw:download:packages  '.$this->pathCer.' '.$this->pathKey.' -p 123')
             ->expectsOutput('The password must be at least 5 characters.')
             ->assertFailed();
     }
 
     public function test_end_point_required()
     {
-        $this->artisan('sw:download:packages ' . $this->pathCer . ' ' . $this->pathKey .
-            ' -p "' . $this->password . ' --endPoint=')
+        $this->artisan('sw:download:packages '.$this->pathCer.' '.$this->pathKey.
+            ' -p "'.$this->password.' --endPoint=')
             ->expectsOutput('The endPoint field is required.')
             ->assertFailed();
     }
 
     public function test_end_point_in()
     {
-        $this->artisan('sw:download:packages ' . $this->pathCer . ' ' . $this->pathKey .
-            ' -p "' . $this->password . ' --endPoint=thing ')
+        $this->artisan('sw:download:packages '.$this->pathCer.' '.$this->pathKey.
+            ' -p "'.$this->password.' --endPoint=thing ')
             ->expectsOutput('The endPoint must be one of the following types: cfdi, retenciones.')
             ->assertFailed();
     }
 
     public function test_packages_id_required()
     {
-        $this->artisan('sw:download:packages ' . $this->pathCer . ' ' . $this->pathKey . ' -p ' . $this->password)
+        $this->artisan('sw:download:packages '.$this->pathCer.' '.$this->pathKey.' -p '.$this->password)
             ->expectsOutput('The package id field is required.')
             ->assertFailed();
     }

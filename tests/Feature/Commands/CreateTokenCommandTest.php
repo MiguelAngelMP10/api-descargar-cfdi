@@ -12,6 +12,7 @@ class CreateTokenCommandTest extends TestCase
 
     /**
      * @see CreateToken::handle()
+     *
      * @test
      */
     public function create_token_for_existing_user(): void
@@ -25,11 +26,12 @@ class CreateTokenCommandTest extends TestCase
 
     /**
      * @see CreateToken::handle()
+     *
      * @test
      */
     public function refuse_creating_token_for_non_existing_user(): void
     {
-        $this->artisan("token:create 123123123 --name=testToken")
+        $this->artisan('token:create 123123123 --name=testToken')
             ->assertExitCode(1)->execute();
     }
 }
