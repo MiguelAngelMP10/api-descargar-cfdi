@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\api\v1\CfdiToJsonController;
 use App\Http\Controllers\api\v1\DownloadPackagesController;
 use App\Http\Controllers\api\v1\MakeQueryController;
 use App\Http\Controllers\api\v1\PackagesController;
@@ -34,6 +35,7 @@ Route::prefix('v1')
         Route::get('/{rfc}/packages', [PackagesController::class, 'index']);
         Route::get('/{rfc}/packages/{packageId}', [PackagesController::class, 'download']);
         Route::delete('/{rfc}/packages/{packageId}', [PackagesController::class, 'delete']);
+        Route::post('cfdi-to-json', [CfdiToJsonController::class,'cfdiToJson']);
     });
 
 /*
