@@ -28,7 +28,7 @@ return new class extends Migration
             $table->enum('documentType', ['', 'I', 'E', 'N', 'T', 'P'])->nullable();
             $table->enum('documentStatus', ['', 'active', 'cancelled'])->nullable();
             $table->string('complementoCfdi')->nullable();
-            $table->json('rfcMatches')->default(new Expression('(JSON_ARRAY())'));
+            $table->json('rfcMatches');
             $table->uuid('uuid')->nullable();
 
             $table->timestamps();
