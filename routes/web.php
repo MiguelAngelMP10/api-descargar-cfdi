@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CfdiToJsonController;
 use App\Http\Controllers\Config\FielController;
 use App\Http\Controllers\DownloadPackagesController;
 use App\Http\Controllers\QueryController;
@@ -44,4 +45,5 @@ Route::middleware([
         ->name('verify.query');
     Route::get('download-packages/{query}', [DownloadPackagesController::class, 'downloadPackages'])
         ->name('download.packages');
+    Route::get('cfdi-to-json', [CfdiToJsonController::class, 'cfdiToJson'])->name('cfdi.to.json');
 });

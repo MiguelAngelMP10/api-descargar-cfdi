@@ -92,7 +92,9 @@ const logout = () => {
                                         </template>
                                     </Dropdown>
                                 </div>
-
+                                <NavLink :href="route('cfdi.to.json')" :active="route().current('cfdi.to.json')">
+                                    cfdi-to-json
+                                </NavLink>
 
                             </div>
                         </div>
@@ -309,6 +311,10 @@ const logout = () => {
                                 </template>
                             </Dropdown>
                         </div>
+
+                        <ResponsiveNavLink :href="route('cfdi.to.json')" :active="route().current('cfdi.to.json')">
+                            cfdi-to-json
+                        </ResponsiveNavLink>
                     </div>
 
                     <!-- Responsive Settings Options -->
