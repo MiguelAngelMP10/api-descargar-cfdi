@@ -39,7 +39,7 @@ Route::prefix('v1/catalogs')
     private static function generateRoute($tables): string
     {
         $strRouters = '';
-        foreach ($tables as $key => $table) {
+        foreach ($tables as $table) {
             $connection = DB::connection('sqlite_catalogs');
             $numKeys = $connection->selectOne("SELECT count(name) as numKeys
                                                     FROM pragma_table_info('" . $table->name . "')
