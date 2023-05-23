@@ -20,6 +20,7 @@
         "phpcfdi/cfdi-to-json": "^0.3.2",
         "phpcfdi/rfc": "^1.1",
         "phpcfdi/sat-ws-descarga-masiva": "^0.5.2",
+        "tailflow/laravel-orion": "^2.21",
         "tightenco/ziggy": "^1.0"
     },
     "require-dev": {
