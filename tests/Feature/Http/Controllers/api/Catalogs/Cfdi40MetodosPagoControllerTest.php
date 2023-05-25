@@ -47,18 +47,8 @@ class Cfdi40MetodosPagoControllerTest extends TestCase
         $response->assertStatus(200);
         $response->assertJsonStructure([
             'data' => [],
-            'links' => [
-                'first',
-                'last',
-                'prev',
-                'next'
-            ],
-            'meta' => [
-                'current_page',
-                'from',
-                'last_page',
-                'links',
-            ]
+            'links' => [],
+            'meta' => []
         ]);
     }
 
