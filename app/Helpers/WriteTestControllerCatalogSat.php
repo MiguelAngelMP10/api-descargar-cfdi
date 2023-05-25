@@ -112,12 +112,12 @@ class ${nameClass}ControllerTest extends TestCase
         return '
     public function test_' . $nameTest . '_show(): void
     {
-        \$this->sanctumAuthenticate();
-        \$model = ' . $nameModel . '::first();
-        \$keyName = \$model->getKeyName();
-        \$response = \$this->get(\'/api/v1/catalogs/' . $route . '/\'.$model->{\$keyName});
-        \$response->assertStatus(200);
-        \$response->assertJsonStructure([
+        $this->sanctumAuthenticate();
+        $model = ' . $nameModel . '::first();
+        $keyName = $model->getKeyName();
+        $response = $this->get(\'/api/v1/catalogs/' . $route . '/\'.$model->{$keyName});
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
             \'data\' => []
         ]);
     }';
