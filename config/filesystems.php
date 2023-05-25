@@ -42,6 +42,10 @@ return [
             'driver' => 'local',
             'root' => storage_path('../routes'),
         ],
+        'catalogs_controllers_test' => [
+            'driver' => 'local',
+            'root' => storage_path('../tests/Feature/Http/Controllers/api/Catalogs'),
+        ],
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app'),
