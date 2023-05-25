@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Helpers\WriteCatalogControllerSat;
 use App\Helpers\WriteCatalogModelSat;
 use App\Helpers\WriteCatalogRouteApi;
+use App\Helpers\WriteTestControllerCatalogSat;
 use App\Models\Config;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
@@ -144,6 +145,9 @@ class SyncSatCatalogs extends Command
             WriteCatalogControllerSat::writeController(Str::studly($nameTable), $columnsFilter->filterColumns);
             $this->info('Created Controller ' . Str::studly($nameTable) . 'Controller of the model ' .
                 Str::studly($nameTable));
+
+            WriteTestControllerCatalogSat::writeControllerTest(Str::studly($nameTable), $nameTable);
+            $this->info('Created Test of ' . Str::studly($nameTable) . 'Controller ');
         }
         WriteCatalogRouteApi::writeApi($tables);
         $this->info('Created routers/api-catalogs.php');
