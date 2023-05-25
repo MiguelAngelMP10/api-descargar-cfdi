@@ -20,8 +20,12 @@ class WriteCatalogRouteApi
 Route::prefix('v1/catalogs')
     ->middleware('auth:sanctum')
     ->group(function () {
-        {$routers}
-        });
+        {$routers}Route::get(
+            'ccp-20-autorizaciones-naviero/{ccp_20_autorizaciones_naviero}',
+            [Ccp20AutorizacionesNavieroController::class, 'show']
+        )
+            ->where('ccp_20_autorizaciones_naviero', '.*');
+    });
 ";
         return Storage::disk('catalogs_api')
             ->put('api-catalogs.php', $stringApi);
