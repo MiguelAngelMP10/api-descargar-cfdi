@@ -312,4 +312,9 @@ Route::prefix('v1/catalogs')
             ->only(['index', 'search', 'show']);
         Orion::resource('ret-20-tipos-pago-retencion', Ret20TiposPagoRetencionController::class)
             ->only(['index', 'search', 'show']);
+        Route::get(
+            'ccp-20-autorizaciones-naviero/{ccp_20_autorizaciones_naviero}',
+            [Ccp20AutorizacionesNavieroController::class, 'show']
+        )
+            ->where('ccp_20_autorizaciones_naviero', '.*');
     });
