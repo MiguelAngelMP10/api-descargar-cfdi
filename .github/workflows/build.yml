@@ -13,7 +13,7 @@ jobs:
 
     strategy:
       matrix:
-        php-versions: ['8.1', '8.2']
+        php-versions: [ '8.1', '8.2' ]
 
     steps:
 
@@ -52,7 +52,10 @@ jobs:
         run: php artisan key:generate
 
       - name: Execute sw:sync:sat:catalogs
-        run: php artisan  sw:sync:sat:catalogs
+        run: php artisan sw:sync:sat:catalogs
+        env:
+          DB_DATABASE_CATALOGS: sqlite_catalogs
+          DATABASE_URL_CATALOGS: ${{ github.workspace }}/storage/app/db/catalogs.sqlite
 
       - name: Install NPM dependencies
         run: npm i
