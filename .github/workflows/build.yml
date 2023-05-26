@@ -52,7 +52,7 @@ jobs:
         run: php artisan key:generate
 
       - name: Execute sw:sync:sat:catalogs
-        run: php artisan sw:sync:sat:catalogs
+        run: php artisan sw:sync:db:sat:catalogs
         env:
           DB_DATABASE_CATALOGS: sqlite_catalogs
           DATABASE_URL_CATALOGS: ${{ github.workspace }}/storage/app/db/catalogs.sqlite
