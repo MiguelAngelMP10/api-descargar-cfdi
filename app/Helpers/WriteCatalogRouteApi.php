@@ -28,7 +28,7 @@ Route::prefix('v1/catalogs')
     });
 ";
         return Storage::disk('catalogs_api')
-            ->put('api-catalogs.php', $stringApi);
+            ->put('api-catalogs-sat.php', $stringApi);
     }
 
     private static function generateUses($tables): string
