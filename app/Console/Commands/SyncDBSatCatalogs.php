@@ -57,7 +57,7 @@ class SyncDBSatCatalogs extends Command
         $this->info('starting download of ' . $nameZip);
         $path = Storage::path($nameZip);
         dump($path);
-        Storage::disk('local')->put($nameZip, Http::get($urlZip)->body());
+        Storage::put($nameZip, Http::get($urlZip)->body());
         $this->info('Download completed');
     }
 
@@ -65,7 +65,8 @@ class SyncDBSatCatalogs extends Command
     {
         $this->info('Start ExtractZip');
         $storagePath = $this->getStoragePath();
-        if (Storage::disk('local')->exists($nameFileZip)) {
+        dump(Storage::exists($nameFileZip));
+        if (Storage::exists($nameFileZip)) {
             $path = Storage::path($nameFileZip);
             $zip = new ZipArchive();
             $res = $zip->open($path);
