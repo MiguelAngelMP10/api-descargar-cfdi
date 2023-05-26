@@ -51,6 +51,9 @@ jobs:
       - name: Set Laravel application key
         run: php artisan key:generate
 
+      - name: Execute sw:sync:sat:catalogs
+        run: php artisan  sw:sync:sat:catalogs
+
       - name: Install NPM dependencies
         run: npm i
 
