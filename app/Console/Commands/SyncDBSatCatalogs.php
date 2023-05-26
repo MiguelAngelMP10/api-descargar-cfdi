@@ -86,7 +86,7 @@ class SyncDBSatCatalogs extends Command
 
     private function importSchemaAndData(): void
     {
-        dump(Storage::disk('local')->directories());
+        dump(Storage::directories());
         $directory = Storage::disk('local')->directories('phpcfdi-resources-sat-catalogs')[0];
         $storagePath = $this->getStoragePath();
 
