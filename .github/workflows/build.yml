@@ -48,6 +48,9 @@ jobs:
       - name: Set environment file
         run: php -r "copy('.env.example', '.env');"
 
+      - name: Change permission in directory storage
+        run:  chmod 775 -R storage
+
       - name: Set Laravel application key
         run: php artisan key:generate
 
