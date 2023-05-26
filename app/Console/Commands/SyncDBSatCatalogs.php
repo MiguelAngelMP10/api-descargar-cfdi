@@ -55,6 +55,8 @@ class SyncDBSatCatalogs extends Command
     private function downloadLastTagResourcesSatCatalogs($nameZip, $urlZip): void
     {
         $this->info('starting download of ' . $nameZip);
+        $path = Storage::path($nameZip);
+        dump($path);
         Storage::disk('local')->put($nameZip, Http::get($urlZip)->body());
         $this->info('Download completed');
     }
