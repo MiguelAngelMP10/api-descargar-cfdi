@@ -65,7 +65,6 @@ class SyncDBSatCatalogs extends Command
     {
         $this->info('Start ExtractZip');
         $storagePath = $this->getStoragePath();
-        dump(Storage::exists($nameFileZip));
         if (Storage::exists($nameFileZip)) {
             $path = Storage::path($nameFileZip);
             $zip = new ZipArchive();
@@ -87,7 +86,8 @@ class SyncDBSatCatalogs extends Command
 
     private function importSchemaAndData(): void
     {
-        dump(Storage::directories());
+        
+        dump( Storage::disk('local')->allDirectories());
         $directory = Storage::disk('local')->directories('phpcfdi-resources-sat-catalogs')[0];
         $storagePath = $this->getStoragePath();
 
