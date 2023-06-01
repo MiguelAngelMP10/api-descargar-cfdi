@@ -58,6 +58,8 @@ class SyncDBSatCatalogs extends Command
     {
         $this->info('starting download of ' . $nameZip);
         Storage::disk('local')->put($nameZip, Http::get($urlZip)->body());
+        $path = Storage::disk('local')->path($nameZip);
+        dump($path);
         $this->info('Download completed');
     }
 
@@ -72,7 +74,7 @@ class SyncDBSatCatalogs extends Command
             $zip = new ZipArchive();
             $res = $zip->open($path);
             if ($res === true) {
-                $zip->extractTo($storagePath . '/phpcfdi-resources-sat-catalogs');
+                $zip->extractTo($storagePath . 'phpcfdi-resources-sat-catalogs');
                 $zip->close();
             }
         }
