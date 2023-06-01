@@ -71,7 +71,7 @@ class SyncDBSatCatalogs extends Command
             $zip = new ZipArchive();
             $res = $zip->open($path);
             if ($res === true) {
-                $zip->extractTo($storagePath . 'phpcfdi-resources-sat-catalogs');
+                $zip->extractTo($storagePath . '/phpcfdi-resources-sat-catalogs');
                 $zip->close();
             }
 
