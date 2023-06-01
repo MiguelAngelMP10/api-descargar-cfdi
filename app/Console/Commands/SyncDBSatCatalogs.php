@@ -33,9 +33,11 @@ class SyncDBSatCatalogs extends Command
         $lasTagInfo = $this->getLastTagResourcesSatCatalogs();
         $this->downloadLastTagResourcesSatCatalogs($lasTagInfo->nameZip, $lasTagInfo->urlZip);
         $this->extractZip($lasTagInfo->nameZip);
+        dump(Storage::disk('local')->files());
+        dump(Storage::disk('local')->directories());
         $this->createFileDataBaseCatalogs();
-        $this->importSchemaAndData();
-        $this->deleteFileZipAndSatCatalogs($lasTagInfo->nameZip);
+        //$this->importSchemaAndData();
+        // $this->deleteFileZipAndSatCatalogs($lasTagInfo->nameZip);
         return 0;
     }
 
@@ -45,7 +47,7 @@ class SyncDBSatCatalogs extends Command
         $response = Http::get('https://api.github.com/repos/phpcfdi/resources-sat-catalogs/tags');
         $versionZip = $response->collect()->get(0);
 
-        return (object) [
+        return (object)[
             'nameZip' => $versionZip['name'] . '.zip',
             'urlZip' => $versionZip['zipball_url'],
             'version' => $versionZip['name'],
@@ -55,24 +57,24 @@ class SyncDBSatCatalogs extends Command
     private function downloadLastTagResourcesSatCatalogs($nameZip, $urlZip): void
     {
         $this->info('starting download of ' . $nameZip);
-        $path = Storage::path($nameZip);
-        dump($path);
-        Storage::put($nameZip, Http::get($urlZip)->body());
+        Storage::disk('local')->put($nameZip, Http::get($urlZip)->body());
         $this->info('Download completed');
     }
 
     private function extractZip($nameFileZip): void
     {
+
         $this->info('Start ExtractZip');
         $storagePath = $this->getStoragePath();
         if (Storage::exists($nameFileZip)) {
-            $path = Storage::path($nameFileZip);
+            $path = Storage::disk('local')->path($nameFileZip);
             $zip = new ZipArchive();
             $res = $zip->open($path);
             if ($res === true) {
                 $zip->extractTo($storagePath . 'phpcfdi-resources-sat-catalogs');
                 $zip->close();
             }
+
         }
         $this->info('End ExtractZip');
     }
@@ -86,8 +88,8 @@ class SyncDBSatCatalogs extends Command
 
     private function importSchemaAndData(): void
     {
-        
-        dump( Storage::disk('local')->allDirectories());
+
+        dump(Storage::disk('local')->directories());
         $directory = Storage::disk('local')->directories('phpcfdi-resources-sat-catalogs')[0];
         $storagePath = $this->getStoragePath();
 
@@ -98,7 +100,7 @@ class SyncDBSatCatalogs extends Command
         $process = Process::fromShellCommandline($command);
         $process->run();
 
-        if (! $process->isSuccessful()) {
+        if (!$process->isSuccessful()) {
             throw new ProcessFailedException($process);
         }
     }
