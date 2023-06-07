@@ -30,7 +30,7 @@
     ```bash
        ./vendor/bin/phpcs --error-severity=1 --warning-severity=8 --extensions=php
     ```
-
+<!-- 
 ## Ejecución con _Docker_
 
 Usa [`laravel/sail`](https://laravel.com/docs/10.x/sail) si estás familiarizado.
@@ -50,7 +50,7 @@ docker run --name=api-descargar-cfdi --detach=true --publish 8081:80 \
   api-descargar-cfdi
 
 ```
-
+-->
 ## Contribuciones
 
 Estamos abiertos a contribuciones de código, documentación, entorno de desarrollo, reporte de problemas,
