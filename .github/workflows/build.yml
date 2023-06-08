@@ -59,6 +59,9 @@ jobs:
 
       - name: Run migrations
         run: php artisan migrate
+        env:
+          DB_CONNECTION: sqlite
+          DB_DATABASE: ${{ github.workspace }}/database/database.sqlite
 
       - name: Run seeder Config
         run: php artisan db:seed --class=ConfigSeeder
