@@ -9,7 +9,6 @@ services:
         image: sail-8.1/app
         ports:
             - '${APP_PORT:-80}:80'
-            - '${VITE_PORT:-5173}:${VITE_PORT:-5173}'
         environment:
             WWWUSER: '${WWWUSER}'
             LARAVEL_SAIL: 1
