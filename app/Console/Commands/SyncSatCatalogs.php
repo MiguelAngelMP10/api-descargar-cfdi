@@ -2,7 +2,10 @@
 
 namespace App\Console\Commands;
 
+use App\Helpers\WriteCatalogControllerSat;
 use App\Helpers\WriteCatalogModelSat;
+use App\Helpers\WriteCatalogRouteApi;
+use App\Helpers\WriteTestControllerCatalogSat;
 use App\Models\Config;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
@@ -42,7 +45,9 @@ class SyncSatCatalogs extends Command
             $this->extractZip($lasTagInfo->nameZip);
             $this->createFileDataBaseCatalogs();
             $this->importSchemaAndData();
-            $this->createModelTableCatalog();
+            if (env('APP_ENV') === 'local') {
+                $this->createModelTableCatalog();
+            }
             $this->deleteFileZipAndSatCatalogs($lasTagInfo->nameZip);
             $config->update([
                 'id' => 1,
@@ -59,7 +64,7 @@ class SyncSatCatalogs extends Command
 
     private function downloadLastTagResourcesSatCatalogs($nameZip, $urlZip): void
     {
-        $this->info('starting download of '.$nameZip);
+        $this->info('starting download of ' . $nameZip);
         Storage::disk('local')->put($nameZip, Http::get($urlZip)->body());
         $this->info('Download completed');
     }
@@ -71,7 +76,7 @@ class SyncSatCatalogs extends Command
         $versionZip = $response->collect()->get(0);
 
         return (object) [
-            'nameZip' => $versionZip['name'].'.zip',
+            'nameZip' => $versionZip['name'] . '.zip',
             'urlZip' => $versionZip['zipball_url'],
             'version' => $versionZip['name'],
         ];
@@ -97,7 +102,7 @@ class SyncSatCatalogs extends Command
     private function deleteFileZipAndSatCatalogs($nameFileZip): void
     {
         Storage::delete($nameFileZip);
-        $this->comment('Delete '.$nameFileZip);
+        $this->comment('Delete ' . $nameFileZip);
         Storage::deleteDirectory('phpcfdi-resources-sat-catalogs');
         $this->comment('Delete phpcfdi-resources-sat-catalogs');
     }
@@ -111,7 +116,7 @@ class SyncSatCatalogs extends Command
             $zip = new ZipArchive();
             $res = $zip->open($path);
             if ($res === true) {
-                $zip->extractTo($storagePath.'phpcfdi-resources-sat-catalogs');
+                $zip->extractTo($storagePath . 'phpcfdi-resources-sat-catalogs');
                 $zip->close();
             }
         }
@@ -122,7 +127,7 @@ class SyncSatCatalogs extends Command
     {
         $pathDataBase = 'db/catalogs.sqlite';
         Storage::disk('local')->put($pathDataBase, '');
-        $this->info('Database created in path '.$pathDataBase);
+        $this->info('Database created in path ' . $pathDataBase);
     }
 
     private function createModelTableCatalog(): void
@@ -132,14 +137,26 @@ class SyncSatCatalogs extends Command
         foreach ($tables as $table) {
             $nameTable = $table->name;
             WriteCatalogModelSat::writeModel(Str::studly($nameTable), $nameTable);
-            $this->info('Created Model '.Str::studly($nameTable).' of the table '.$nameTable);
+            $this->info('Created Model ' . Str::studly($nameTable) . ' of the table ' . $nameTable);
+
+            $columnsFilter = $connection
+                ->selectOne("select group_concat(\"'\" || name || \"'\", ',\n            ')
+                                AS filterColumns
+                                from pragma_table_info('" . $nameTable . "')");
+
+            WriteCatalogControllerSat::writeController(Str::studly($nameTable), $columnsFilter->filterColumns);
+            $this->info('Created Controller ' . Str::studly($nameTable) . 'Controller of the model ' .
+                Str::studly($nameTable));
+
+            WriteTestControllerCatalogSat::writeControllerTest(Str::studly($nameTable), $nameTable);
+            $this->info('Created Test of ' . Str::studly($nameTable) . 'Controller ');
         }
+        WriteCatalogRouteApi::writeApi($tables);
+        $this->info('Created routers/api-catalogs.php');
     }
 
     private function getStoragePath(): string
     {
-        $storagePath = Storage::disk('local')->path('');
-
-        return explode('/api-descargar-cfdi/', $storagePath)[1];
+        return Storage::disk('local')->path('');
     }
 }

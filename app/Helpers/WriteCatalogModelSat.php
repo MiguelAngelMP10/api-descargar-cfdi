@@ -23,7 +23,7 @@ class ${nameClass} extends Model
 }
 ";
 
-        return Storage::disk('catalogs')
+        return Storage::disk('catalogs_models')
             ->put($nameClass.'.php', $stringModel);
     }
 }

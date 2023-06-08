@@ -30,11 +30,22 @@ return [
 
     'disks' => [
 
-        'catalogs' => [
+        'catalogs_models' => [
             'driver' => 'local',
             'root' => storage_path('../app/Models/Catalogs'),
         ],
-
+        'catalogs_controllers' => [
+            'driver' => 'local',
+            'root' => storage_path('../app/Http/Controllers/api/Catalogs'),
+        ],
+        'catalogs_api' => [
+            'driver' => 'local',
+            'root' => storage_path('../routes'),
+        ],
+        'catalogs_controllers_test' => [
+            'driver' => 'local',
+            'root' => storage_path('../tests/Feature/Http/Controllers/api/Catalogs'),
+        ],
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app'),
@@ -43,7 +54,7 @@ return [
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
-            'url' => env('APP_URL').'/storage',
+            'url' => env('APP_URL') . '/storage',
             'visibility' => 'public',
         ],
 

@@ -20,12 +20,13 @@
         "phpcfdi/cfdi-to-json": "^0.3.2",
         "phpcfdi/rfc": "^1.1",
         "phpcfdi/sat-ws-descarga-masiva": "^0.5.2",
+        "tailflow/laravel-orion": "^2.21",
         "tightenco/ziggy": "^1.0"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
         "laravel/pint": "^1.0",
-        "laravel/sail": "^1.21",
+        "laravel/sail": "^1.22",
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^7.0",
         "nunomaduro/larastan": "^2.0",

@@ -13,7 +13,7 @@ jobs:
 
     strategy:
       matrix:
-        php-versions: ['8.1', '8.2']
+        php-versions: [ '8.1', '8.2' ]
 
     steps:
 
@@ -51,6 +51,33 @@ jobs:
       - name: Set Laravel application key
         run: php artisan key:generate
 
+      - name: Config databases
+        run: touch database/database.sqlite
+        env:
+          DB_CONNECTION: sqlite
+          DB_DATABASE: ${{ github.workspace }}/database/database.sqlite
+
+      - name: Run migrations
+        run: php artisan migrate
+        env:
+          DB_CONNECTION: sqlite
+          DB_DATABASE: ${{ github.workspace }}/database/database.sqlite
+
+      - name: Run seeder Config
+        run: php artisan db:seed --class=ConfigSeeder
+        env:
+          DB_CONNECTION: sqlite
+          DB_DATABASE: ${{ github.workspace }}/database/database.sqlite
+
+      - name: Execute sw:sync:sat:catalogs
+        run: php artisan sw:sync:sat:catalogs
+        env:
+          APP_ENV: github
+          DB_CONNECTION: sqlite
+          DB_DATABASE: ${{ github.workspace }}/database/database.sqlite
+          DB_DATABASE_CATALOGS: sqlite_catalogs
+          DATABASE_URL_CATALOGS: ${{ github.workspace }}/storage/app/db/catalogs.sqlite
+
       - name: Install NPM dependencies
         run: npm i
 
@@ -59,6 +86,11 @@ jobs:
 
       - name: Tests (phpunit)
         run: php artisan test
+        env:
+          DB_CONNECTION: sqlite
+          DB_DATABASE: ${{ github.workspace }}/database/database.sqlite
+          DB_DATABASE_CATALOGS: sqlite_catalogs
+          DATABASE_URL_CATALOGS: ${{ github.workspace }}/storage/app/db/catalogs.sqlite
 
       - name: PHP Insights
         run: php artisan insights --no-interaction --ansi --format=github-action
