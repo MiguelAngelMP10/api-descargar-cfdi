@@ -65,6 +65,9 @@ jobs:
 
       - name: Run seeder Config
         run: php artisan db:seed --class=ConfigSeeder
+        env:
+          DB_DATABASE_CATALOGS: sqlite_catalogs
+          DATABASE_URL_CATALOGS: ${{ github.workspace }}/storage/app/db/catalogs.sqlite
 
       - name: Execute sw:sync:sat:catalogs
         run: php artisan sw:sync:sat:catalogs
