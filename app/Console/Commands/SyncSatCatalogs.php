@@ -155,8 +155,6 @@ class SyncSatCatalogs extends Command
 
     private function getStoragePath(): string
     {
-        $storagePath = Storage::disk('local')->path('');
-
-        return explode('/api-descargar-cfdi/', $storagePath)[1];
+        return Storage::disk('local')->path('');
     }
 }
