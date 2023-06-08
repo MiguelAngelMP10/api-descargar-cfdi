@@ -72,6 +72,9 @@ jobs:
       - name: Execute sw:sync:sat:catalogs
         run: php artisan sw:sync:sat:catalogs
         env:
+          APP_ENV: github
+          DB_CONNECTION: sqlite
+          DB_DATABASE: ${{ github.workspace }}/database/database.sqlite
           DB_DATABASE_CATALOGS: sqlite_catalogs
           DATABASE_URL_CATALOGS: ${{ github.workspace }}/storage/app/db/catalogs.sqlite
 

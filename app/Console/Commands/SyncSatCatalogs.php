@@ -45,7 +45,9 @@ class SyncSatCatalogs extends Command
             $this->extractZip($lasTagInfo->nameZip);
             $this->createFileDataBaseCatalogs();
             $this->importSchemaAndData();
-            $this->createModelTableCatalog();
+            if (env('APP_ENV') === 'local') {
+                $this->createModelTableCatalog();
+            }
             $this->deleteFileZipAndSatCatalogs($lasTagInfo->nameZip);
             $config->update([
                 'id' => 1,
@@ -73,7 +75,7 @@ class SyncSatCatalogs extends Command
         $response = Http::get('https://api.github.com/repos/phpcfdi/resources-sat-catalogs/tags');
         $versionZip = $response->collect()->get(0);
 
-        return (object) [
+        return (object)[
             'nameZip' => $versionZip['name'] . '.zip',
             'urlZip' => $versionZip['zipball_url'],
             'version' => $versionZip['name'],
@@ -92,7 +94,7 @@ class SyncSatCatalogs extends Command
         $process = Process::fromShellCommandline($command);
         $process->run();
 
-        if (! $process->isSuccessful()) {
+        if (!$process->isSuccessful()) {
             throw new ProcessFailedException($process);
         }
     }
