@@ -51,6 +51,18 @@ jobs:
       - name: Set Laravel application key
         run: php artisan key:generate
 
+      - name: Config databases
+        run: touch database/database.sqlite
+        env:
+          DB_CONNECTION: sqlite
+          DB_DATABASE: ${{ github.workspace }}/database/database.sqlite
+
+      - name: Run migrations
+        run: php artisan migrate
+
+      - name: Run seeder Config
+        run: php artisan db:seed --class=ConfigSeeder
+
       - name: Execute sw:sync:sat:catalogs
         run: php artisan sw:sync:sat:catalogs
         env:
