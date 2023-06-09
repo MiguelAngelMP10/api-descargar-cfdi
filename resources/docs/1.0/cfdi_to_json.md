@@ -1,6 +1,6 @@
 ## cfdi-to-json
 
-Este EndPoint convierte archivo(s)
+Este EndPoint convierte archivo(s) CFDI(s) a json
 
 ### **URL**
 
