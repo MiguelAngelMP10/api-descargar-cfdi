@@ -18,6 +18,9 @@
     - [API example](/{{route}}/{{version}}/cfdi_to_json)
     - [UI usage examples](#)
 
+- ## SAT catalogs
+    - [API example](/{{route}}/{{version}}/sat_catalogs)
+
 
 - ## Other commands
     - [sw:send:cer-key](/{{route}}/{{version}}/sw_send_cer-key)
