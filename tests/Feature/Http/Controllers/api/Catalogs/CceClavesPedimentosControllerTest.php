@@ -10,7 +10,7 @@ class CceClavesPedimentosControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-
+    
     public function test_cce_claves_pedimentos_index(): void
     {
         $this->sanctumAuthenticate();
@@ -33,7 +33,7 @@ class CceClavesPedimentosControllerTest extends TestCase
         ]);
     }
 
-
+    
     public function test_cce_claves_pedimentos_search(): void
     {
         $this->sanctumAuthenticate();
@@ -52,7 +52,7 @@ class CceClavesPedimentosControllerTest extends TestCase
         ]);
     }
 
-
+    
     public function test_cce_claves_pedimentos_show(): void
     {
         $this->sanctumAuthenticate();
