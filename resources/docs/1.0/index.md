@@ -1,3 +1,4 @@
+<!--- https://github.com/larecipe/larecipe-docs -->
 - ## Installation steps
     - [Local installation](/{{route}}/{{version}}/installation_steps)
 
