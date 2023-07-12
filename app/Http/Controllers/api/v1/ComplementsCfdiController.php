@@ -13,6 +13,6 @@ class ComplementsCfdiController extends Controller
      */
     public function __invoke(): JsonResponse
     {
-        return response()->json(['data'=> ComplementoCfdi::getLabels()]);
+        return response()->json(['data' => ComplementoCfdi::getLabels()]);
     }
 }

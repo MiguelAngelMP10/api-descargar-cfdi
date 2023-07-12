@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\api\v1\ComplementsCfdiController;
 use App\Http\Controllers\api\v1\CfdiToJsonController;
+use App\Http\Controllers\api\v1\ComplementsCfdiController;
 use App\Http\Controllers\api\v1\DownloadPackagesController;
 use App\Http\Controllers\api\v1\MakeQueryController;
 use App\Http\Controllers\api\v1\PackagesController;
@@ -24,7 +24,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', fn(Request $request) => $request->user());
+Route::middleware('auth:sanctum')->get('/user', fn (Request $request) => $request->user());
 
 Route::prefix('v1')
     ->middleware('auth:sanctum')
