@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\api\v1\ComplementsCfdiController;
 use App\Http\Controllers\api\v1\CfdiToJsonController;
 use App\Http\Controllers\api\v1\DownloadPackagesController;
 use App\Http\Controllers\api\v1\MakeQueryController;
@@ -23,7 +24,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', fn (Request $request) => $request->user());
+Route::middleware('auth:sanctum')->get('/user', fn(Request $request) => $request->user());
 
 Route::prefix('v1')
     ->middleware('auth:sanctum')
@@ -36,6 +37,7 @@ Route::prefix('v1')
         Route::get('/{rfc}/packages/{packageId}', [PackagesController::class, 'download']);
         Route::delete('/{rfc}/packages/{packageId}', [PackagesController::class, 'delete']);
         Route::post('cfdi-to-json', [CfdiToJsonController::class, 'cfdiToJson']);
+        Route::get('/complements/cfdi', ComplementsCfdiController::class);
     });
 
 /*
