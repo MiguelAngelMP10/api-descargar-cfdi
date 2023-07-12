@@ -8,6 +8,7 @@
         - [Verify Query](/{{route}}/{{version}}/ExampleVerifyQuery)
         - [Download Packages](/{{route}}/{{version}}/ExampleDownloadPackages)
         - [Packages](/{{route}}/{{version}}/ExamplePackages)
+        - [Complements of cfdi](/{{route}}/{{version}}/complements_of_cfdi)
 
     - [CLI usage examples](#)
         - [Make query](/{{route}}/{{version}}/sw_make_query)
