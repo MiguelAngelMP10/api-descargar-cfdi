@@ -9,6 +9,7 @@
         - [Download Packages](/{{route}}/{{version}}/ExampleDownloadPackages)
         - [Packages](/{{route}}/{{version}}/ExamplePackages)
         - [Complements of cfdi](/{{route}}/{{version}}/complements_of_cfdi)
+        - [Complements of retention](/{{route}}/{{version}}/complements_of_retention)
 
     - [CLI usage examples](#)
         - [Make query](/{{route}}/{{version}}/sw_make_query)
